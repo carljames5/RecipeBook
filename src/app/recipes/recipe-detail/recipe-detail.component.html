@@ -1,1 +1,32 @@
-<p>recipe-detail works!</p>
+<div class="d-flex justify-content-center">
+  <div class="p-2">
+    <span>
+      <h3>Recipe Name</h3>
+    </span>
+  </div>
+
+  <div class="p-2">
+    <div class="btn-group" role="group">
+      <button id="manage-recipe-group" type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span><fa-icon [icon]="tasksIcon"></fa-icon></span>
+      </button>
+
+      <div id="manage-dropdown-menu" class="dropdown-menu" aria-labelledby="manage-recipe-group">
+        <a id="to-shopping-list" class="dropdown-item" href="#"> 
+          <span><fa-icon [icon]="plusSquareIcon"></fa-icon></span>To Shopping List</a>
+        <a id="edit-recipe" class="dropdown-item" href="#">
+          <span><fa-icon [icon]="cogsIcon"></fa-icon></span>Edit Recipe</a>
+        <a id="delete-recipe" class="dropdown-item" href="#">
+          <span><fa-icon [icon]="trashAltIcon"></fa-icon></span>Delete Recipe</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <div class="p-2">
+    <img
+      src="https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/spaghetti-puttanesca_1.jpg"
+      alt="" class="img-responsive">
+  </div>
+</div>

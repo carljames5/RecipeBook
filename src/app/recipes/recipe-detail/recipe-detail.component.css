@@ -1,0 +1,24 @@
+div#manage-dropdown-menu.dropdown-menu a:hover {
+    background-color: #eeeeee;
+    color: black
+}
+
+div#manage-dropdown-menu.dropdown-menu a:active {
+    background-color: #e0e0e0;
+    color: black
+}
+
+div#manage-dropdown-menu.dropdown-menu a#to-shopping-list.dropdown-item > span{
+    padding-right: 8px;
+    margin-left: -3px;
+}
+
+div#manage-dropdown-menu.dropdown-menu a#edit-recipe.dropdown-item > span{
+    padding-right: 6px;
+    margin-left: -5px;
+}
+
+div#manage-dropdown-menu.dropdown-menu a#delete-recipe.dropdown-item > span{
+    padding-right: 10px;
+    margin-left: -3px;
+}
