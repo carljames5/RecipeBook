@@ -1,7 +1,17 @@
-<div class="row">
-    <div class="col-md-12">
-        <app-shopping-edit></app-shopping-edit>
-        <hr>
-        <p>It's the sopping list</p>
-    </div>
+<div class="d-flex flex-row">
+  <div class="p-2">
+    <hr>
+    <h2>Edit Shopping Item</h2>
+    <app-shopping-edit></app-shopping-edit>
+  </div>
+</div>
+
+<hr>
+<h2>Ingredients</h2>
+<div class="mt-4">
+  <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let currentIngredient of ingredients">
+      {{ currentIngredient.name }} ({{ currentIngredient.amount }})
+    </a>
+  </div>
 </div>
