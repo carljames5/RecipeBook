@@ -1,17 +1,24 @@
-<div class="d-flex flex-row">
-  <div class="p-2">
-    <hr>
-    <h2>Edit Shopping Item</h2>
-    <app-shopping-edit></app-shopping-edit>
-  </div>
-</div>
-
+<h2 class="text-center">Shopping List</h2>
 <hr>
-<h2>Ingredients</h2>
-<div class="mt-4">
-  <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let currentIngredient of ingredients">
-      {{ currentIngredient.name }} ({{ currentIngredient.amount }})
-    </a>
+
+<div class="row mt-5">
+  <div class="col-md-7">
+    <div class="d-flex flex-row">
+      <div>
+        <h2>Edit Shopping Item</h2>
+        <app-shopping-edit></app-shopping-edit>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <h2>Ingredients</h2>
+    <div class="mt-4">
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
+          *ngFor="let currentIngredient of ingredients">
+          {{ currentIngredient.name }} ({{ currentIngredient.amount }})
+        </a>
+      </div>
+    </div>
   </div>
 </div>
