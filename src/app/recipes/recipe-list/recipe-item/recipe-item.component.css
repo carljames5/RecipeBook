@@ -1,0 +1,11 @@
+a.list-group-item > div.list-group-item-heading > span > img {
+    max-height: 50px;
+}
+
+a.list-group-item > div.list-group-item-text {
+    margin-top: 15px;
+}
+
+a.list-group-item > div.list-group-item-text > p {
+    word-break: break-all;
+}
