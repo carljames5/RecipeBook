@@ -22,3 +22,7 @@ div#manage-dropdown-menu.dropdown-menu a#delete-recipe.dropdown-item > span{
     padding-right: 10px;
     margin-left: -3px;
 }
+
+div#description-content > div.p-2 > p {
+    word-break: break-all;
+}

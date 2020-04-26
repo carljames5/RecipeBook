@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { faTasks, faPlusSquare, faCogs, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { Recipe } from '../recipe.model';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -12,6 +13,8 @@ export class RecipeDetailComponent implements OnInit {
   plusSquareIcon: IconDefinition = faPlusSquare;
   cogsIcon: IconDefinition = faCogs;
   trashAltIcon: IconDefinition = faTrashAlt;
+
+  @Input() recipe: Recipe;
 
   constructor() { }
 
