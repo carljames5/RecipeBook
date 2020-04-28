@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { faPlus, faTrashAlt, faSyncAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Ingredient } from 'src/app/shared/ingredient.model';
+import { ShoppingListService } from '../shopping-list.service';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -16,17 +17,16 @@ export class ShoppingEditComponent implements OnInit {
   @ViewChild('nameInput') name: ElementRef;
   @ViewChild('amountInput') amount: ElementRef;
 
-  @Output() onAddNewItemHandler = new EventEmitter<Ingredient>();
-
-  constructor() { }
+  constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit(): void {
 
   }
 
   onAddNewItem() {
-    this.onAddNewItemHandler.emit(new Ingredient(
-      this.name.nativeElement.value,
-      this.amount.nativeElement.value));
+    this.shoppingListService.addIngredient(
+      new Ingredient(
+        this.name.nativeElement.value,
+        this.amount.nativeElement.value));
   }
 }
