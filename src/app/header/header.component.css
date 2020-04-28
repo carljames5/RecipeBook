@@ -1,0 +1,9 @@
+li.nav-item.dropdown div.dropdown-menu.show a:hover {
+    background-color: #eeeeee;
+    color: black
+}
+
+li.nav-item.dropdown div.dropdown-menu.show a.dropdown-item:active {
+    background-color: #e0e0e0;
+    color: black
+}

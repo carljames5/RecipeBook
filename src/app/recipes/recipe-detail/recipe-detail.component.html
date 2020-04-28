@@ -6,19 +6,28 @@
   </div>
 
   <div class="p-2">
-    <div class="btn-group" role="group">
-      <button id="manage-recipe-group" type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="btn-group" appDropDown #r="appDropDown">
+      <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
         <span><fa-icon [icon]="tasksIcon"></fa-icon></span>
       </button>
-
-      <div id="manage-dropdown-menu" class="dropdown-menu" aria-labelledby="manage-recipe-group">
-        <a id="to-shopping-list" class="dropdown-item" href="#"> 
-          <span><fa-icon [icon]="plusSquareIcon"></fa-icon></span>To Shopping List</a>
-        <a id="edit-recipe" class="dropdown-item" href="#">
-          <span><fa-icon [icon]="cogsIcon"></fa-icon></span>Edit Recipe</a>
-        <a id="delete-recipe" class="dropdown-item" href="#">
-          <span><fa-icon [icon]="trashAltIcon"></fa-icon></span>Delete Recipe</a>
-      </div>
+      
+      <ul class="dropdown-menu" [ngClass]="{'show':r.isOpen}" >
+        <li>
+          <a id="to-shopping-list" class="dropdown-item" href="#"> 
+            <span><fa-icon [icon]="plusSquareIcon"></fa-icon></span>To Shopping List
+          </a>
+        </li>
+        <li>
+          <a id="edit-recipe" class="dropdown-item" href="#">
+            <span><fa-icon [icon]="cogsIcon"></fa-icon></span>Edit Recipe
+          </a>
+        </li>
+        <li>
+          <a id="delete-recipe" class="dropdown-item" href="#">
+            <span><fa-icon [icon]="trashAltIcon"></fa-icon></span>Delete Recipe
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
