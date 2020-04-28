@@ -13,7 +13,7 @@
       
       <ul class="dropdown-menu" [ngClass]="{'show':r.isOpen}" >
         <li>
-          <a id="to-shopping-list" class="dropdown-item" href="#"> 
+          <a id="to-shopping-list" class="dropdown-item" (click)="onAddToShoppingList()"> 
             <span><fa-icon [icon]="plusSquareIcon"></fa-icon></span>To Shopping List
           </a>
         </li>
