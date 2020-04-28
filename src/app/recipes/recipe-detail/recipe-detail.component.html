@@ -40,15 +40,32 @@
   </div>
 </div>
 
-<div class="d-flex">
-  <div class="p-2">
-    <h4>Recipe Description</h4>
-    <hr>
-  </div>
+<div class="recipe-description-title">
+  <h4>Recipe Description</h4>
+  <hr>
 </div>
 
 <div id="description-content" class="d-flex">
   <div class="p-2">
     <p>{{ recipe.description }}</p>
   </div>
+</div>
+
+<h4>Ingredients</h4>
+<hr>
+
+<div id="description-content" class="d-flex">
+
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
+        <div class="row">
+          <div class="col-md-11">
+            {{ ingredient.name }}
+          </div>
+          <div class="col-md-1 text-right">
+            {{ ingredient.amount }}
+          </div>
+        </div>
+      </li>
+    </ul>
 </div>
