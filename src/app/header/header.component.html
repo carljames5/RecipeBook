@@ -18,12 +18,12 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
       <ul class="navbar-nav">
         <li class="nav-item dropdown" appDropDown #r="appDropDown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown">
             Manage
           </a>
           <div class="dropdown-menu dropdown-menu-right" [ngClass]="{'show':r.isOpen}">
-            <a class="dropdown-item" href="#">Save Data</a>
-            <a class="dropdown-item" href="#">Fetch Data</a>
+            <a class="dropdown-item">Save Data</a>
+            <a class="dropdown-item">Fetch Data</a>
           </div>
         </li>
       </ul>
