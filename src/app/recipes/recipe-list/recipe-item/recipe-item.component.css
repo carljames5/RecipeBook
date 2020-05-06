@@ -2,6 +2,12 @@ a {
     cursor: pointer;
 }
 
+a.list-group-item.active {
+    background-color: #cfcfcf;
+    border-color: #bdbdbd;
+    color: #727272;
+}
+
 a.list-group-item > div.list-group-item-heading > span > img {
     max-height: 50px;
 }
