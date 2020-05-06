@@ -1,3 +1,7 @@
+a {
+    cursor: pointer;
+}
+
 a.list-group-item > div.list-group-item-heading > span > img {
     max-height: 50px;
 }

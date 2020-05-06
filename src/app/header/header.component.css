@@ -1,3 +1,7 @@
+a {
+    cursor: pointer;
+}
+
 li.nav-item.dropdown div.dropdown-menu.show a:hover {
     background-color: #eeeeee;
     color: black
