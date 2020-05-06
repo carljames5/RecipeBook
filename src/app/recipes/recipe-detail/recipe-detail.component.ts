@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { faTasks, faPlusSquare, faCogs, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -15,11 +16,20 @@ export class RecipeDetailComponent implements OnInit {
   cogsIcon: IconDefinition = faCogs;
   trashAltIcon: IconDefinition = faTrashAlt;
 
-  @Input() recipe: Recipe;
+  recipe: Recipe;
+  index: number;
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.index = +params['id'];
+
+        this.recipe = this.recipeService.getRecipeById(this.index);
+      }
+    )
   }
 
   onAddToShoppingList() {

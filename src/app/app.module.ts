@@ -16,6 +16,7 @@ import { FooterComponent } from './footer/footer.component';
 import { DropDownDirective } from './shared/directives/dropdown.directive';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
+import { DefaultRecipeComponent } from './recipes/default-recipe/default-recipe.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AppRoutingModule } from './app-routing.module';
     ShoppingListComponent,
     ShoppingEditComponent,
     FooterComponent,
-    DropDownDirective
+    DropDownDirective,
+    DefaultRecipeComponent
   ],
   imports: [
     BrowserModule,

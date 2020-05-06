@@ -8,8 +8,9 @@
 <div class="d-flex p-2">
     <div class="list-group" id="recipes-list-group">
         <app-recipe-item class="recipes-list-item" 
-                         *ngFor="let currentRecipe of recipes"
-                        [recipe]="currentRecipe">
+                         *ngFor="let currentRecipe of recipes; let i = index"
+                         [recipe]="currentRecipe"
+                         [index]="i">
         </app-recipe-item>
     </div>
 </div>

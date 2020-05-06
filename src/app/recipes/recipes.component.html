@@ -5,17 +5,6 @@
         <app-recipe-list></app-recipe-list>
     </div>
     <div class="col-md-7 align-self-center">
-        <app-recipe-detail *ngIf="selectedRecipe; else detailsInfo"
-                           [recipe]="selectedRecipe">
-        </app-recipe-detail>
-
-        <ng-template #detailsInfo>
-            <div id="details-info" class="d-flex justify-content-center">
-                <div class="p-2">
-                    <h2>Please select a recipe!</h2>
-                    <hr>
-                </div>
-            </div>
-        </ng-template>
+        <router-outlet></router-outlet>
     </div>
 </div>
