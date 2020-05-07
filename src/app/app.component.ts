@@ -6,10 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title: string = 'Angular-RecipeBook';
-  loadedMenu: string = 'recipes';
-
-  onNavigate(selectedMenu: string) {
-    this.loadedMenu = selectedMenu;
-  }
+  title: string = 'Angular-RecipeBook';  
 }
