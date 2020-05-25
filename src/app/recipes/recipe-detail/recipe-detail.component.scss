@@ -1,55 +1,65 @@
-a {
+ul.dropdown-menu {
+  a {
     cursor: pointer;
-}
 
-ul.dropdown-menu a:hover {
-    background-color: #eeeeee;
-    color: black
-}
+    &:hover {
+      background-color: #eeeeee;
+      color: black
+    }
 
-ul.dropdown-menu a.dropdown-item:active {
-    background-color: #e0e0e0;
-    color: black
-}
+    &.dropdown-item:active {
+      background-color: #e0e0e0;
+      color: black
+    }
 
-ul.dropdown-menu a#to-shopping-list.dropdown-item > span{
-    padding-right: 8px;
-    margin-left: -3px;
-}
+    &#to-shopping-list {
+      >span {
+        padding-right: 8px;
+        margin-left: -3px;
+      }
+    }
 
-ul.dropdown-menu a#edit-recipe.dropdown-item > span{
-    padding-right: 6px;
-    margin-left: -5px;
-}
+    &#edit-recipe {
+      >span {
+        padding-right: 6px;
+        margin-left: -5px;
+      }
+    }
 
-ul.dropdown-menu a#delete-recipe.dropdown-item > span{
-    padding-right: 10px;
-    margin-left: -3px;
+    &#delete-recipe {
+      >span {
+        padding-right: 10px;
+        margin-left: -3px;
+      }
+    }
+  }
 }
 
 div.recipe-description-title {
-    margin-top: 28px;
+  margin-top: 28px;
 }
 
-div#description-content > div.p-2 > p {
+div#description-content {
+  >div>p {
     word-break: break-all;
-}
+  }
 
-ul.list-group {
+  ul.list-group {
     width: 100%;
-}
 
-ul.list-group > li.list-group-item {
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
+    >li.list-group-item {
+      padding-top: 0px;
+      padding-bottom: 0px;
 
-ul.list-group > li.list-group-item > div.row > div {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
+      >div.row>div {
+        padding-top: 10px;
+        padding-bottom: 10px;
 
-ul.list-group > li.list-group-item > div.row > div:nth-child(2) {
-    border-left: 1px solid #e9e9e9;
-    padding-right: 2px;
+        &:nth-child(2) {
+          border-left: 1px solid #e9e9e9;
+          padding-right: 2px;
+        }
+      }
+    }
+  }
 }

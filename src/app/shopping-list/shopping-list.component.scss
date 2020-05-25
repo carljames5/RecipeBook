@@ -1,14 +1,16 @@
-div.list-group > a {
+div.list-group {
+  >a {
     padding-top: 0px;
     padding-bottom: 0px;
-}
 
-div.list-group > a > div.row > div {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
+    >div.row>div {
+      padding-top: 10px;
+      padding-bottom: 10px;
 
-div.list-group > a > div.row > div:nth-child(2) {
-    border-left: 1px solid #e9e9e9;
-    padding-right: 2px;
+      &:nth-child(2) {
+        border-left: 1px solid #e9e9e9;
+        padding-right: 2px;
+      }
+    }
+  }
 }

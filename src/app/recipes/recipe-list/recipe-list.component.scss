@@ -1,3 +1,5 @@
-.recipes-list-item + .recipes-list-item {
+.list-group {
+  .recipes-list-item+.recipes-list-item {
     margin-top: 20px;
+  }
 }
