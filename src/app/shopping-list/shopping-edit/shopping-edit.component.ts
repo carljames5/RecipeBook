@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { faPlus, faTrashAlt, faSyncAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Ingredient } from 'src/app/shared/ingredient.model';
@@ -11,7 +11,7 @@ import { ShoppingEditValidator } from './validators/shopping-edit-validators';
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.scss']
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent {
   plusIcon: IconDefinition = faPlus;
   trashIcon: IconDefinition = faTrashAlt;
   clearIcon: IconDefinition = faSyncAlt;
@@ -30,10 +30,6 @@ export class ShoppingEditComponent implements OnInit {
   }
 
   constructor(private shoppingListService: ShoppingListService) { }
-
-  ngOnInit(): void {
-
-  }
 
   onAddNewItem() {
     this.shoppingListService.addIngredient(
