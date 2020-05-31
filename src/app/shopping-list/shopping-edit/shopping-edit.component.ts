@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { faPlus, faTrashAlt, faSyncAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ShoppingEditValidator } from './validators/shopping-edit-validators';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -14,8 +16,18 @@ export class ShoppingEditComponent implements OnInit {
   trashIcon: IconDefinition = faTrashAlt;
   clearIcon: IconDefinition = faSyncAlt;
 
-  @ViewChild('nameInput') name: ElementRef;
-  @ViewChild('amountInput') amount: ElementRef;
+  shoppingEditForm = new FormGroup({
+    'name': new FormControl(null, Validators.required),
+    'amount': new FormControl(null, [Validators.required, ShoppingEditValidator.amountValidator, ShoppingEditValidator.maxAmountValueValidator])
+  })
+
+  public get name() {
+    return this.shoppingEditForm.get('name');
+  }
+
+  public get amount() {
+    return this.shoppingEditForm.get('amount');
+  }
 
   constructor(private shoppingListService: ShoppingListService) { }
 
@@ -26,7 +38,7 @@ export class ShoppingEditComponent implements OnInit {
   onAddNewItem() {
     this.shoppingListService.addIngredient(
       new Ingredient(
-        this.name.nativeElement.value,
-        this.amount.nativeElement.value));
+        this.name.value,
+        this.amount.value));
   }
 }

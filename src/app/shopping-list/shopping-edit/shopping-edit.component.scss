@@ -1,0 +1,24 @@
+form#shopping-edit-form {
+  div.d-flex.flex-column {
+    &.validation-errors {
+      div.p-2 {
+        padding: 0px 0px 12px 0px !important;
+
+        &:last-child {
+            padding: 0px 0px 18px 0px !important;
+        }
+
+        span.validation-error {
+          margin-bottom: 12px;
+          color: #e53935;
+        }
+      }
+    }
+  }
+
+  button[type="submit"] {
+      &:disabled {
+          cursor: default;
+      }
+  }
+}
