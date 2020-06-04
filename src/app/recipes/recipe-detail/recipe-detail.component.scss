@@ -42,6 +42,7 @@ div.recipe-description-title {
 div#description-content {
   >div>p {
     word-break: break-all;
+    cursor: default;
   }
 
   ul.list-group {
@@ -50,6 +51,7 @@ div#description-content {
     >li.list-group-item {
       padding-top: 0px;
       padding-bottom: 0px;
+      cursor: default;
 
       >div.row>div {
         padding-top: 10px;

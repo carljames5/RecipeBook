@@ -6,6 +6,7 @@ div.list-group {
     >div.row>div {
       padding-top: 10px;
       padding-bottom: 10px;
+      cursor: pointer;
 
       &:nth-child(2) {
         border-left: 1px solid #e9e9e9;
