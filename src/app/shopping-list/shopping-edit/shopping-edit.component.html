@@ -47,8 +47,16 @@
             Update
           </span>
         </button>
-        <button class="btn btn-danger mr-2" type="button"><span><fa-icon [icon]="trashIcon"></fa-icon> Remove</span></button>
-        <button class="btn btn-secondary mr-2" type="button" (click)="onClear()"><span><fa-icon [icon]="clearIcon"></fa-icon> Clear</span></button>
+        <button class="btn btn-secondary mr-2" type="button" (click)="onClear()">
+          <span>
+            <fa-icon [icon]="clearIcon"></fa-icon> Clear
+          </span>
+        </button>
+        <button *ngIf="id.value !== null" class="btn btn-danger mr-2" type="button" (click)="onDelete()">
+          <span>
+            <fa-icon [icon]="trashIcon"></fa-icon> Remove
+          </span>
+        </button>
       </div>
     </form>
   </div>

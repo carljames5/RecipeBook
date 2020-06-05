@@ -61,6 +61,16 @@ export class ShoppingListService {
         this.ingredientsChanged.next(this.ingredients.slice());
     }
 
+    public deleteIngredient(id: number): void {
+        const deleteIngredientIndex = this.getIngredientIndexByIdAndName(this.getIngredientById(id));
+
+        if(deleteIngredientIndex !== -1) {
+            this.ingredients.splice(deleteIngredientIndex, 1);
+    
+            this.ingredientsChanged.next(this.ingredients.slice());
+        }
+    }
+
     private getIngredientIndexByIdAndName(ingredient: Ingredient) {
         return this.ingredients
                    .findIndex(x => x.id == ingredient.id && x.name.toLowerCase().trim() === ingredient.name.toLowerCase().trim())
