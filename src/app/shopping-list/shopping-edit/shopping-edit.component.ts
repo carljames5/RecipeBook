@@ -50,11 +50,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         'amount': selectedIngredient.amount
       })
     });
-  }
+  };
 
   ngOnDestroy(): void {
     this.editingSubscription.unsubscribe();
-  }
+  };
 
   onCreateOrUpdateItem(): void {
     if (this.id.value !== null) {
@@ -64,7 +64,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     }
 
     this.shoppingEditFormReset();
-  }
+  };
+
+  onClear(): void {
+    this.shoppingEditFormReset();
+  };
 
   private createIngredientObjectFromInputFileds(): Ingredient {
     return new Ingredient(
