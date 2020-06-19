@@ -52,6 +52,16 @@ export class RecipeService {
     this.recipesChanged.next(this.recipes.slice());
   }
 
+  public deleteRecipe(id: number): void {
+    const recipeIndex = this.recipes.findIndex(x => x.id === id);
+
+    if (recipeIndex !== -1) {
+      this.recipes.splice(recipeIndex, 1);
+
+      this.recipesChanged.next(this.recipes.slice());
+    }
+  }
+
   public checkRecipeNameIsExist(id: number, name: string): boolean {
     return this.recipes.findIndex(x => x.name.toLowerCase().trim() === name.toLowerCase().trim() && x.id !== id) !== -1;
   }

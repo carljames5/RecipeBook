@@ -24,7 +24,7 @@
             </a>
           </li>
           <li>
-            <a id="delete-recipe" class="dropdown-item">
+            <a id="delete-recipe" class="dropdown-item" (click)="onDeleteRecipe(recipe.id)">
               <span><fa-icon [icon]="trashAltIcon"></fa-icon></span> Delete Recipe
             </a>
           </li>
