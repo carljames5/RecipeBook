@@ -1,0 +1,60 @@
+form#recipeForm {
+  input.form-control.hidden {
+    display: none;
+  }
+
+  input.ng-invalid.ng-touched,
+  textarea.ng-invalid.ng-touched {
+    border: 1px solid #e53935;
+  }
+
+  .card {
+    margin-bottom: 24px;
+  }
+
+  div#details.card {
+    div.card-body {
+      textarea {
+        resize: none;
+      }
+
+      .validation-errors {
+        div.p-2 {
+          padding: 0px 0px 12px 6px !important;
+
+          &:last-child {
+            padding: 5px 0px 12px 0px !important;
+          }
+
+          span.validation-error {
+            margin-bottom: 12px;
+            color: #e53935;
+          }
+        }
+      }
+    }
+  }
+
+  div#ingredients.card {
+    div.card-body {
+      div.form-group.delete-btn {
+        margin-top: auto;
+      }
+
+      .validation-errors {
+        div.p-2 {
+          padding: 0px 0px 12px 6px !important;
+
+          &:last-child {
+            padding: 0px 0px 18px 6px !important;
+          }
+
+          span.validation-error {
+            margin-bottom: 12px;
+            color: #e53935;
+          }
+        }
+      }
+    }
+  }
+}

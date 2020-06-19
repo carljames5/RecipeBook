@@ -1,33 +1,34 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingListService } from './shopping-list.service';
+import { ShoppingListService } from './services/shopping-list.service';
+import { ShoppingListIngredient } from './models/shopping-list-ingredient.model';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.scss']
+  styleUrls: ['./shopping-list.component.scss'],
 })
-export class ShoppingListComponent implements OnInit, OnDestroy{
-  ingredients: Ingredient[]
-  ingredientsChangedSubscription: Subscription;
+export class ShoppingListComponent implements OnInit, OnDestroy {
+  private shoppingListIngredientsChangedSubscription: Subscription;
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  public shoppingListIngredients: ShoppingListIngredient[];
 
-  ngOnInit(): void {
-    this.ingredients = this.shoppingListService.getIngredients();
+  constructor(private shoppingListService: ShoppingListService) {}
 
-    this.ingredientsChangedSubscription = this.shoppingListService.ingredientsChanged.subscribe(
-      (ingredients: Ingredient[]) => this.ingredients = ingredients
-    )
+  public ngOnInit(): void {
+    this.shoppingListIngredients = this.shoppingListService.getShoppingListIngredients();
+
+    this.shoppingListIngredientsChangedSubscription = this.shoppingListService.shoppingListIngredientsChanged.subscribe(
+      (shoppingListIngredients: ShoppingListIngredient[]) => (this.shoppingListIngredients = shoppingListIngredients)
+    );
   }
 
-  ngOnDestroy(): void {
-    this.ingredientsChangedSubscription.unsubscribe();
+  public ngOnDestroy(): void {
+    this.shoppingListIngredientsChangedSubscription.unsubscribe();
   }
 
-  onEditItem(id: number): void {
-    this.shoppingListService.ingredientEditing.next(id);
+  public onEditItem(id: number): void {
+    this.shoppingListService.shoppingListIngredientEditing.next(id);
   }
 }

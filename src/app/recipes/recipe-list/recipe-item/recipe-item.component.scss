@@ -8,16 +8,16 @@ a {
       color: #727272;
     }
 
-    >div.list-group-item-heading {
-      >span>img {
+    > div.header {
+      > span > img {
         max-height: 50px;
       }
     }
 
-    >div.list-group-item-text {
+    > div.content {
       margin-top: 15px;
 
-      >p {
+      > p {
         word-break: break-all;
       }
     }

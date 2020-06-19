@@ -1,16 +1,13 @@
-<div class="d-flex">    
-    <button class="btn btn-success" (click)="onCreateRecipe()">
-        <span><fa-icon [icon]="plusIcon"></fa-icon></span> New Recipe
-    </button>
+<div class="d-flex">
+  <button class="btn btn-success" (click)="onCreateRecipe()">
+    <span><fa-icon [icon]="plusIcon"></fa-icon></span> New Recipe
+  </button>
 </div>
-<hr>
+<hr />
 
-<div class="d-flex p-2">
-    <div class="list-group">
-        <app-recipe-item class="recipes-list-item" 
-                         *ngFor="let currentRecipe of recipes; let i = index"
-                         [recipe]="currentRecipe"
-                         [index]="i">
-        </app-recipe-item>
-    </div>
+<div class="p-2">
+  <div class="list-group recipes">
+    <app-recipe-item class="list-item" *ngFor="let recipe of recipes" [recipe]="recipe" [index]="recipe.id">
+    </app-recipe-item>
+  </div>
 </div>

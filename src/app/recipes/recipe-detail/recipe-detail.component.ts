@@ -1,41 +1,37 @@
+import { faTasks, faPlusSquare, faCogs, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { faTasks, faPlusSquare, faCogs, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
+import { Recipe } from '../models/recipe.model';
+import { RecipeService } from '../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styleUrls: ['./recipe-detail.component.scss']
+  styleUrls: ['./recipe-detail.component.scss'],
 })
 export class RecipeDetailComponent implements OnInit {
-  tasksIcon: IconDefinition = faTasks;
-  plusSquareIcon: IconDefinition = faPlusSquare;
-  cogsIcon: IconDefinition = faCogs;
-  trashAltIcon: IconDefinition = faTrashAlt;
+  public tasksIcon: IconDefinition = faTasks;
+  public plusSquareIcon: IconDefinition = faPlusSquare;
+  public cogsIcon: IconDefinition = faCogs;
+  public trashAltIcon: IconDefinition = faTrashAlt;
 
-  recipe: Recipe;
-  index: number;
+  public recipe: Recipe;
 
-  constructor(private recipeService: RecipeService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.recipe = this.recipeService.getRecipeById(+params['id']);
-      }
-    )
+    this.route.params.subscribe((params: Params) => {
+      this.recipe = this.recipeService.getRecipeById(+params['id']);
+    });
   }
 
-  onAddToShoppingList() {
-    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+  public onAddRecipeIngredientsToShoppingList() {
+    this.recipeService.addRecipeIngredientsToShoppingList(this.recipe.ingredients);
   }
 
-  onEditRecipe() {
-    this.router.navigate(['edit'], {relativeTo: this.route})
+  public onEditRecipe() {
+    this.router.navigate(['edit'], { relativeTo: this.route });
   }
 }
