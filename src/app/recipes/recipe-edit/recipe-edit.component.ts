@@ -2,13 +2,14 @@ import { faSave, faPlus, faRedoAlt, faTrashAlt, IconDefinition } from '@fortawes
 
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { RecipeService } from '../services/recipe.service';
 import { RecipeFormValidator } from './validators/recipe-form-validators';
 
 import { Recipe } from '../models/recipe.model';
 import { RecipeIngredient } from '../models/recipe-ingredient.model';
+import { relative } from 'path';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -41,9 +42,10 @@ export class RecipeEditComponent implements OnInit {
   //#endregion
 
   constructor(
-    private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private recipeFormValidator: RecipeFormValidator
+    private recipeFormValidator: RecipeFormValidator,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +76,12 @@ export class RecipeEditComponent implements OnInit {
     } else {
       this.recipeService.createRecipe(recipeFormValue);
     }
+
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  public onCancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   // #region PRIVATE RecipeForm Initializer Methods
