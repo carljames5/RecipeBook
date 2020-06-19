@@ -67,6 +67,12 @@ export class RecipeEditComponent implements OnInit {
     this.ingredients.push(this.createNewRecipeIngredientFormGroup());
   }
 
+  public onDeleteRecipeIngredient(index: number): void {
+    if (index !== null && index !== undefined && index >= 0) {
+      this.ingredients.removeAt(index);
+    }
+  }
+
   public onCreateOrEditRecipe(): void {
     const recipeFormValue: any = this.recipeForm.value;
 
