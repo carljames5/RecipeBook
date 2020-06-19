@@ -9,7 +9,6 @@ import { RecipeFormValidator } from './validators/recipe-form-validators';
 
 import { Recipe } from '../models/recipe.model';
 import { RecipeIngredient } from '../models/recipe-ingredient.model';
-import { relative } from 'path';
 
 @Component({
   selector: 'app-recipe-edit',

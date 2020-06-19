@@ -18,6 +18,10 @@ form#recipeForm {
         resize: none;
       }
 
+      img {
+        max-height: 170px;
+      }
+
       .validation-errors {
         div.p-2 {
           padding: 0px 0px 12px 6px !important;
