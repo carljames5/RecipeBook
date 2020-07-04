@@ -4,8 +4,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Recipe } from '../models/recipe.model';
 import { RecipeService } from '../services/recipe.service';
+import { GetAllRecipeItemResponseModel } from '../models/response-models/getAllRecipeItemResponseModel.model';
 
 @Component({
   selector: 'app-recipe-list',
@@ -16,21 +16,41 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   public plusIcon: IconDefinition = faPlus;
 
   private recipesChangedSubscription: Subscription;
+  private recipeAddedSubscription: Subscription;
+  private recipeUpdatedSubscription: Subscription;
+  private recipeDeletedSubscription: Subscription;
 
-  public recipes: Recipe[];
+  public recipes: GetAllRecipeItemResponseModel[];
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {}
 
   public ngOnInit() {
-    this.recipesChangedSubscription = this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
-      this.recipes = recipes;
+    this.recipesChangedSubscription = this.recipeService.recipesChanged.subscribe(
+      (recipes: GetAllRecipeItemResponseModel[]) => {
+        this.recipes = recipes;
+      }
+    );
+
+    this.recipeAddedSubscription = this.recipeService.recipeAdded.subscribe(() => {
+      this.recipeService.getAllRecipe();
     });
 
-    this.recipes = this.recipeService.getRecipes();
+    this.recipeUpdatedSubscription = this.recipeService.recipeUpdated.subscribe(() => {
+      this.recipeService.getAllRecipe();
+    });
+
+    this.recipeDeletedSubscription = this.recipeService.recipeDeleted.subscribe(() => {
+      this.recipeService.getAllRecipe();
+    });
+
+    this.recipeService.getAllRecipe();
   }
 
   public ngOnDestroy() {
     this.recipesChangedSubscription.unsubscribe();
+    this.recipeAddedSubscription.unsubscribe();
+    this.recipeUpdatedSubscription.unsubscribe();
+    this.recipeDeletedSubscription.unsubscribe();
   }
 
   public onCreateRecipe() {

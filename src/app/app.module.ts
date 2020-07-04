@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms/';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -19,9 +20,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { DefaultRecipeComponent } from './recipes/default-recipe/default-recipe.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 
-import { IngredientsService } from './shared/services/ingredients.service';
-import { CommonFunctionsService } from './shared/services/common-functions.service';
 import { RecipeService } from './recipes/services/recipe.service';
+import { RecipeHttpService } from './recipes/services/recipe-http.service';
+import { LoadingComponent } from './shared/components/loading/loading.component';
+import { RecipeCreateComponent } from './recipes/recipe-create/recipe-create.component';
 
 @NgModule({
   declarations: [
@@ -36,10 +38,12 @@ import { RecipeService } from './recipes/services/recipe.service';
     FooterComponent,
     DropDownDirective,
     DefaultRecipeComponent,
+    RecipeCreateComponent,
     RecipeEditComponent,
+    LoadingComponent,
   ],
-  imports: [BrowserModule, FontAwesomeModule, ReactiveFormsModule, AppRoutingModule],
-  providers: [ShoppingListService, IngredientsService, CommonFunctionsService, RecipeService],
+  imports: [BrowserModule, FontAwesomeModule, ReactiveFormsModule, AppRoutingModule, HttpClientModule],
+  providers: [ShoppingListService, RecipeService, RecipeHttpService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

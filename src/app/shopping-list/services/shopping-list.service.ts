@@ -1,94 +1,67 @@
 import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-import { IngredientsService } from '../../shared/services/ingredients.service';
-import { CommonFunctionsService } from '../../shared/services/common-functions.service';
-
-import { ShoppingListIngredient } from '../models/shopping-list-ingredient.model';
-import { Ingredient } from '../../shared/models/ingredient.model';
+import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { RecipeIngredient } from 'src/app/recipes/models/recipe-ingredient.model';
 
 @Injectable()
 export class ShoppingListService {
-  private shoppingListIngredients: ShoppingListIngredient[] = [];
+  private shoppingListIngredients: ShoppingListIngredient[];
 
   public shoppingListIngredientsChanged = new Subject<ShoppingListIngredient[]>();
   public shoppingListIngredientEditing = new Subject<number>();
 
-  constructor(private ingredientsService: IngredientsService, private commonFunctionsService: CommonFunctionsService) {
-    ingredientsService.getTheFirstTwoItems().map(item => {
-      this.shoppingListIngredients.push(
-        new ShoppingListIngredient(item.id, item.name, commonFunctionsService.generateRandomAmount(1, 20))
-      );
-    });
+  constructor() {
+    this.shoppingListIngredients = [];
   }
 
   public getShoppingListIngredients(): ShoppingListIngredient[] {
-    return this.shoppingListIngredients.slice();
+    return this.shoppingListIngredients;
   }
 
-  public getShoppingListIngredientById(id: number): ShoppingListIngredient {
-    return this.shoppingListIngredients.find(x => x.id === id);
+  public getShoppingListIngredientById(arrayIndex: number): ShoppingListIngredient {
+    return this.shoppingListIngredients[arrayIndex];
   }
 
   public addIngredientsToShoppingList(ingredients: RecipeIngredient[]): void {
     ingredients.forEach(item => {
-      this.addIngredientToShoppingList(new ShoppingListIngredient(item.id, item.name, item.amount));
+      this.addIngredientToShoppingList(new ShoppingListIngredient(item.name, item.amount));
     });
 
-    this.shoppingListIngredientsChanged.next(this.getShoppingListIngredients());
+    this.shoppingListIngredientsChanged.next(this.shoppingListIngredients);
   }
 
   public addIngredientToShoppingList(shoppingListIngredient: ShoppingListIngredient): void {
     const shoppingListIngredientIndex = this.getShoppingListIngredientIndexByName(shoppingListIngredient.name);
 
     if (shoppingListIngredientIndex !== -1) {
-      const updatedShoppingListIngredient = this.getShoppingListIngredientByIndex(shoppingListIngredientIndex);
-      updatedShoppingListIngredient.amount += shoppingListIngredient.amount;
-
-      this.shoppingListIngredients[shoppingListIngredientIndex] = updatedShoppingListIngredient;
+      this.shoppingListIngredients[shoppingListIngredientIndex].amount += shoppingListIngredient.amount;
     } else {
-      const ingredient = this.ingredientsService.addIngredient(new Ingredient(null, shoppingListIngredient.name));
-      shoppingListIngredient.id = ingredient.id;
-
       this.shoppingListIngredients.push(shoppingListIngredient);
     }
 
-    this.shoppingListIngredientsChanged.next(this.getShoppingListIngredients());
+    this.shoppingListIngredientsChanged.next(this.shoppingListIngredients);
   }
 
-  public updateIngredientInShoppingList(shoppingListIngredient: ShoppingListIngredient): void {
-    const updatedIngredientIndex = this.getShoppingListIngredientIndexById(shoppingListIngredient.id);
+  public updateIngredientInShoppingList(updatedElement: { arrayIndex: number; name: string; amount: number }): void {
+    this.shoppingListIngredients[updatedElement.arrayIndex] = new ShoppingListIngredient(
+      updatedElement.name,
+      updatedElement.amount
+    );
 
-    if (updatedIngredientIndex !== -1) {
-      this.shoppingListIngredients[updatedIngredientIndex] = shoppingListIngredient;
-
-      this.shoppingListIngredientsChanged.next(this.getShoppingListIngredients());
-    }
+    this.shoppingListIngredientsChanged.next(this.shoppingListIngredients);
   }
 
-  public deleteIngredientFromShoppingList(id: number): void {
-    const deleteIngredientIndex = this.getShoppingListIngredientIndexById(id);
+  public deleteIngredientFromShoppingList(arrayIndex: number): void {
+    this.shoppingListIngredients.splice(arrayIndex, 1);
 
-    if (deleteIngredientIndex !== -1) {
-      this.shoppingListIngredients.splice(deleteIngredientIndex, 1);
-
-      this.shoppingListIngredientsChanged.next(this.getShoppingListIngredients());
-    }
+    this.shoppingListIngredientsChanged.next(this.shoppingListIngredients);
   }
 
   //#region PRIVATE Helper Methods
 
   private getShoppingListIngredientIndexByName(name: string): number {
     return this.shoppingListIngredients.findIndex(x => x.name.toLowerCase().trim() === name.toLowerCase().trim());
-  }
-
-  private getShoppingListIngredientIndexById(id: number): number {
-    return this.shoppingListIngredients.findIndex(x => x.id === id);
-  }
-
-  private getShoppingListIngredientByIndex(index: number): ShoppingListIngredient {
-    return this.shoppingListIngredients[index];
   }
 
   //#endregion

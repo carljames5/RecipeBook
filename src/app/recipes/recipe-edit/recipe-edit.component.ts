@@ -1,14 +1,13 @@
 import { faSave, faPlus, faRedoAlt, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 import { RecipeService } from '../services/recipe.service';
-import { RecipeFormValidator } from './validators/recipe-form-validators';
-
-import { Recipe } from '../models/recipe.model';
 import { RecipeIngredient } from '../models/recipe-ingredient.model';
+import { RecipeFormValidator } from '../validators/recipe-form-validators';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -16,7 +15,10 @@ import { RecipeIngredient } from '../models/recipe-ingredient.model';
   styleUrls: ['./recipe-edit.component.scss'],
   providers: [RecipeFormValidator],
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnDestroy {
+  private recipeGetByIdResolveSubscription: Subscription;
+  private recipeUpdatedSubscription: Subscription;
+
   public plusIcon: IconDefinition = faPlus;
   public saveIcon: IconDefinition = faSave;
   public cancelIcon: IconDefinition = faRedoAlt;
@@ -26,16 +28,24 @@ export class RecipeEditComponent implements OnInit {
 
   //#region GETTERS
 
+  public recipeId(): AbstractControl {
+    return this.recipeForm.get('id');
+  }
+
+  public recipeName(): AbstractControl {
+    return this.recipeForm.get('name');
+  }
+
   public get ingredients(): FormArray {
     return <FormArray>this.recipeForm.get('ingredients');
   }
 
-  public ingredientName(index: number) {
-    return this.ingredients.at(index).get('ingredientName');
+  public ingredientName(index: number): AbstractControl {
+    return this.ingredients.at(index).get('name');
   }
 
-  public ingredientAmount(index: number) {
-    return this.ingredients.at(index).get('ingredientAmount');
+  public ingredientAmount(index: number): AbstractControl {
+    return this.ingredients.at(index).get('amount');
   }
 
   //#endregion
@@ -48,19 +58,40 @@ export class RecipeEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let recipeId: number;
-
     this.route.params.subscribe((params: Params) => {
-      recipeId = +params['id'];
+      this.recipeService.getRecipeById(+params['id']);
     });
 
-    if (recipeId) {
-      const selectedRecipe: Recipe = this.recipeService.getRecipeById(recipeId);
+    this.recipeGetByIdResolveSubscription = this.recipeService.recipeGetByIdResolve.subscribe(recipe => {
+      this.recipeForm = new FormGroup({
+        id: new FormControl(recipe.id),
+        name: new FormControl(recipe.name, [Validators.required]),
+        imagePath: new FormControl(recipe.imagePath, [Validators.required]),
+        description: new FormControl(recipe.description, [Validators.required]),
+        ingredients: this.initRecipeIngredientsFormArray(recipe.ingredients),
+      });
 
-      this.initRecipeForm(selectedRecipe);
-    } else {
-      this.initRecipeForm();
-    }
+      this.recipeForm.controls['name'].setAsyncValidators(
+        this.recipeFormValidator.recipeNameValidator(this.recipeId(), this.recipeName())
+      );
+    });
+
+    this.recipeUpdatedSubscription = this.recipeService.recipeUpdated.subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.recipeGetByIdResolveSubscription.unsubscribe();
+    this.recipeUpdatedSubscription.unsubscribe();
+  }
+
+  public onUpdateRecipe(): void {
+    this.recipeService.updateRecipe(this.recipeForm.value);
+  }
+
+  public onCancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   public onAddNewRecipeIngredient() {
@@ -73,38 +104,9 @@ export class RecipeEditComponent implements OnInit {
     }
   }
 
-  public onCreateOrEditRecipe(): void {
-    const recipeFormValue: any = this.recipeForm.value;
+  // #region PRIVATE Helper Methods
 
-    if (this.recipeForm.value.id !== null) {
-      this.recipeService.updateRecipe(recipeFormValue);
-    } else {
-      this.recipeService.createRecipe(recipeFormValue);
-    }
-
-    this.router.navigate(['../'], { relativeTo: this.route });
-  }
-
-  public onCancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
-  }
-
-  // #region PRIVATE RecipeForm Initializer Methods
-
-  private initRecipeForm(recipe: Recipe = null): void {
-    this.recipeForm = new FormGroup(
-      {
-        id: new FormControl(recipe?.id),
-        name: new FormControl(recipe?.name, Validators.required),
-        imagePath: new FormControl(recipe?.imagePath, Validators.required),
-        description: new FormControl(recipe?.description, Validators.required),
-        ingredients: this.initRecipeIngredientsFormArray(recipe?.ingredients),
-      },
-      this.recipeFormValidator.ingredientNameIsExistValidator('id', 'name')
-    );
-  }
-
-  private initRecipeIngredientsFormArray(recipeIngredients: RecipeIngredient[] = null): FormArray {
+  private initRecipeIngredientsFormArray(recipeIngredients: RecipeIngredient[]): FormArray {
     const recipeIngredientsFormArray: FormArray = new FormArray([]);
 
     if (recipeIngredients) {
@@ -118,9 +120,9 @@ export class RecipeEditComponent implements OnInit {
 
   private createNewRecipeIngredientFormGroup(recipeIngredient: RecipeIngredient = null): FormGroup {
     return new FormGroup({
-      ingredientId: new FormControl(recipeIngredient?.id),
-      ingredientName: new FormControl(recipeIngredient?.name, Validators.required),
-      ingredientAmount: new FormControl(recipeIngredient?.amount, [
+      id: new FormControl(recipeIngredient?.id),
+      name: new FormControl(recipeIngredient?.name, Validators.required),
+      amount: new FormControl(recipeIngredient?.amount, [
         Validators.required,
         this.recipeFormValidator.ingredientAmountValidator,
         this.recipeFormValidator.maxIngredientAmountValueValidator,

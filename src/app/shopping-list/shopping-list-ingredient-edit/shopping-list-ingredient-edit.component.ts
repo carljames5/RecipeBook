@@ -1,4 +1,5 @@
 import { faPlus, faTrashAlt, faSyncAlt, IconDefinition, faEraser } from '@fortawesome/free-solid-svg-icons';
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -19,20 +20,12 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   public clearIcon: IconDefinition = faEraser;
   public updateIcon: IconDefinition = faSyncAlt;
 
-  public shoppingListIngredientForm: FormGroup = new FormGroup({
-    id: new FormControl(null),
-    name: new FormControl(null, Validators.required),
-    amount: new FormControl(null, [
-      Validators.required,
-      ShoppingListIngredientFormValidator.amountValidator,
-      ShoppingListIngredientFormValidator.maxAmountValueValidator,
-    ]),
-  });
+  public shoppingListIngredientForm: FormGroup;
 
   //#region GETTERS
 
-  public get id(): AbstractControl {
-    return this.shoppingListIngredientForm.get('id');
+  public get arrayIndex(): AbstractControl {
+    return this.shoppingListIngredientForm.get('arrayIndex');
   }
 
   public get name(): AbstractControl {
@@ -45,15 +38,25 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
 
   //#endregion
 
-  constructor(private shoppingListService: ShoppingListService) {}
+  constructor(private shoppingListService: ShoppingListService) {
+    this.shoppingListIngredientForm = new FormGroup({
+      arrayIndex: new FormControl(null),
+      name: new FormControl(null, [Validators.required]),
+      amount: new FormControl(null, [
+        Validators.required,
+        ShoppingListIngredientFormValidator.amountValidator,
+        ShoppingListIngredientFormValidator.maxAmountValueValidator,
+      ]),
+    });
+  }
 
   public ngOnInit(): void {
     this.shoppingListIngredientEditingSubscript = this.shoppingListService.shoppingListIngredientEditing.subscribe(
-      id => {
-        const selectedIngredient = this.shoppingListService.getShoppingListIngredientById(id);
+      arrayIndex => {
+        const selectedIngredient = this.shoppingListService.getShoppingListIngredientById(arrayIndex);
 
         this.shoppingListIngredientForm.setValue({
-          id: selectedIngredient.id,
+          arrayIndex: arrayIndex,
           name: selectedIngredient.name,
           amount: selectedIngredient.amount,
         });
@@ -66,26 +69,22 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   }
 
   public onCreateOrUpdateItem(): void {
-    if (this.id.value) {
+    if (this.arrayIndex.value !== null && this.arrayIndex.value !== undefined) {
       this.shoppingListService.updateIngredientInShoppingList(this.shoppingListIngredientForm.value);
     } else {
       this.shoppingListService.addIngredientToShoppingList(this.shoppingListIngredientForm.value);
     }
 
-    this.shoppingEditFormReset();
+    this.onClear();
   }
 
   public onClear(): void {
-    this.shoppingEditFormReset();
+    this.shoppingListIngredientForm.reset();
   }
 
   public onDelete(): void {
-    this.shoppingListService.deleteIngredientFromShoppingList(this.id.value);
+    this.shoppingListService.deleteIngredientFromShoppingList(this.arrayIndex.value);
 
-    this.shoppingEditFormReset();
-  }
-
-  private shoppingEditFormReset(): void {
-    this.shoppingListIngredientForm.reset();
+    this.onClear();
   }
 }

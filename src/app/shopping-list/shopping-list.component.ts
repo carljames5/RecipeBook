@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ShoppingListService } from './services/shopping-list.service';
-import { ShoppingListIngredient } from './models/shopping-list-ingredient.model';
+import { ShoppingListIngredient } from './models/shopping-list.model';
 
 @Component({
   selector: 'app-shopping-list',
@@ -20,7 +20,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingListIngredients = this.shoppingListService.getShoppingListIngredients();
 
     this.shoppingListIngredientsChangedSubscription = this.shoppingListService.shoppingListIngredientsChanged.subscribe(
-      (shoppingListIngredients: ShoppingListIngredient[]) => (this.shoppingListIngredients = shoppingListIngredients)
+      (shoppingListIngredients: ShoppingListIngredient[]) => {
+        this.shoppingListIngredients = shoppingListIngredients;
+      }
     );
   }
 
@@ -28,7 +30,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingListIngredientsChangedSubscription.unsubscribe();
   }
 
-  public onEditItem(id: number): void {
-    this.shoppingListService.shoppingListIngredientEditing.next(id);
+  public onEditItem(arrayIndex: number): void {
+    this.shoppingListService.shoppingListIngredientEditing.next(arrayIndex);
   }
 }

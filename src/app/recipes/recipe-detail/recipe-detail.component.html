@@ -1,4 +1,4 @@
-<div id="recipe-detail">
+<div id="recipe-detail" *ngIf="recipe; else loading">
   <div id="recipe-header" class="d-flex justify-content-center">
     <div class="p-2">
       <span>
@@ -70,3 +70,7 @@
     </ul>
   </div>
 </div>
+
+<ng-template #loading>
+  <app-loading loadingClass="recipe-details-block-loading"></app-loading>
+</ng-template>
