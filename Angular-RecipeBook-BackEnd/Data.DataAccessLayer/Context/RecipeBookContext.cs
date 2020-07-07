@@ -1,9 +1,10 @@
 ﻿using Data.DataAccessLayer.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.DataAccessLayer.Context
 {
-    public class RecipeBookContext : DbContext
+    public class RecipeBookContext : IdentityDbContext<RecipeBookAppUser, RecipeBookAppRole, string>
     {
         public RecipeBookContext(DbContextOptions options) : base(options)
         { }
@@ -22,6 +23,8 @@ namespace Data.DataAccessLayer.Context
                 .HasOne(ri => ri.Ingredient)
                 .WithMany(i => i.RecipeIngredients)
                 .HasForeignKey(ri => ri.IngredientId);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         #region DbSets

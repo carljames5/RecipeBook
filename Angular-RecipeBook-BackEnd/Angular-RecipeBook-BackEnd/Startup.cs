@@ -28,6 +28,7 @@ namespace Angular_RecipeBook_BackEnd
             services.AddDbContext<RecipeBookContext>(options =>
                 options.UseSqlite(inMemorySqlite));
 
+            services.ConfigureAuthService();
             services.ConfiguraCoreModules();
             services.ConfigureBusinessEngines();
 
