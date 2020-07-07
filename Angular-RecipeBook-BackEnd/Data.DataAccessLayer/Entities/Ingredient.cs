@@ -13,5 +13,13 @@ namespace Data.DataAccessLayer.Entities
         public string Name { get; set; }
 
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+
+        public ICollection<ShoppingList> ShoppingList { get; set; }
+
+        public Ingredient()
+        {
+            RecipeIngredients = new HashSet<RecipeIngredient>();
+            ShoppingList = new HashSet<ShoppingList>();
+        }
     }
 }

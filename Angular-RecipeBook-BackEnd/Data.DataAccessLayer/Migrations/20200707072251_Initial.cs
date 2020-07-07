@@ -183,6 +183,31 @@ namespace Data.DataAccessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShoppingList",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    IngredientId = table.Column<int>(nullable: false),
+                    Amount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingList", x => new { x.UserId, x.IngredientId });
+                    table.ForeignKey(
+                        name: "FK_ShoppingList_Ingredient_IngredientId",
+                        column: x => x.IngredientId,
+                        principalTable: "Ingredient",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShoppingList_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RecipeIngredient",
                 columns: table => new
                 {
@@ -248,6 +273,11 @@ namespace Data.DataAccessLayer.Migrations
                 name: "IX_RecipeIngredient_IngredientId",
                 table: "RecipeIngredient",
                 column: "IngredientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingList_IngredientId",
+                table: "ShoppingList",
+                column: "IngredientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -271,16 +301,19 @@ namespace Data.DataAccessLayer.Migrations
                 name: "RecipeIngredient");
 
             migrationBuilder.DropTable(
+                name: "ShoppingList");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Recipe");
 
             migrationBuilder.DropTable(
                 name: "Ingredient");
 
             migrationBuilder.DropTable(
-                name: "Recipe");
+                name: "AspNetUsers");
         }
     }
 }

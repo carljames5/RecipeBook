@@ -24,6 +24,19 @@ namespace Data.DataAccessLayer.Context
                 .WithMany(i => i.RecipeIngredients)
                 .HasForeignKey(ri => ri.IngredientId);
 
+            modelBuilder.Entity<ShoppingList>()
+                .HasKey(sl => new { sl.UserId, sl.IngredientId });
+
+            modelBuilder.Entity<ShoppingList>()
+                .HasOne(sl => sl.User)
+                .WithMany(u => u.ShoppingList)
+                .HasForeignKey(sl => sl.UserId);
+
+            modelBuilder.Entity<ShoppingList>()
+                .HasOne(sl => sl.Ingredient)
+                .WithMany(i => i.ShoppingList)
+                .HasForeignKey(sl => sl.IngredientId);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -34,6 +47,8 @@ namespace Data.DataAccessLayer.Context
         public DbSet<Ingredient> Ingredient { get; set; }
 
         public DbSet<RecipeIngredient> RecipeIngredient { get; set; }
+
+        public DbSet<ShoppingList> ShoppingList { get; set; }
 
         #endregion
     }

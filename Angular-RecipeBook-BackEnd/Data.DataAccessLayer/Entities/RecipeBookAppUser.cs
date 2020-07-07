@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace Data.DataAccessLayer.Entities
 {
@@ -7,5 +8,12 @@ namespace Data.DataAccessLayer.Entities
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public ICollection<ShoppingList> ShoppingList { get; set; }
+
+        public RecipeBookAppUser()
+        {
+            ShoppingList = new HashSet<ShoppingList>();
+        }
     }
 }

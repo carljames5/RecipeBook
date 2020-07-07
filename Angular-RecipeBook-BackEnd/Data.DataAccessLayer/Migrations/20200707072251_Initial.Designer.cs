@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.DataAccessLayer.Migrations
 {
     [DbContext(typeof(RecipeBookContext))]
-    [Migration("20200706184405_Initial")]
+    [Migration("20200707072251_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,6 +170,24 @@ namespace Data.DataAccessLayer.Migrations
                     b.ToTable("RecipeIngredient");
                 });
 
+            modelBuilder.Entity("Data.DataAccessLayer.Entities.ShoppingList", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("ShoppingList");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -283,6 +301,21 @@ namespace Data.DataAccessLayer.Migrations
                     b.HasOne("Data.DataAccessLayer.Entities.Recipe", "Recipe")
                         .WithMany("RecipeIngredients")
                         .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Data.DataAccessLayer.Entities.ShoppingList", b =>
+                {
+                    b.HasOne("Data.DataAccessLayer.Entities.Ingredient", "Ingredient")
+                        .WithMany("ShoppingList")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.DataAccessLayer.Entities.RecipeBookAppUser", "User")
+                        .WithMany("ShoppingList")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
