@@ -2,9 +2,8 @@
 
 namespace Data.DataAccessLayer.Entities
 {
-    public class RecipeBookAppRole : IdentityRole<string>
+    public class RecipeBookAppRole : IdentityRole<int>
     {
-        public RecipeBookAppRole(string name) : base()
-        { }
+        
     }
 }

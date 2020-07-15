@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.DataAccessLayer.Context
 {
-    public class RecipeBookContext : IdentityDbContext<RecipeBookAppUser, RecipeBookAppRole, string>
+    public class RecipeBookContext : IdentityDbContext<RecipeBookAppUser, RecipeBookAppRole, int>
     {
         public RecipeBookContext(DbContextOptions options) : base(options)
         { }

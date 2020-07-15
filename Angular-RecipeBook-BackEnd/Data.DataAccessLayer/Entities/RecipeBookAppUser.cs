@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Data.DataAccessLayer.Entities
 {
-    public class RecipeBookAppUser : IdentityUser<string>, IEntity
+    public class RecipeBookAppUser : IdentityUser<int>, IEntity
     {
         public string FirstName { get; set; }
 
