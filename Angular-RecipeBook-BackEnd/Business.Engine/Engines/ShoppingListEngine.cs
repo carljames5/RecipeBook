@@ -28,12 +28,8 @@ namespace Business.Engine.Engines
 
         public async Task SaveShoppingList(List<SaveShoppingListIngredienttemDto> saveShoppingListIngredients)
         {
-            RecipeBookAppUser authenticatedUser = await _userManager.FindByNameAsync("admin");
-
-            RecipeBookAppUser asd = _unitOfWork.GetRepository<RecipeBookAppUser>().Query()
-                .FirstOrDefault(x => x.UserName == "admin");
-
-            var result = await _signInManager.PasswordSignInAsync("admin", "techadmin2020", false, false);
+            RecipeBookAppUser authenticatedUser = _unitOfWork.GetRepository<RecipeBookAppUser>().Query()
+                .FirstOrDefault(x => x.NormalizedUserName == "admin".ToUpper());
 
             await RemoveExistingShoppingList(authenticatedUser);
 
