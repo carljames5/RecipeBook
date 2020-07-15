@@ -54,6 +54,13 @@ namespace Core.ApplicationCore.Repository
             return entity;
         }
 
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            await _context.Set<TEntity>().AddRangeAsync(entities);
+
+            await _unitOfWork.Commit();
+        }
+
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             if (entity == null)

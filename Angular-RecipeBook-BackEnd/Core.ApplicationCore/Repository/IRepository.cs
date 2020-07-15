@@ -21,11 +21,14 @@ namespace Core.ApplicationCore.Repository
 
         Task<TEntity> AddAsync(TEntity entity);
 
+        Task AddRangeAsync(IEnumerable<TEntity> entities);
+
         Task<TEntity> UpdateAsync(TEntity entity);
 
         Task<int> DeleteAsync(TEntity entity);
 
         Task<int> RemoveRangeAsync(IEnumerable<TEntity> entities);
+
 
         IEnumerable<TEntity> Filter(
             Expression<Func<TEntity, bool>> filterPredicate = null,

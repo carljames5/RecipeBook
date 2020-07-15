@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { RecipeIngredient } from 'src/app/recipes/models/recipe-ingredient.model';
+import { SaveShoppingListRequestModel } from '../models/request-models/saveShoppingListRequestModel.model';
+import { SaveShoppingListIngredientRequestModel } from '../models/request-models/saveShoppingListIngredientRequestModel.model';
+import { ShoppingListHttpService } from './shopping-list-http.service';
 
 @Injectable()
 export class ShoppingListService {
@@ -11,7 +14,7 @@ export class ShoppingListService {
   public shoppingListIngredientsChanged = new Subject<ShoppingListIngredient[]>();
   public shoppingListIngredientEditing = new Subject<number>();
 
-  constructor() {
+  constructor(private shoppingListHttpService: ShoppingListHttpService) {
     this.shoppingListIngredients = [];
   }
 
@@ -56,6 +59,18 @@ export class ShoppingListService {
     this.shoppingListIngredients.splice(arrayIndex, 1);
 
     this.shoppingListIngredientsChanged.next(this.shoppingListIngredients);
+  }
+
+  public saveShoppingListIngredients() {
+    const saveShoppingListIngredientRequestModel: SaveShoppingListIngredientRequestModel[] = this.shoppingListIngredients.map(
+      function (shoppingListIngredient: ShoppingListIngredient) {
+        return { name: shoppingListIngredient.name, amount: shoppingListIngredient.amount };
+      }
+    );
+
+    this.shoppingListHttpService.saveShoppingList(saveShoppingListIngredientRequestModel).subscribe(response => {
+      console.log(response);
+    });
   }
 
   //#region PRIVATE Helper Methods

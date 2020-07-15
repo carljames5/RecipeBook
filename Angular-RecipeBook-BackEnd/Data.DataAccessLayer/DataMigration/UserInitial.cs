@@ -18,11 +18,14 @@ namespace Data.DataAccessLayer.DataMigration
             RecipeBookAppUser user = new RecipeBookAppUser
             {
                 Id = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
                 FirstName = "Administrator",
                 LastName = "Technical",
                 Email = "admin@recipebook.com",
                 UserName = "admin",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                NormalizedUserName = "admin"
             };
 
             if (!context.Users.Any(x => x.UserName.ToLower() == user.UserName.ToLower()))

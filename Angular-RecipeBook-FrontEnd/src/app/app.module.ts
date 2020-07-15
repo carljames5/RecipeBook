@@ -24,6 +24,7 @@ import { RecipeService } from './recipes/services/recipe.service';
 import { RecipeHttpService } from './recipes/services/recipe-http.service';
 import { LoadingComponent } from './shared/components/loading/loading.component';
 import { RecipeCreateComponent } from './recipes/recipe-create/recipe-create.component';
+import { ShoppingListHttpService } from './shopping-list/services/shopping-list-http.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { RecipeCreateComponent } from './recipes/recipe-create/recipe-create.com
     LoadingComponent,
   ],
   imports: [BrowserModule, FontAwesomeModule, ReactiveFormsModule, AppRoutingModule, HttpClientModule],
-  providers: [ShoppingListService, RecipeService, RecipeHttpService],
+  providers: [ShoppingListService, RecipeService, RecipeHttpService, ShoppingListHttpService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

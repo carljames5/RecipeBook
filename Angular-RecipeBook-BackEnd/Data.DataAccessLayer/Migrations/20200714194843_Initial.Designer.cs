@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.DataAccessLayer.Migrations
 {
     [DbContext(typeof(RecipeBookContext))]
-    [Migration("20200707072251_Initial")]
+    [Migration("20200714194843_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Data.DataAccessLayer.Entities.Core;
 using Microsoft.AspNetCore.Identity;
 
 namespace Data.DataAccessLayer.Entities
 {
-    public class RecipeBookAppUser : IdentityUser<string>
+    public class RecipeBookAppUser : IdentityUser<string>, IEntity
     {
         public string FirstName { get; set; }
 
