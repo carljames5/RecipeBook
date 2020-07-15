@@ -6,7 +6,7 @@ namespace Data.DataAccessLayer.Entities
     public class ShoppingList : IEntity
     {
         [Required]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         public RecipeBookAppUser User { get; set; }
 

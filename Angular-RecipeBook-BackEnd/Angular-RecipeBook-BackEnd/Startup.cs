@@ -36,6 +36,8 @@ namespace Angular_RecipeBook_BackEnd
             services.AddControllers();
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,6 +52,13 @@ namespace Angular_RecipeBook_BackEnd
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(o =>
+            {
+                o.SwaggerEndpoint("/swagger/v1/swagger.json", "Angular RecipeBook API v1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
