@@ -1,11 +1,10 @@
 import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
+import { ShoppingListHttpService } from './shopping-list-http.service';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { RecipeIngredient } from 'src/app/recipes/models/recipe-ingredient.model';
-import { SaveShoppingListRequestModel } from '../models/request-models/saveShoppingListRequestModel.model';
 import { SaveShoppingListIngredientRequestModel } from '../models/request-models/saveShoppingListIngredientRequestModel.model';
-import { ShoppingListHttpService } from './shopping-list-http.service';
 
 @Injectable()
 export class ShoppingListService {
@@ -13,6 +12,7 @@ export class ShoppingListService {
 
   public shoppingListIngredientsChanged = new Subject<ShoppingListIngredient[]>();
   public shoppingListIngredientEditing = new Subject<number>();
+  public shoppingListIngredientSaved = new Subject();
 
   constructor(private shoppingListHttpService: ShoppingListHttpService) {
     this.shoppingListIngredients = [];
@@ -68,9 +68,14 @@ export class ShoppingListService {
       }
     );
 
-    this.shoppingListHttpService.saveShoppingList(saveShoppingListIngredientRequestModel).subscribe(response => {
-      console.log(response);
-    });
+    this.shoppingListHttpService.saveShoppingList(saveShoppingListIngredientRequestModel).subscribe(
+      response => {
+        this.shoppingListIngredientSaved.next();
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   //#region PRIVATE Helper Methods

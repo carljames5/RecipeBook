@@ -26,6 +26,9 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
 import { RecipeCreateComponent } from './recipes/recipe-create/recipe-create.component';
 import { ShoppingListHttpService } from './shopping-list/services/shopping-list-http.service';
 
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +46,15 @@ import { ShoppingListHttpService } from './shopping-list/services/shopping-list-
     RecipeEditComponent,
     LoadingComponent,
   ],
-  imports: [BrowserModule, FontAwesomeModule, ReactiveFormsModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({ positionClass: 'toast-bottom-full-width', closeButton: true }),
+  ],
   providers: [ShoppingListService, RecipeService, RecipeHttpService, ShoppingListHttpService],
   bootstrap: [AppComponent],
 })
