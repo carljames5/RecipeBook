@@ -7,26 +7,20 @@ using Core.ApplicationCore.UnitOfWork;
 using Core.Common.DTOs.ShoppingList;
 using Data.DataAccessLayer.Context;
 using Data.DataAccessLayer.Entities;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Engine.Engines
 {
     public class ShoppingListEngine : IShoppingListEngine
     {
-        private readonly UserManager<RecipeBookAppUser> _userManager;
-
-        private readonly SignInManager<RecipeBookAppUser> _signInManager;
-
         private readonly IUnitOfWork<RecipeBookContext> _unitOfWork;
 
-        public ShoppingListEngine(UserManager<RecipeBookAppUser> userManager, SignInManager<RecipeBookAppUser> signInManager, IUnitOfWork<RecipeBookContext> unitOfWork)
+        public ShoppingListEngine(IUnitOfWork<RecipeBookContext> unitOfWork)
         {
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            _signInManager = signInManager;
         }
 
-        public async Task SaveShoppingList(List<SaveShoppingListIngredienttemDto> saveShoppingListIngredients)
+        public async Task SaveShoppingList(List<SaveShoppingListIngredientItemDto> saveShoppingListIngredients)
         {
             RecipeBookAppUser authenticatedUser = _unitOfWork.GetRepository<RecipeBookAppUser>().Query()
                 .FirstOrDefault(x => x.NormalizedUserName == "admin".ToUpper());
@@ -37,6 +31,20 @@ namespace Business.Engine.Engines
                 await InitialShoppingListIngredients(saveShoppingListIngredients, authenticatedUser);
 
             await _unitOfWork.GetRepository<ShoppingList>().AddRangeAsync(newShoppingList);
+        }
+
+        public List<FetchShoppingListIngredientItemDto> FetchShoppingList()
+        {
+            return _unitOfWork.GetRepository<ShoppingList>()
+                .Query()
+                .Include(x => x.User)
+                .Include(x => x.Ingredient)
+                .Where(x => x.User.NormalizedUserName == "admin".ToUpper())
+                .Select(x => new FetchShoppingListIngredientItemDto
+                {
+                    Name = x.Ingredient.Name,
+                    Amount = x.Amount
+                }).ToList();
         }
 
         #region PRIVATE Helper Methods
@@ -51,13 +59,13 @@ namespace Business.Engine.Engines
             await _unitOfWork.GetRepository<ShoppingList>().RemoveRangeAsync(existingShoppingList);
         }
 
-        private async Task<ICollection<ShoppingList>> InitialShoppingListIngredients(List<SaveShoppingListIngredienttemDto> shoppingListIngredients, RecipeBookAppUser authenticatedUser)
+        private async Task<ICollection<ShoppingList>> InitialShoppingListIngredients(List<SaveShoppingListIngredientItemDto> shoppingListIngredients, RecipeBookAppUser authenticatedUser)
         {
             List<ShoppingList> result = new List<ShoppingList>();
 
             List<Ingredient> existingIngredients = GetExistingIngredients(shoppingListIngredients);
 
-            foreach (SaveShoppingListIngredienttemDto currentIngredient in shoppingListIngredients)
+            foreach (SaveShoppingListIngredientItemDto currentIngredient in shoppingListIngredients)
             {
                 Ingredient insertedIngredient =
                     existingIngredients.FirstOrDefault(x => x.Name.ToLower() == currentIngredient.Name.ToLower());
@@ -87,7 +95,7 @@ namespace Business.Engine.Engines
                 .ToList();
         }
 
-        private List<Ingredient> GetExistingIngredients(IEnumerable<SaveShoppingListIngredienttemDto> shoppingLIstIngredients)
+        private List<Ingredient> GetExistingIngredients(IEnumerable<SaveShoppingListIngredientItemDto> shoppingLIstIngredients)
         {
             IEnumerable<string> insertedIngredientNames = shoppingLIstIngredients.Select(x => x.Name.ToLower());
 

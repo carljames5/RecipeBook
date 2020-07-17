@@ -1,6 +1,6 @@
 ﻿namespace Core.Common.DTOs.ShoppingList
 {
-    public class SaveShoppingListIngredienttemDto
+    public class ShoppingListIngredientBaseDto
     {
         public string Name { get; set; }
 

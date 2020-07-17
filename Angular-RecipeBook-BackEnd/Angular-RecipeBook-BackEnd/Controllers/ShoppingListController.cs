@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Angular_RecipeBook_BackEnd.Models.ShoppingList.RequestModels;
+using Angular_RecipeBook_BackEnd.Models.ShoppingList.ResponseModels;
 using AutoMapper;
 using Business.Engine.Interfaces;
 using Core.Common.DTOs.ShoppingList;
@@ -26,9 +27,20 @@ namespace Angular_RecipeBook_BackEnd.Controllers
         public IActionResult SaveShoppingList([FromBody] SaveShoppingListRequestModel requestModel)
         {
             _shoppingListEngine.SaveShoppingList(
-                _mapper.Map<List<SaveShoppingListIngredienttemDto>>(requestModel.ShoppingListIngredients));
+                _mapper.Map<List<SaveShoppingListIngredientItemDto>>(requestModel.ShoppingListIngredients));
 
             return Ok();
+        }
+
+        [HttpGet("FetchShoppingList")]
+        public ActionResult<FetchShoppingListResponseModel> FetchShoppingList()
+        {
+            List<FetchShoppingListIngredientItemDto> result = _shoppingListEngine.FetchShoppingList();
+
+            return Ok(new FetchShoppingListResponseModel
+            {
+                ShoppingListIngredients = _mapper.Map<List<FetchShoppingListIngredientItemResponseModel>>(result)
+            });
         }
     }
 }
