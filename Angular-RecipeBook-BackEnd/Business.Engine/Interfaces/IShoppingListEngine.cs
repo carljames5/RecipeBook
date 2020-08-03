@@ -8,6 +8,6 @@ namespace Business.Engine.Interfaces
     {
         Task SaveShoppingList(List<SaveShoppingListIngredientItemDto> shoppingListIngredients);
 
-        List<FetchShoppingListIngredientItemDto> FetchShoppingList();
+        List<FetchShoppingListIngredientListItemDto> FetchShoppingList();
     }
 }

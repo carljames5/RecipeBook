@@ -4,7 +4,7 @@ import { ApiConsts } from 'src/app/shared/consts/api.const';
 import { SaveShoppingListRequestModel } from '../models/request-models/saveShoppingListRequestModel.model';
 import { SaveShoppingListIngredientRequestModel } from '../models/request-models/saveShoppingListIngredientRequestModel.model';
 import { Observable } from 'rxjs/internal/Observable';
-import { FetchShoppingListResponseModel } from '../models/response-models/fetchShoppingListResponseModel.model';
+import { FetchShoppingListIngredientListItemResponseModel } from '../models/response-models/fetch-shopping-list-ingredient-list-item-response.model';
 
 @Injectable()
 export class ShoppingListHttpService {
@@ -16,7 +16,9 @@ export class ShoppingListHttpService {
     return this.http.post(ApiConsts.API_URL + '/api/ShoppingList/SaveShoppingList', requestModel);
   }
 
-  public fetchShoppingList(): Observable<any> {
-    return this.http.get(ApiConsts.API_URL + '/api/ShoppingList/FetchShoppingList');
+  public fetchShoppingListIngredients(): Observable<FetchShoppingListIngredientListItemResponseModel[]> {
+    return this.http.get<FetchShoppingListIngredientListItemResponseModel[]>(
+      ApiConsts.API_URL + '/api/ShoppingList/FetchShoppingList'
+    );
   }
 }

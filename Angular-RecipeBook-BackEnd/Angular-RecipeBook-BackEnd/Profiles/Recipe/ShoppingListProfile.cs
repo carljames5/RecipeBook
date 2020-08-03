@@ -11,7 +11,7 @@ namespace Angular_RecipeBook_BackEnd.Profiles.Recipe
         {
             CreateMap<SaveShoppingListIngredientRequestModel, SaveShoppingListIngredientItemDto>();
 
-            CreateMap<FetchShoppingListIngredientItemDto, FetchShoppingListIngredientItemResponseModel>();
+            CreateMap<FetchShoppingListIngredientListItemDto, FetchShoppingListIngredientListItemResponseModel>();
         }
     }
 }

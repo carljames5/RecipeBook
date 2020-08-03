@@ -33,14 +33,11 @@ namespace Angular_RecipeBook_BackEnd.Controllers
         }
 
         [HttpGet("FetchShoppingList")]
-        public ActionResult<FetchShoppingListResponseModel> FetchShoppingList()
+        public ActionResult<FetchShoppingListIngredientListItemResponseModel> FetchShoppingList()
         {
-            List<FetchShoppingListIngredientItemDto> result = _shoppingListEngine.FetchShoppingList();
+            List<FetchShoppingListIngredientListItemDto> result = _shoppingListEngine.FetchShoppingList();
 
-            return Ok(new FetchShoppingListResponseModel
-            {
-                ShoppingListIngredients = _mapper.Map<List<FetchShoppingListIngredientItemResponseModel>>(result)
-            });
+            return Ok(_mapper.Map<List<FetchShoppingListIngredientListItemResponseModel>>(result));
         }
     }
 }

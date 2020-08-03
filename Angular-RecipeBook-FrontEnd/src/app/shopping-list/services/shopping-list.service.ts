@@ -5,7 +5,7 @@ import { ShoppingListHttpService } from './shopping-list-http.service';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { RecipeIngredient } from 'src/app/recipes/models/recipe-ingredient.model';
 import { SaveShoppingListIngredientRequestModel } from '../models/request-models/saveShoppingListIngredientRequestModel.model';
-import { FetchShoppingListResponseModel } from '../models/response-models/fetchShoppingListResponseModel.model';
+import { FetchShoppingListIngredientListItemResponseModel } from '../models/response-models/fetch-shopping-list-ingredient-list-item-response.model';
 
 @Injectable()
 export class ShoppingListService {
@@ -80,11 +80,9 @@ export class ShoppingListService {
   }
 
   public fetchShoppingListIngredients() {
-    this.shoppingListHttpService.fetchShoppingList().subscribe(
-      (response: FetchShoppingListResponseModel) => {
-        this.shoppingListIngredients = response.shoppingListIngredients.map(
-          response => new ShoppingListIngredient(response.name, response.amount)
-        );
+    this.shoppingListHttpService.fetchShoppingListIngredients().subscribe(
+      (response: FetchShoppingListIngredientListItemResponseModel[]) => {
+        this.shoppingListIngredients = response;
 
         this.shoppingListIngredientsChanged.next(this.shoppingListIngredients);
       },

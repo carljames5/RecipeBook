@@ -33,14 +33,14 @@ namespace Business.Engine.Engines
             await _unitOfWork.GetRepository<ShoppingList>().AddRangeAsync(newShoppingList);
         }
 
-        public List<FetchShoppingListIngredientItemDto> FetchShoppingList()
+        public List<FetchShoppingListIngredientListItemDto> FetchShoppingList()
         {
             return _unitOfWork.GetRepository<ShoppingList>()
                 .Query()
                 .Include(x => x.User)
                 .Include(x => x.Ingredient)
                 .Where(x => x.User.NormalizedUserName == "admin".ToUpper())
-                .Select(x => new FetchShoppingListIngredientItemDto
+                .Select(x => new FetchShoppingListIngredientListItemDto
                 {
                     Name = x.Ingredient.Name,
                     Amount = x.Amount

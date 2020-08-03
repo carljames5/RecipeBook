@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
     this.shoppingListService.saveShoppingListIngredients();
   }
 
-  onFetchShoppingList(): void {
+  onFetchShoppingListIngredients(): void {
     this.shoppingListService.fetchShoppingListIngredients();
   }
 }
