@@ -5,6 +5,7 @@ import { ShoppingListHttpService } from './shopping-list-http.service';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { RecipeIngredient } from 'src/app/recipes/models/recipe-ingredient.model';
 import { SaveShoppingListIngredientRequestModel } from '../models/request-models/saveShoppingListIngredientRequestModel.model';
+import { FetchShoppingListResponseModel } from '../models/response-models/fetchShoppingListResponseModel.model';
 
 @Injectable()
 export class ShoppingListService {
@@ -71,6 +72,21 @@ export class ShoppingListService {
     this.shoppingListHttpService.saveShoppingList(saveShoppingListIngredientRequestModel).subscribe(
       response => {
         this.shoppingListIngredientSaved.next();
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  public fetchShoppingListIngredients() {
+    this.shoppingListHttpService.fetchShoppingList().subscribe(
+      (response: FetchShoppingListResponseModel) => {
+        this.shoppingListIngredients = response.shoppingListIngredients.map(
+          response => new ShoppingListIngredient(response.name, response.amount)
+        );
+
+        this.shoppingListIngredientsChanged.next(this.shoppingListIngredients);
       },
       err => {
         console.log(err);
