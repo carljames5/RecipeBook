@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Data.DataAccessLayer.Migrations
 {
-    [DbContext(typeof(RecipeBookContext))]
+    [DbContext(typeof(RecipeBookDbContext))]
     partial class RecipeBookContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

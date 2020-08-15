@@ -7,6 +7,6 @@ namespace Data.DataAccessLayer.DataMigration.Interfaces
 {
     public interface IUserMigrationInitial
     {
-        Task SeedAsync(RecipeBookContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager);
+        Task SeedAsync(RecipeBookDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager);
     }
 }

@@ -10,9 +10,9 @@ namespace Data.DataAccessLayer.DataMigration
 {
     public class UserMigrationInitial : IUserMigrationInitial
     {
-        public async Task SeedAsync(RecipeBookContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public async Task SeedAsync(RecipeBookDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
-            if (!context.Users.Any(x => x.NormalizedUserName == "ADMIN"))
+            if (!context.Users.Any(x => x.NormalizedUserName == ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper()))
             {
                 ApplicationUser adminUser = new ApplicationUser
                 {

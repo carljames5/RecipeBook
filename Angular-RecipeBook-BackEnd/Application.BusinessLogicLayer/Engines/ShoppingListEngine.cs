@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Engine.Interfaces;
+using Application.BusinessLogicLayer.Interfaces;
 using Core.Common.DTOs.ShoppingList;
-using Data.DataAccessLayer.Context;
-using Data.DataAccessLayer.Entities;
-using Microsoft.EntityFrameworkCore;
 
-namespace Business.Engine.Engines
+namespace Application.BusinessLogicLayer.Engines
 {
     public class ShoppingListEngine : IShoppingListEngine
     {

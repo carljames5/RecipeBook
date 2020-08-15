@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Angular_RecipeBook_BackEnd.Models.ShoppingList.RequestModels;
 using Angular_RecipeBook_BackEnd.Models.ShoppingList.ResponseModels;
+using Application.BusinessLogicLayer.Interfaces;
 using AutoMapper;
-using Business.Engine.Interfaces;
 using Core.Common.DTOs.ShoppingList;
 using Microsoft.AspNetCore.Mvc;
 

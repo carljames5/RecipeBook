@@ -16,7 +16,7 @@ namespace Angular_RecipeBook_BackEnd.Core.Extensions
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
 
-                RecipeBookContext context = serviceProvider.GetRequiredService<RecipeBookContext>();
+                RecipeBookDbContext context = serviceProvider.GetRequiredService<RecipeBookDbContext>();
                 UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 RoleManager<ApplicationRole> roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 

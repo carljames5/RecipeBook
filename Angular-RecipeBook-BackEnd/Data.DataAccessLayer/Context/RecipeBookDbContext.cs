@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.DataAccessLayer.Context
 {
-    public class RecipeBookContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
+    public class RecipeBookDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
-        public RecipeBookContext(DbContextOptions options) : base(options)
+        public RecipeBookDbContext(DbContextOptions options) : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

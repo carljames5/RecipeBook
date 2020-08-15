@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.DataAccessLayer.Migrations
 {
-    [DbContext(typeof(RecipeBookContext))]
+    [DbContext(typeof(RecipeBookDbContext))]
     [Migration("20200815124608_Initial")]
     partial class Initial
     {

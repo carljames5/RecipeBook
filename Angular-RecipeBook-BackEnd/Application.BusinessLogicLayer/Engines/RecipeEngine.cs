@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Engine.Interfaces;
+using Application.BusinessLogicLayer.Interfaces;
 using Core.Common.DTOs.Recipe;
 using Core.Common.DTOs.Recipe.RequestDtos;
 using Core.Common.DTOs.Recipe.ResponseDtos;
 using Data.DataAccessLayer.Entities;
 
-namespace Business.Engine.Engines
+namespace Application.BusinessLogicLayer.Engines
 {
     public class RecipeEngine : IRecipeEngine
     {

@@ -13,13 +13,13 @@ namespace Data.DataAccessLayer.Extensions
 {
     public static class DotnetCoreBaseDbContextExtensions
     {
-        private static RecipeBookContext _context;
+        private static RecipeBookDbContext _context;
 
         private static UserManager<ApplicationUser> _userManager;
 
         private static RoleManager<ApplicationRole> _roleManager;
 
-        public static async Task InitDatabase(this RecipeBookContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public static async Task InitDatabase(this RecipeBookDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));

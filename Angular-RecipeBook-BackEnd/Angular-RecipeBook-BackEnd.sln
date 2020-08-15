@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.DataAccessLayer", "Dat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{394796FD-30CD-4C33-851C-B79FCA5B2A76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.ApplicationCore", "Core.ApplicationCore\Core.ApplicationCore.csproj", "{CE24C365-9C0B-46D6-A9E0-1E161C598657}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.ApplicationCore", "Core.ApplicationCore\Core.ApplicationCore.csproj", "{CE24C365-9C0B-46D6-A9E0-1E161C598657}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{BBD80E84-E0FD-4160-B39E-57824AE1AD97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business.Engine", "Business.Engine\Business.Engine.csproj", "{FB48C9DF-679F-41BC-8904-0707917DA4AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.BusinessLogicLayer", "Application.BusinessLogicLayer\Application.BusinessLogicLayer.csproj", "{FB48C9DF-679F-41BC-8904-0707917DA4AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Common", "Core.Common\Core.Common.csproj", "{CEE8090F-D9C9-4120-9B20-EB0D7F7D66D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Common", "Core.Common\Core.Common.csproj", "{CEE8090F-D9C9-4120-9B20-EB0D7F7D66D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

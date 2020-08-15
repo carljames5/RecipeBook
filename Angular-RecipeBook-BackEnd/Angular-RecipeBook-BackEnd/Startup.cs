@@ -21,7 +21,7 @@ namespace Angular_RecipeBook_BackEnd
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<RecipeBookContext>(options =>
+            services.AddDbContext<RecipeBookDbContext>(options =>
                 options.UseSqlServer(
                     _configuration.GetConnectionString("DevConnection")
                 )

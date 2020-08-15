@@ -7,9 +7,9 @@ namespace Data.DataAccessLayer.Context
 {
     public class RecipeBookReadOnlyDbContext
     {
-        private readonly RecipeBookContext _context;
+        private readonly RecipeBookDbContext _context;
 
-        public RecipeBookReadOnlyDbContext(RecipeBookContext context)
+        public RecipeBookReadOnlyDbContext(RecipeBookDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

@@ -1,5 +1,5 @@
-﻿using Business.Engine.Engines;
-using Business.Engine.Interfaces;
+﻿using Application.BusinessLogicLayer.Engines;
+using Application.BusinessLogicLayer.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Angular_RecipeBook_BackEnd.Core.Configurations

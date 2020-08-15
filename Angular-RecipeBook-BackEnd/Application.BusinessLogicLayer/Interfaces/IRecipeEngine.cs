@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Core.Common.DTOs.Recipe.RequestDtos;
 using Core.Common.DTOs.Recipe.ResponseDtos;
 
-namespace Business.Engine.Interfaces
+namespace Application.BusinessLogicLayer.Interfaces
 {
     public interface IRecipeEngine
     {

@@ -12,7 +12,7 @@ namespace Angular_RecipeBook_BackEnd.Core.Configurations
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<RecipeBookContext>();
+            }).AddEntityFrameworkStores<RecipeBookDbContext>();
 
             services.Configure<IdentityOptions>(options =>
             {
