@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { ShoppingListHttpService } from './shopping-list-http.service';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { RecipeIngredient } from 'src/app/recipes/models/recipe-ingredient.model';
-import { SaveShoppingListIngredientRequestModel } from '../models/request-models/saveShoppingListIngredientRequestModel.model';
 import { FetchShoppingListIngredientListItemResponseModel } from '../models/response-models/fetch-shopping-list-ingredient-list-item-response.model';
 
 @Injectable()
@@ -63,14 +62,8 @@ export class ShoppingListService {
   }
 
   public saveShoppingListIngredients() {
-    const saveShoppingListIngredientRequestModel: SaveShoppingListIngredientRequestModel[] = this.shoppingListIngredients.map(
-      function (shoppingListIngredient: ShoppingListIngredient) {
-        return { name: shoppingListIngredient.name, amount: shoppingListIngredient.amount };
-      }
-    );
-
-    this.shoppingListHttpService.saveShoppingList(saveShoppingListIngredientRequestModel).subscribe(
-      response => {
+    this.shoppingListHttpService.saveShoppingList(this.shoppingListIngredients).subscribe(
+      () => {
         this.shoppingListIngredientSaved.next();
       },
       err => {

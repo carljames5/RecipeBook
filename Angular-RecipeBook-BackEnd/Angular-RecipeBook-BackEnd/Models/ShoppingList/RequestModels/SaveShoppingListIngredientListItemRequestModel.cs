@@ -1,6 +1,6 @@
 ﻿namespace Angular_RecipeBook_BackEnd.Models.ShoppingList.RequestModels
 {
-    public class SaveShoppingListIngredientRequestModel
+    public class SaveShoppingListIngredientListItemRequestModel
     {
         public string Name { get; set; }
 

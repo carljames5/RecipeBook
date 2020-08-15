@@ -20,15 +20,16 @@ namespace Business.Engine.Engines
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public async Task SaveShoppingList(List<SaveShoppingListIngredientItemDto> saveShoppingListIngredients)
+        public async Task SaveShoppingList(SaveShoppingListIngredientListDto model)
         {
-            RecipeBookAppUser authenticatedUser = _unitOfWork.GetRepository<RecipeBookAppUser>().Query()
+            RecipeBookAppUser authenticatedUser = _unitOfWork.GetRepository<RecipeBookAppUser>()
+                .Query()
                 .FirstOrDefault(x => x.NormalizedUserName == "admin".ToUpper());
 
             await RemoveExistingShoppingList(authenticatedUser);
 
             ICollection<ShoppingList> newShoppingList =
-                await InitialShoppingListIngredients(saveShoppingListIngredients, authenticatedUser);
+                await InitialNewShoppingListIngredients(model.ShoppingListIngredientListItems, authenticatedUser);
 
             await _unitOfWork.GetRepository<ShoppingList>().AddRangeAsync(newShoppingList);
         }
@@ -51,21 +52,20 @@ namespace Business.Engine.Engines
 
         private async Task RemoveExistingShoppingList(RecipeBookAppUser authenticatedUser)
         {
-            List<ShoppingList> existingShoppingList = _unitOfWork.GetRepository<ShoppingList>()
+            IEnumerable<ShoppingList> existingShoppingList = _unitOfWork.GetRepository<ShoppingList>()
                 .Query()
                 .Where(x => x.UserId == authenticatedUser.Id)
-                .ToList();
+                .AsEnumerable();
 
             await _unitOfWork.GetRepository<ShoppingList>().RemoveRangeAsync(existingShoppingList);
         }
 
-        private async Task<ICollection<ShoppingList>> InitialShoppingListIngredients(List<SaveShoppingListIngredientItemDto> shoppingListIngredients, RecipeBookAppUser authenticatedUser)
+        private async Task<ICollection<ShoppingList>> InitialNewShoppingListIngredients(List<SaveShoppingListIngredientListItemDto> shoppingListIngredients, RecipeBookAppUser authenticatedUser)
         {
             List<ShoppingList> result = new List<ShoppingList>();
-
             List<Ingredient> existingIngredients = GetExistingIngredients(shoppingListIngredients);
 
-            foreach (SaveShoppingListIngredientItemDto currentIngredient in shoppingListIngredients)
+            foreach (SaveShoppingListIngredientListItemDto currentIngredient in shoppingListIngredients)
             {
                 Ingredient insertedIngredient =
                     existingIngredients.FirstOrDefault(x => x.Name.ToLower() == currentIngredient.Name.ToLower());
@@ -95,12 +95,13 @@ namespace Business.Engine.Engines
                 .ToList();
         }
 
-        private List<Ingredient> GetExistingIngredients(IEnumerable<SaveShoppingListIngredientItemDto> shoppingLIstIngredients)
+        private List<Ingredient> GetExistingIngredients(IEnumerable<SaveShoppingListIngredientListItemDto> shoppingListIngredients)
         {
-            IEnumerable<string> insertedIngredientNames = shoppingLIstIngredients.Select(x => x.Name.ToLower());
+            IEnumerable<string> insertedIngredientNames = shoppingListIngredients.Select(x => x.Name.ToLower());
 
             return _unitOfWork.GetRepository<Ingredient>()
-                .Filter(x => insertedIngredientNames.Contains(x.Name.ToLower()))
+                .Query()
+                .Where(x => insertedIngredientNames.Contains(x.Name.ToLower()))
                 .ToList();
         }
 

@@ -24,10 +24,10 @@ namespace Angular_RecipeBook_BackEnd.Controllers
         }
 
         [HttpPost("SaveShoppingList")]
-        public IActionResult SaveShoppingList([FromBody] SaveShoppingListRequestModel requestModel)
+        public IActionResult SaveShoppingList([FromBody] SaveShoppingListIngredientListRequestModel requestModel)
         {
             _shoppingListEngine.SaveShoppingList(
-                _mapper.Map<List<SaveShoppingListIngredientItemDto>>(requestModel.ShoppingListIngredients));
+                _mapper.Map<SaveShoppingListIngredientListDto>(requestModel));
 
             return Ok();
         }

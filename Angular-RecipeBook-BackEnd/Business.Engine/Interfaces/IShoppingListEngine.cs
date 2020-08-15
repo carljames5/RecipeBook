@@ -6,7 +6,7 @@ namespace Business.Engine.Interfaces
 {
     public interface IShoppingListEngine
     {
-        Task SaveShoppingList(List<SaveShoppingListIngredientItemDto> shoppingListIngredients);
+        Task SaveShoppingList(SaveShoppingListIngredientListDto model);
 
         List<FetchShoppingListIngredientListItemDto> FetchShoppingList();
     }
