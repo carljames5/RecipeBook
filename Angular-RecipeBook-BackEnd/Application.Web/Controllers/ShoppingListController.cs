@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Interfaces;
+using Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries;
+using Application.BusinessLogicLayer.Modules.ShoppingListModule.ResponseModels;
 using Application.Core.DTOs.ShoppingList;
 using Application.Web.Models.ShoppingList.RequestModels;
 using Application.Web.Models.ShoppingList.ResponseModels;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Web.Controllers
@@ -17,10 +21,13 @@ namespace Application.Web.Controllers
 
         private readonly IShoppingListEngine _shoppingListEngine;
 
-        public ShoppingListController(IMapper mapper, IShoppingListEngine shoppingListEngine)
+        private readonly IMediator _mediator;
+
+        public ShoppingListController(IMapper mapper, IShoppingListEngine shoppingListEngine, IMediator mediator)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _shoppingListEngine = shoppingListEngine ?? throw new ArgumentNullException(nameof(shoppingListEngine));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpPost("SaveShoppingList")]
@@ -33,11 +40,12 @@ namespace Application.Web.Controllers
         }
 
         [HttpGet("FetchShoppingList")]
-        public ActionResult<FetchShoppingListIngredientListItemResponseModel> FetchShoppingList()
+        public async Task<ActionResult<FetchShoppingListIngredientListItemResponseModel>> FetchShoppingList()
         {
-            List<FetchShoppingListIngredientListItemDto> result = _shoppingListEngine.FetchShoppingList();
+            List<ShoppingListIngredientListItemResponseModel> result =
+                await _mediator.Send(new FetchShoppingListIngredientsQuery());
 
-            return Ok(_mapper.Map<List<FetchShoppingListIngredientListItemResponseModel>>(result));
+            return Ok(result);
         }
     }
 }

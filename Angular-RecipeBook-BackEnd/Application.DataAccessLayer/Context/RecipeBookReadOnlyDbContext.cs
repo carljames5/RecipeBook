@@ -21,5 +21,7 @@ namespace Application.DataAccessLayer.Context
         public IQueryable<Ingredient> Ingredients => _context.Ingredient.AsNoTracking();
 
         public IQueryable<Recipe> Recipes => _context.Recipe.AsNoTracking();
+
+        public IQueryable<ShoppingList> ShoppingLists => _context.ShoppingList.AsNoTracking();
     }
 }

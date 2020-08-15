@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { ShoppingListHttpService } from './shopping-list-http.service';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { RecipeIngredient } from 'src/app/recipes/models/recipe-ingredient.model';
-import { FetchShoppingListIngredientListItemResponseModel } from '../models/response-models/fetch-shopping-list-ingredient-list-item-response.model';
+import { ShoppingListIngredientListItemResponseModel } from '../models/response-models/shopping-list-ingredient-list-item-response.model';
 
 @Injectable()
 export class ShoppingListService {
@@ -74,7 +74,7 @@ export class ShoppingListService {
 
   public fetchShoppingListIngredients() {
     this.shoppingListHttpService.fetchShoppingListIngredients().subscribe(
-      (response: FetchShoppingListIngredientListItemResponseModel[]) => {
+      (response: ShoppingListIngredientListItemResponseModel[]) => {
         this.shoppingListIngredients = response;
 
         this.shoppingListIngredientsChanged.next(this.shoppingListIngredients);

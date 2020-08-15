@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConsts } from 'src/app/shared/consts/api.const';
 import { Observable } from 'rxjs/internal/Observable';
-import { FetchShoppingListIngredientListItemResponseModel } from '../models/response-models/fetch-shopping-list-ingredient-list-item-response.model';
+import { ShoppingListIngredientListItemResponseModel } from '../models/response-models/shopping-list-ingredient-list-item-response.model';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { SaveShoppingListIngredientListRequestModel } from '../models/request-models/save-shopping-list-ingredient-list-request.model';
 
@@ -20,8 +20,8 @@ export class ShoppingListHttpService {
     );
   }
 
-  public fetchShoppingListIngredients(): Observable<FetchShoppingListIngredientListItemResponseModel[]> {
-    return this.http.get<FetchShoppingListIngredientListItemResponseModel[]>(
+  public fetchShoppingListIngredients(): Observable<ShoppingListIngredientListItemResponseModel[]> {
+    return this.http.get<ShoppingListIngredientListItemResponseModel[]>(
       ApiConsts.API_URL + '/api/ShoppingList/FetchShoppingList'
     );
   }

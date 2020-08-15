@@ -28,6 +28,8 @@ namespace Application.Web
             );
 
             services.ConfigureReadOnlyDbContext();
+            services.ConfigureMediatR();
+
             services.ConfigureAuthService();
             services.ConfigureBusinessEngines();
 
