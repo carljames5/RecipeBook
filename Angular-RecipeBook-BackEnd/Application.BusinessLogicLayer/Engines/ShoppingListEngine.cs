@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Interfaces;
-using Core.Common.DTOs.ShoppingList;
+using Application.Core.DTOs.ShoppingList;
 
 namespace Application.BusinessLogicLayer.Engines
 {

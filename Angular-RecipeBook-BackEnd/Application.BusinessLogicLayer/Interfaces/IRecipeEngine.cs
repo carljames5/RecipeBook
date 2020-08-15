@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.Common.DTOs.Recipe.RequestDtos;
-using Core.Common.DTOs.Recipe.ResponseDtos;
+using Application.Core.DTOs.Recipe.RequestDtos;
+using Application.Core.DTOs.Recipe.ResponseDtos;
 
 namespace Application.BusinessLogicLayer.Interfaces
 {

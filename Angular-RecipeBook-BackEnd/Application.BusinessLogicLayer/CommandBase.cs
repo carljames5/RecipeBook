@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Data.DataAccessLayer.Context;
+using Application.DataAccessLayer.Context;
 using MediatR;
 
 namespace Application.BusinessLogicLayer

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Interfaces;
-using Core.Common.DTOs.Recipe;
-using Core.Common.DTOs.Recipe.RequestDtos;
-using Core.Common.DTOs.Recipe.ResponseDtos;
-using Data.DataAccessLayer.Entities;
+using Application.Core.DTOs.Recipe;
+using Application.Core.DTOs.Recipe.RequestDtos;
+using Application.Core.DTOs.Recipe.ResponseDtos;
+using Application.DataAccessLayer.Entities;
 
 namespace Application.BusinessLogicLayer.Engines
 {
