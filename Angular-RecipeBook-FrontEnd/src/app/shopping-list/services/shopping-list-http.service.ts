@@ -4,17 +4,17 @@ import { ApiConsts } from 'src/app/shared/consts/api.const';
 import { Observable } from 'rxjs/internal/Observable';
 import { ShoppingListIngredientListItemResponseModel } from '../models/response-models/shopping-list-ingredient-list-item-response.model';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
-import { SaveShoppingListIngredientListRequestModel } from '../models/request-models/save-shopping-list-ingredient-list-request.model';
+import { SaveShoppingListIngredientsRequestModel } from '../models/request-models/save-shopping-list-ingredients-request.model';
 
 @Injectable()
 export class ShoppingListHttpService {
   constructor(private http: HttpClient) {}
 
   public saveShoppingList(shoppingListIngredients: ShoppingListIngredient[]): Observable<any> {
-    const requestModel: SaveShoppingListIngredientListRequestModel = {} as SaveShoppingListIngredientListRequestModel;
+    const requestModel: SaveShoppingListIngredientsRequestModel = {} as SaveShoppingListIngredientsRequestModel;
     requestModel.shoppingListIngredientListItems = shoppingListIngredients;
 
-    return this.http.post<SaveShoppingListIngredientListRequestModel>(
+    return this.http.post<SaveShoppingListIngredientsRequestModel>(
       ApiConsts.API_URL + '/api/ShoppingList/SaveShoppingList',
       requestModel
     );

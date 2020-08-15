@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Application.Web.Models.ShoppingList.RequestModels
+namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels
 {
-    public class SaveShoppingListIngredientListRequestModel
+    public class SaveShoppingListIngredientsRequestModel
     {
         public List<SaveShoppingListIngredientListItemRequestModel> ShoppingListIngredientListItems { get; set; }
     }

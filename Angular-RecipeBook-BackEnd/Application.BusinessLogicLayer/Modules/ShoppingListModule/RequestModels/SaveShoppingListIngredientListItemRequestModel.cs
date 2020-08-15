@@ -1,4 +1,4 @@
-﻿namespace Application.Web.Models.ShoppingList.RequestModels
+﻿namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels
 {
     public class SaveShoppingListIngredientListItemRequestModel
     {

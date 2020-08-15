@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.BusinessLogicLayer.Interfaces;
+using Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries;
+using Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.ResponseModels;
-using Application.Core.DTOs.ShoppingList;
-using Application.Web.Models.ShoppingList.RequestModels;
-using Application.Web.Models.ShoppingList.ResponseModels;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,30 +14,23 @@ namespace Application.Web.Controllers
     [ApiController]
     public class ShoppingListController : ControllerBase
     {
-        private readonly IMapper _mapper;
-
-        private readonly IShoppingListEngine _shoppingListEngine;
-
         private readonly IMediator _mediator;
 
-        public ShoppingListController(IMapper mapper, IShoppingListEngine shoppingListEngine, IMediator mediator)
+        public ShoppingListController(IMediator mediator)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _shoppingListEngine = shoppingListEngine ?? throw new ArgumentNullException(nameof(shoppingListEngine));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpPost("SaveShoppingList")]
-        public IActionResult SaveShoppingList([FromBody] SaveShoppingListIngredientListRequestModel requestModel)
+        public async Task<ActionResult> SaveShoppingList([FromBody] SaveShoppingListIngredientsRequestModel requestModel)
         {
-            _shoppingListEngine.SaveShoppingList(
-                _mapper.Map<SaveShoppingListIngredientListDto>(requestModel));
+            await _mediator.Send(new SaveShoppingListIngredientsCommand(requestModel));
 
             return Ok();
         }
 
         [HttpGet("FetchShoppingList")]
-        public async Task<ActionResult<FetchShoppingListIngredientListItemResponseModel>> FetchShoppingList()
+        public async Task<ActionResult<List<ShoppingListIngredientListItemResponseModel>>> FetchShoppingList()
         {
             List<ShoppingListIngredientListItemResponseModel> result =
                 await _mediator.Send(new FetchShoppingListIngredientsQuery());

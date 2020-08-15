@@ -1,5 +1,6 @@
 using Application.DataAccessLayer.Context;
 using Application.Web.Core.Configurations;
+using Application.Web.Core.Providers;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,8 @@ namespace Application.Web
             services.ConfigureMediatR();
 
             services.ConfigureAuthService();
+            services.AddScopedServices();
+
             services.ConfigureBusinessEngines();
 
             services.AddCors();

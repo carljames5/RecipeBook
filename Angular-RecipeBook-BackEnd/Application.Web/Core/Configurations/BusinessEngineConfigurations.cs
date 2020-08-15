@@ -9,7 +9,6 @@ namespace Application.Web.Core.Configurations
         public static IServiceCollection ConfigureBusinessEngines(this IServiceCollection services)
         {
             services.AddScoped<IRecipeEngine, RecipeEngine>();
-            services.AddScoped<IShoppingListEngine, ShoppingListEngine>();
 
             return services;
         }
