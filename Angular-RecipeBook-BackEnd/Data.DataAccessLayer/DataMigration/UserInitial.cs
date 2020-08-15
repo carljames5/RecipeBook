@@ -14,7 +14,7 @@ namespace Data.DataAccessLayer.DataMigration
         {
             if (!context.Users.Any(x => x.NormalizedUserName == "ADMIN"))
             {
-                RecipeBookAppUser user = new RecipeBookAppUser
+                ApplicationUser user = new ApplicationUser
                 {
                     Id = 1,
                     SecurityStamp = Guid.NewGuid().ToString(),
@@ -26,19 +26,19 @@ namespace Data.DataAccessLayer.DataMigration
                     LockoutEnabled = false,
                     NormalizedUserName = "ADMIN"
                 };
-                user.PasswordHash = new PasswordHasher<RecipeBookAppUser>().HashPassword(user, "techadmin2020");
+                user.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(user, "techadmin2020");
                 context.Users.Add(user);
-            
+
                 string adminRole = "Administrator";
-                var role = new RecipeBookAppRole
+                var role = new ApplicationRole
                 {
                     Id = 1,
                     Name = adminRole,
                     NormalizedName = adminRole.ToUpper()
                 };
-            
+
                 context.Roles.Add(role);
-            
+
                 context.SaveChanges();
 
                 context.UserRoles.Add(new IdentityUserRole<int>

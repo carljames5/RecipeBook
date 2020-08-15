@@ -9,7 +9,7 @@ namespace Angular_RecipeBook_BackEnd.Core.Configurations
     {
         public static IServiceCollection ConfigureAuthService(this IServiceCollection services)
         {
-            services.AddIdentity<RecipeBookAppUser, RecipeBookAppRole>(options =>
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<RecipeBookContext>();

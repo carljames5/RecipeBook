@@ -22,7 +22,7 @@ namespace Business.Engine.Engines
 
         public async Task SaveShoppingList(SaveShoppingListIngredientListDto model)
         {
-            RecipeBookAppUser authenticatedUser = _unitOfWork.GetRepository<RecipeBookAppUser>()
+            ApplicationUser authenticatedUser = _unitOfWork.GetRepository<ApplicationUser>()
                 .Query()
                 .FirstOrDefault(x => x.NormalizedUserName == "admin".ToUpper());
 
@@ -50,7 +50,7 @@ namespace Business.Engine.Engines
 
         #region PRIVATE Helper Methods
 
-        private async Task RemoveExistingShoppingList(RecipeBookAppUser authenticatedUser)
+        private async Task RemoveExistingShoppingList(ApplicationUser authenticatedUser)
         {
             IEnumerable<ShoppingList> existingShoppingList = _unitOfWork.GetRepository<ShoppingList>()
                 .Query()
@@ -60,7 +60,7 @@ namespace Business.Engine.Engines
             await _unitOfWork.GetRepository<ShoppingList>().RemoveRangeAsync(existingShoppingList);
         }
 
-        private async Task<ICollection<ShoppingList>> InitialNewShoppingListIngredients(List<SaveShoppingListIngredientListItemDto> shoppingListIngredients, RecipeBookAppUser authenticatedUser)
+        private async Task<ICollection<ShoppingList>> InitialNewShoppingListIngredients(List<SaveShoppingListIngredientListItemDto> shoppingListIngredients, ApplicationUser authenticatedUser)
         {
             List<ShoppingList> result = new List<ShoppingList>();
             List<Ingredient> existingIngredients = GetExistingIngredients(shoppingListIngredients);

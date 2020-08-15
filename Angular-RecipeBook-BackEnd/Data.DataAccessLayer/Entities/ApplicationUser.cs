@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Data.DataAccessLayer.Entities
 {
-    public class RecipeBookAppUser : IdentityUser<int>, IEntity
+    public class ApplicationUser : IdentityUser<int>, IEntity
     {
         public string FirstName { get; set; }
 
@@ -12,7 +12,7 @@ namespace Data.DataAccessLayer.Entities
 
         public ICollection<ShoppingList> ShoppingList { get; set; }
 
-        public RecipeBookAppUser()
+        public ApplicationUser()
         {
             ShoppingList = new HashSet<ShoppingList>();
         }

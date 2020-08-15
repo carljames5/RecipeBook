@@ -8,7 +8,7 @@ namespace Data.DataAccessLayer.Entities
         [Required]
         public int UserId { get; set; }
 
-        public RecipeBookAppUser User { get; set; }
+        public ApplicationUser User { get; set; }
 
         [Required]
         public int IngredientId { get; set; }
