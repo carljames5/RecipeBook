@@ -6,8 +6,8 @@ import { ApiConsts } from 'src/app/shared/consts/api.const';
 import { RecipeNameIsExistRequestModel } from '../models/request-models/recipeNameIsExistRequestModel.model';
 import { RecipeNameIsExistResponseModel } from '../models/response-models/recipeNameIsExistResponseModel.model';
 import { CreateRecipeRequestModel } from '../models/request-models/createRecipeRequestModel.model';
-import { GetAllRecipeItemResponseModel } from '../models/response-models/getAllRecipeItemResponseModel.model';
 import { GetRecipeByIdResponseModel } from '../models/response-models/getRecipeByIdResponseModel.model';
+import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
 
 @Injectable()
 export class RecipeHttpService {
@@ -22,8 +22,8 @@ export class RecipeHttpService {
     });
   }
 
-  public getAllRecipe(): Observable<GetAllRecipeItemResponseModel[]> {
-    return this.http.get<GetAllRecipeItemResponseModel[]>(ApiConsts.API_URL + '/api/Recipe/GetAll');
+  public getAllRecipe(): Observable<GetAllRecipeResponseModel> {
+    return this.http.get<GetAllRecipeResponseModel>(ApiConsts.API_URL + '/api/Recipe/GetAll');
   }
 
   public createNewRecipe(recipe: CreateRecipeRequestModel): Observable<Object> {

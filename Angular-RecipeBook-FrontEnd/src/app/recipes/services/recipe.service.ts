@@ -8,12 +8,13 @@ import { RecipeIngredient } from '../models/recipe-ingredient.model';
 import { RecipeHttpService } from './recipe-http.service';
 import { CreateRecipeRequestModel } from '../models/request-models/createRecipeRequestModel.model';
 import { GetRecipeByIdResponseModel } from '../models/response-models/getRecipeByIdResponseModel.model';
-import { GetAllRecipeItemResponseModel } from '../models/response-models/getAllRecipeItemResponseModel.model';
+import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
+import { GetAllRecipeListItemResponseModel } from '../models/response-models/get-all-recipe-list-item-response.model';
 
 @Injectable()
 export class RecipeService {
   public recipeGetByIdResolve = new Subject<GetRecipeByIdResponseModel>();
-  public recipesChanged = new Subject<GetAllRecipeItemResponseModel[]>();
+  public recipesChanged = new Subject<GetAllRecipeListItemResponseModel[]>();
   public recipeAdded = new Subject();
   public recipeUpdated = new Subject();
   public recipeDeleted = new Subject();
@@ -22,8 +23,8 @@ export class RecipeService {
 
   public getAllRecipe(): void {
     this.recipeHttpService.getAllRecipe().subscribe(
-      (response: GetAllRecipeItemResponseModel[]) => {
-        this.recipesChanged.next(response);
+      (response: GetAllRecipeResponseModel) => {
+        this.recipesChanged.next(response.recipes);
       },
       err => {
         console.log(err);

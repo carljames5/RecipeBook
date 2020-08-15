@@ -45,21 +45,6 @@ namespace Application.BusinessLogicLayer.Engines
             return null;
         }
 
-        public async Task<List<GetAllRecipeItemResponseDto>> GetAllRecipe()
-        {
-            //ICollection<Recipe> recipes = await _unitOfWork.GetRepository<Recipe>().GetAllAsync();
-
-            //return recipes.Select(x => new GetAllRecipeItemResponseDto
-            //{
-            //    Id = x.RecipeId,
-            //    Name = x.Name,
-            //    Description = x.Description,
-            //    ImagePath = x.ImagePath
-            //}).ToList();
-
-            return null;
-        }
-
         public async Task AddRecipe(CreateRecipeRequestDto requestModel)
         {
             //Recipe recipe = new Recipe

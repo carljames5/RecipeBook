@@ -11,8 +11,6 @@ namespace Application.Web.Profiles.Recipe
     {
         public RecipeProfile()
         {
-            CreateMap<GetAllRecipeItemResponseDto, GetAllRecipeItemResponseModel>();
-
             CreateMap<GetRecipeByIdResponseDto, GetRecipeByIdResponseModel>().ForMember(
                 destination => destination.Ingredients, opt => opt.MapFrom(
                     source => source.Ingredients.Select(x => new GetRecipeIngredientResponseModel

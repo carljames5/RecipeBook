@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Interfaces;
+using Application.BusinessLogicLayer.Modules.RecipeModule.Queries;
+using Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels;
 using Application.Core.DTOs.Recipe.RequestDtos;
 using Application.Core.DTOs.Recipe.ResponseDtos;
 using Application.Web.Models.Recipe.RequestModels;
 using Application.Web.Models.Recipe.ResponseModels;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Web.Controllers
@@ -19,10 +21,14 @@ namespace Application.Web.Controllers
 
         private readonly IRecipeEngine _recipeEngine;
 
-        public RecipeController(IRecipeEngine recipeEngine, IMapper mapper)
+        private readonly IMediator _mediator;
+
+        public RecipeController(IRecipeEngine recipeEngine, IMapper mapper, IMediator mediator)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _recipeEngine = recipeEngine ?? throw new ArgumentNullException(nameof(recipeEngine));
+
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpGet("GetById")]
@@ -34,11 +40,11 @@ namespace Application.Web.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<GetAllRecipeItemResponseModel>>> GetAllRecipe()
+        public async Task<ActionResult<GetAllRecipeResponseModel>> GetAllRecipe()
         {
-            List<GetAllRecipeItemResponseModel> recipes = _mapper.Map<List<GetAllRecipeItemResponseModel>>(await _recipeEngine.GetAllRecipe());
+            GetAllRecipeResponseModel result = await _mediator.Send(new GetAllRecipeQuery());
 
-            return Ok(recipes);
+            return Ok(result);
         }
 
         [HttpPost("Create")]

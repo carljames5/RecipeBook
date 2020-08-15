@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { RecipeService } from '../services/recipe.service';
-import { GetAllRecipeItemResponseModel } from '../models/response-models/getAllRecipeItemResponseModel.model';
+import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
+import { GetAllRecipeListItemResponseModel } from '../models/response-models/get-all-recipe-list-item-response.model';
 
 @Component({
   selector: 'app-recipe-list',
@@ -20,13 +21,13 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   private recipeUpdatedSubscription: Subscription;
   private recipeDeletedSubscription: Subscription;
 
-  public recipes: GetAllRecipeItemResponseModel[];
+  public recipes: GetAllRecipeListItemResponseModel[];
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {}
 
   public ngOnInit() {
     this.recipesChangedSubscription = this.recipeService.recipesChanged.subscribe(
-      (recipes: GetAllRecipeItemResponseModel[]) => {
+      (recipes: GetAllRecipeListItemResponseModel[]) => {
         this.recipes = recipes;
       }
     );
