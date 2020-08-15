@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries;
@@ -30,9 +29,9 @@ namespace Application.Web.Controllers
         }
 
         [HttpGet("FetchShoppingList")]
-        public async Task<ActionResult<List<ShoppingListIngredientListItemResponseModel>>> FetchShoppingList()
+        public async Task<ActionResult<FetchShoppingListIngredientsResponseModel>> FetchShoppingList()
         {
-            List<ShoppingListIngredientListItemResponseModel> result =
+            FetchShoppingListIngredientsResponseModel result =
                 await _mediator.Send(new FetchShoppingListIngredientsQuery());
 
             return Ok(result);

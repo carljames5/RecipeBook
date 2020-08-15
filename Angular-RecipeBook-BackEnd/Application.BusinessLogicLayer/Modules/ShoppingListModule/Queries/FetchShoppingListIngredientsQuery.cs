@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,16 +11,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries
 {
-    public class FetchShoppingListIngredientsQuery : IRequest<List<ShoppingListIngredientListItemResponseModel>>
+    public class FetchShoppingListIngredientsQuery : IRequest<FetchShoppingListIngredientsResponseModel>
     { }
 
-    public class FetchShoppingListIngredientsQueryHandler : QueryBase<FetchShoppingListIngredientsQuery, List<ShoppingListIngredientListItemResponseModel>>
+    public class FetchShoppingListIngredientsQueryHandler : QueryBase<FetchShoppingListIngredientsQuery, FetchShoppingListIngredientsResponseModel>
     {
         public FetchShoppingListIngredientsQueryHandler(RecipeBookReadOnlyDbContext context) : base(context)
         { }
 
-        public override async Task<List<ShoppingListIngredientListItemResponseModel>> Handle(FetchShoppingListIngredientsQuery request, CancellationToken cancellationToken)
+        public override async Task<FetchShoppingListIngredientsResponseModel> Handle(FetchShoppingListIngredientsQuery request, CancellationToken cancellationToken)
         {
+            FetchShoppingListIngredientsResponseModel result = new FetchShoppingListIngredientsResponseModel();
+
             ApplicationUser user = await Context.Users
                 .Where(x => x.NormalizedUserName == ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper())
                 .FirstOrDefaultAsync(cancellationToken);
@@ -31,7 +32,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries
                 throw new ArgumentNullException(nameof(user)); // TODO UserNotFoundException!
             }
 
-            return await Context.ShoppingLists
+            result.ShoppingListIngredients = await Context.ShoppingLists
                 .Include(x => x.User)
                 .Include(x => x.Ingredient)
                 .Where(x => x.User == user)
@@ -40,6 +41,8 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries
                     Name = x.Ingredient.Name,
                     Amount = x.Amount
                 }).ToListAsync(cancellationToken);
+
+            return result;
         }
     }
 }

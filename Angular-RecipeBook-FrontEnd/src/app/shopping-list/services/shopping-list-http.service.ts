@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { ShoppingListIngredientListItemResponseModel } from '../models/response-models/shopping-list-ingredient-list-item-response.model';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { SaveShoppingListIngredientsRequestModel } from '../models/request-models/save-shopping-list-ingredients-request.model';
+import { FetchShoppingListIngredientsResponseModels } from '../models/response-models/fetch-shopping-list-ingredients-response.model';
 
 @Injectable()
 export class ShoppingListHttpService {
@@ -20,8 +21,8 @@ export class ShoppingListHttpService {
     );
   }
 
-  public fetchShoppingListIngredients(): Observable<ShoppingListIngredientListItemResponseModel[]> {
-    return this.http.get<ShoppingListIngredientListItemResponseModel[]>(
+  public fetchShoppingListIngredients(): Observable<FetchShoppingListIngredientsResponseModels> {
+    return this.http.get<FetchShoppingListIngredientsResponseModels>(
       ApiConsts.API_URL + '/api/ShoppingList/FetchShoppingList'
     );
   }
