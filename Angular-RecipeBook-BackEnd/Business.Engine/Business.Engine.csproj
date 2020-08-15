@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core.ApplicationCore\Core.ApplicationCore.csproj" />
     <ProjectReference Include="..\Core.Common\Core.Common.csproj" />
+    <ProjectReference Include="..\Data.DataAccessLayer\Data.DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

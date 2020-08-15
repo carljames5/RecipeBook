@@ -3,7 +3,6 @@ using AutoMapper;
 using Data.DataAccessLayer.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,14 +21,13 @@ namespace Angular_RecipeBook_BackEnd
 
         public void ConfigureServices(IServiceCollection services)
         {
-            SqliteConnection inMemorySqlite = new SqliteConnection(_configuration.GetConnectionString("DevConnection"));
-            inMemorySqlite.Open();
-
             services.AddDbContext<RecipeBookContext>(options =>
-                options.UseSqlite(inMemorySqlite));
+                options.UseSqlServer(
+                    _configuration.GetConnectionString("DevConnection")
+                )
+            );
 
             services.ConfigureReadOnlyDbContext();
-            services.ConfigureCoreModules();
             services.ConfigureAuthService();
             services.ConfigureBusinessEngines();
 
