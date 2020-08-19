@@ -7,9 +7,10 @@ import { UpdateRecipeRequestModel } from '../models/request-models/updateRecipeR
 import { RecipeIngredient } from '../models/recipe-ingredient.model';
 import { RecipeHttpService } from './recipe-http.service';
 import { CreateRecipeRequestModel } from '../models/request-models/createRecipeRequestModel.model';
-import { GetRecipeByIdResponseModel } from '../models/response-models/getRecipeByIdResponseModel.model';
 import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
 import { GetAllRecipeListItemResponseModel } from '../models/response-models/get-all-recipe-list-item-response.model';
+import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
+import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 
 @Injectable()
 export class RecipeService {
@@ -76,7 +77,7 @@ export class RecipeService {
     );
   }
 
-  public addRecipeIngredientsToShoppingList(ingredients: RecipeIngredient[]): void {
+  public addRecipeIngredientsToShoppingList(ingredients: GetRecipeByIdIngredientListItemResponseModel[]): void {
     this.shoppingListService.addIngredientsToShoppingList(ingredients);
   }
 }

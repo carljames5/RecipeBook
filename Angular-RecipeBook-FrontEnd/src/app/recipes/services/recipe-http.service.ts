@@ -6,20 +6,19 @@ import { ApiConsts } from 'src/app/shared/consts/api.const';
 import { RecipeNameIsExistRequestModel } from '../models/request-models/recipeNameIsExistRequestModel.model';
 import { RecipeNameIsExistResponseModel } from '../models/response-models/recipeNameIsExistResponseModel.model';
 import { CreateRecipeRequestModel } from '../models/request-models/createRecipeRequestModel.model';
-import { GetRecipeByIdResponseModel } from '../models/response-models/getRecipeByIdResponseModel.model';
 import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
+import { GetRecipeByIdRequestModel } from '../models/request-models/get-recipe-by-id-request.model';
+import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
 
 @Injectable()
 export class RecipeHttpService {
   constructor(private http: HttpClient) {}
 
   public getRecipeById(id: number): Observable<GetRecipeByIdResponseModel> {
-    let searchParamteres = new HttpParams();
-    searchParamteres = searchParamteres.append('id', id.toString());
+    const requestModel: GetRecipeByIdRequestModel = {} as GetRecipeByIdRequestModel;
+    requestModel.id = id;
 
-    return this.http.get<GetRecipeByIdResponseModel>(ApiConsts.API_URL + '/api/Recipe/GetById', {
-      params: searchParamteres,
-    });
+    return this.http.post<GetRecipeByIdResponseModel>(ApiConsts.API_URL + '/api/Recipe/GetById', requestModel);
   }
 
   public getAllRecipe(): Observable<GetAllRecipeResponseModel> {

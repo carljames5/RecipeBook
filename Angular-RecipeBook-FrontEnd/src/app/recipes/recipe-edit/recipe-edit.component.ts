@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { RecipeService } from '../services/recipe.service';
 import { RecipeIngredient } from '../models/recipe-ingredient.model';
 import { RecipeFormValidator } from '../validators/recipe-form-validators';
+import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -106,7 +107,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   // #region PRIVATE Helper Methods
 
-  private initRecipeIngredientsFormArray(recipeIngredients: RecipeIngredient[]): FormArray {
+  private initRecipeIngredientsFormArray(recipeIngredients: GetRecipeByIdIngredientListItemResponseModel[]): FormArray {
     const recipeIngredientsFormArray: FormArray = new FormArray([]);
 
     if (recipeIngredients) {
@@ -118,9 +119,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     return recipeIngredientsFormArray;
   }
 
-  private createNewRecipeIngredientFormGroup(recipeIngredient: RecipeIngredient = null): FormGroup {
+  private createNewRecipeIngredientFormGroup(
+    recipeIngredient: GetRecipeByIdIngredientListItemResponseModel = null
+  ): FormGroup {
     return new FormGroup({
-      id: new FormControl(recipeIngredient?.id),
+      id: new FormControl(null),
       name: new FormControl(recipeIngredient?.name, Validators.required),
       amount: new FormControl(recipeIngredient?.amount, [
         Validators.required,

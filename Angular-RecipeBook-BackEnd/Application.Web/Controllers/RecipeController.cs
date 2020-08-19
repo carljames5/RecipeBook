@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Interfaces;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Queries;
+using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels;
 using Application.Core.DTOs.Recipe.RequestDtos;
 using Application.Core.DTOs.Recipe.ResponseDtos;
@@ -31,10 +32,10 @@ namespace Application.Web.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpGet("GetById")]
-        public ActionResult<GetRecipeByIdResponseModel> GetRecipeById(int id)
+        [HttpPost("GetById")]
+        public async Task<ActionResult<GetRecipeByIdResponseModel>> GetRecipeById(GetRecipeByIdRequestModel requestModel)
         {
-            GetRecipeByIdResponseModel recipe = _mapper.Map<GetRecipeByIdResponseDto, GetRecipeByIdResponseModel>(_recipeEngine.GetRecipeById(id));
+            GetRecipeByIdResponseModel recipe = await _mediator.Send(new GetRecipeByIdQuery(requestModel));
 
             return Ok(recipe);
         }

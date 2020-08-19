@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { RecipeService } from '../services/recipe.service';
-import { GetRecipeByIdResponseModel } from '../models/response-models/getRecipeByIdResponseModel.model';
+import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
 
 @Component({
   selector: 'app-recipe-detail',

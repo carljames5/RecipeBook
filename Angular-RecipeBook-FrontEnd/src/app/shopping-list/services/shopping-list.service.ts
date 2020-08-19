@@ -5,6 +5,7 @@ import { ShoppingListHttpService } from './shopping-list-http.service';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { RecipeIngredient } from 'src/app/recipes/models/recipe-ingredient.model';
 import { FetchShoppingListIngredientsResponseModels } from '../models/response-models/fetch-shopping-list-ingredients-response.model';
+import { GetRecipeByIdIngredientListItemResponseModel } from 'src/app/recipes/models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 
 @Injectable()
 export class ShoppingListService {
@@ -26,7 +27,7 @@ export class ShoppingListService {
     return this.shoppingListIngredients[arrayIndex];
   }
 
-  public addIngredientsToShoppingList(ingredients: RecipeIngredient[]): void {
+  public addIngredientsToShoppingList(ingredients: GetRecipeByIdIngredientListItemResponseModel[]): void {
     ingredients.forEach(item => {
       this.addIngredientToShoppingList(new ShoppingListIngredient(item.name, item.amount));
     });
