@@ -3,20 +3,21 @@ import { Subject } from 'rxjs';
 
 import { ShoppingListService } from '../../shopping-list/services/shopping-list.service';
 
-import { UpdateRecipeRequestModel } from '../models/request-models/updateRecipeRequestModel.model';
-import { RecipeIngredient } from '../models/recipe-ingredient.model';
 import { RecipeHttpService } from './recipe-http.service';
 import { CreateRecipeRequestModel } from '../models/request-models/createRecipeRequestModel.model';
 import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
 import { GetAllRecipeListItemResponseModel } from '../models/response-models/get-all-recipe-list-item-response.model';
 import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
 import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
+import { EditRecipeResponseModel } from '../models/response-models/edit-recipe-response.model';
+import { UpdateRecipeRequestModel } from '../models/request-models/update-recipe-request.model';
 
 @Injectable()
 export class RecipeService {
   public recipeGetByIdResolve = new Subject<GetRecipeByIdResponseModel>();
   public recipesChanged = new Subject<GetAllRecipeListItemResponseModel[]>();
   public recipeAdded = new Subject();
+  public recipeEditSubject = new Subject<EditRecipeResponseModel>();
   public recipeUpdated = new Subject();
   public recipeDeleted = new Subject();
 
@@ -44,6 +45,17 @@ export class RecipeService {
     );
   }
 
+  public editRecipe(id: number): void {
+    this.recipeHttpService.editRecipe(id).subscribe(
+      (recipe: EditRecipeResponseModel) => {
+        this.recipeEditSubject.next(recipe);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
   public createRecipe(recipe: CreateRecipeRequestModel): void {
     this.recipeHttpService.createNewRecipe(recipe).subscribe(
       () => {
@@ -55,8 +67,8 @@ export class RecipeService {
     );
   }
 
-  public updateRecipe(recipe: UpdateRecipeRequestModel): void {
-    this.recipeHttpService.updateRecipe(recipe).subscribe(
+  public updateRecipe(requestModel: UpdateRecipeRequestModel): void {
+    this.recipeHttpService.updateRecipe(requestModel).subscribe(
       () => {
         this.recipeUpdated.next();
       },

@@ -18,7 +18,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 
         public override async Task<GetAllRecipeResponseModel> Handle(GetAllRecipeQuery request, CancellationToken cancellationToken)
         {
-            GetAllRecipeResponseModel result = new GetAllRecipeResponseModel
+            return new GetAllRecipeResponseModel
             {
                 Recipes = await Context.Recipes.Select(x => new GetAllRecipeListItemResponseModel
                 {
@@ -28,8 +28,6 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
                     ImagePath = x.ImagePath
                 }).ToListAsync(cancellationToken)
             };
-
-            return result;
         }
     }
 }

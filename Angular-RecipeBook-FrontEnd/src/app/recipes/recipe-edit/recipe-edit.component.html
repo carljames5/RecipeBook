@@ -60,7 +60,6 @@
         </div>
         <hr />
         <div class="form-row" *ngFor="let ingredientCtrl of ingredients.controls; let i = index" [formGroupName]="i">
-          <input type="text" id="id" class="form-control hidden" formControlName="id" />
           <div class="form-group col-md-8">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" formControlName="name" />

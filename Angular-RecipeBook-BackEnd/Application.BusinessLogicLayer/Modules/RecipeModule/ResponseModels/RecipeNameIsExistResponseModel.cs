@@ -1,4 +1,4 @@
-﻿namespace Application.Web.Models.Recipe.ResponseModels
+﻿namespace Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels
 {
     public class RecipeNameIsExistResponseModel
     {

@@ -64,9 +64,7 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
       ingredients: new FormArray([]),
     });
 
-    this.recipeForm.controls['name'].setAsyncValidators(
-      this.recipeFormValidator.recipeNameValidator(this.recipeId(), this.recipeName())
-    );
+    this.recipeForm.controls['name'].setAsyncValidators(this.recipeFormValidator.recipeNameValidator(this.recipeId()));
 
     this.recipeAddedSubscription = this.recipeService.recipeAdded.subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });

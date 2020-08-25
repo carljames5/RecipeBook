@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 
 import { RecipeHttpService } from '../services/recipe-http.service';
-import { RecipeNameIsExistRequestModel } from '../models/request-models/recipeNameIsExistRequestModel.model';
+import { RecipeNameIsExistRequestModel } from '../models/request-models/recipe-name-is-exist-request.model';
 
 @Injectable()
 export class RecipeFormValidator {
@@ -31,19 +31,17 @@ export class RecipeFormValidator {
     return null;
   }
 
-  public recipeNameValidator(id: AbstractControl, name: AbstractControl): AsyncValidatorFn {
+  public recipeNameValidator(recipeIdControl: AbstractControl): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.recipeHttpService
-        .checkRecipeNameIsExist(new RecipeNameIsExistRequestModel(id.value, name.value))
-        .pipe(
-          map(response => {
-            if (response.recipeNameIsExist) {
-              return { recipeNameIsExist: true };
-            } else {
-              return null;
-            }
-          })
-        );
+      return this.recipeHttpService.checkRecipeNameIsExist(recipeIdControl.value, control.value).pipe(
+        map(response => {
+          if (response.recipeNameIsExist) {
+            return { recipeNameIsExist: true };
+          } else {
+            return null;
+          }
+        })
+      );
     };
   }
 }

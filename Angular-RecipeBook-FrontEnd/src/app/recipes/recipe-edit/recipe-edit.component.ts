@@ -6,9 +6,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 import { RecipeService } from '../services/recipe.service';
-import { RecipeIngredient } from '../models/recipe-ingredient.model';
 import { RecipeFormValidator } from '../validators/recipe-form-validators';
-import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
+import { EditRecipeIngredientListItemResponseModel } from '../models/response-models/edit-recipe-ingredient-list-item-response.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -17,7 +16,7 @@ import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response
   providers: [RecipeFormValidator],
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
-  private recipeGetByIdResolveSubscription: Subscription;
+  private recipeEditSubscription: Subscription;
   private recipeUpdatedSubscription: Subscription;
 
   public plusIcon: IconDefinition = faPlus;
@@ -60,10 +59,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.recipeService.getRecipeById(+params['id']);
+      this.recipeService.editRecipe(+params['id']);
     });
 
-    this.recipeGetByIdResolveSubscription = this.recipeService.recipeGetByIdResolve.subscribe(recipe => {
+    this.recipeEditSubscription = this.recipeService.recipeEditSubject.subscribe(recipe => {
       this.recipeForm = new FormGroup({
         id: new FormControl(recipe.id),
         name: new FormControl(recipe.name, [Validators.required]),
@@ -73,7 +72,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       });
 
       this.recipeForm.controls['name'].setAsyncValidators(
-        this.recipeFormValidator.recipeNameValidator(this.recipeId(), this.recipeName())
+        this.recipeFormValidator.recipeNameValidator(this.recipeId())
       );
     });
 
@@ -83,7 +82,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.recipeGetByIdResolveSubscription.unsubscribe();
+    this.recipeEditSubscription.unsubscribe();
     this.recipeUpdatedSubscription.unsubscribe();
   }
 
@@ -107,23 +106,20 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   // #region PRIVATE Helper Methods
 
-  private initRecipeIngredientsFormArray(recipeIngredients: GetRecipeByIdIngredientListItemResponseModel[]): FormArray {
+  private initRecipeIngredientsFormArray(recipeIngredients: EditRecipeIngredientListItemResponseModel[]): FormArray {
     const recipeIngredientsFormArray: FormArray = new FormArray([]);
 
-    if (recipeIngredients) {
-      for (let recipeIngredient of recipeIngredients) {
-        recipeIngredientsFormArray.push(this.createNewRecipeIngredientFormGroup(recipeIngredient));
-      }
+    for (let recipeIngredient of recipeIngredients) {
+      recipeIngredientsFormArray.push(this.createNewRecipeIngredientFormGroup(recipeIngredient));
     }
 
     return recipeIngredientsFormArray;
   }
 
   private createNewRecipeIngredientFormGroup(
-    recipeIngredient: GetRecipeByIdIngredientListItemResponseModel = null
+    recipeIngredient: EditRecipeIngredientListItemResponseModel = null
   ): FormGroup {
     return new FormGroup({
-      id: new FormControl(null),
       name: new FormControl(recipeIngredient?.name, Validators.required),
       amount: new FormControl(recipeIngredient?.amount, [
         Validators.required,
