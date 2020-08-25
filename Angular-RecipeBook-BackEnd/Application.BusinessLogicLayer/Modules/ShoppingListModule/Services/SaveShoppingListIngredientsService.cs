@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos.InitialNewShoppingListIngredients;
-using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos.RemoveExistingShoppingList;
+using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
@@ -20,31 +19,23 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task RemoveExistingShoppingList(RemoveExistingShoppingListDto model)
-        {
-            IEnumerable<ShoppingList> existingShoppingList =
-                await _context.ShoppingList.Where(x => x.User == model.ApplicationUser).ToListAsync(model.CancellationToken);
-
-            _context.ShoppingList.RemoveRange(existingShoppingList);
-        }
-
-        public async Task<IEnumerable<ShoppingList>> InitialNewShoppingListIngredients(InitialNewShoppingListIngredientsDto model)
+        public async Task<ICollection<ShoppingList>> InitialNewShoppingListIngredients(InitialNewShoppingListIngredientsDto modelDto)
         {
             List<ShoppingList> result = new List<ShoppingList>();
 
-            List<Ingredient> existingIngredients = await GetExistingIngredientsAsync(model);
+            List<Ingredient> existingIngredients = await GetExistingIngredientsAsync(modelDto);
 
-            foreach (NewShoppingListIngredientListItemDto newShoppingListIngredient in model.NewShoppingListIngredients)
+            foreach (ShoppingListIngredientListItemDto newShoppingListIngredient in modelDto.ShoppingListIngredients)
             {
                 Ingredient insertedIngredient =
-                    existingIngredients.FirstOrDefault(x => x.Name.Trim().ToLower() == newShoppingListIngredient.Name);
+                    existingIngredients.FirstOrDefault(x => x.Name.ToLower() == newShoppingListIngredient.Name.ToLower());
 
                 if (insertedIngredient == null)
                 {
                     insertedIngredient = (await _context.Ingredient.AddAsync(new Ingredient
                     {
                         Name = newShoppingListIngredient.Name
-                    }, model.CancellationToken)).Entity;
+                    }, modelDto.CancellationToken)).Entity;
                 }
 
                 result.Add(new ShoppingList
@@ -59,17 +50,16 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Services
                          {
                              Ingredient = x.Key,
                              Amount = x.Select(y => y.Amount).ToArray().Sum(),
-                             User = model.ApplicationUser,
-                         });
+                         }).ToList();
         }
 
-        private async Task<List<Ingredient>> GetExistingIngredientsAsync(InitialNewShoppingListIngredientsDto model)
+        private async Task<List<Ingredient>> GetExistingIngredientsAsync(InitialNewShoppingListIngredientsDto modelDto)
         {
-            IEnumerable<string> insertedIngredientNames = model.NewShoppingListIngredients.Select(x => x.Name.ToLower());
+            IEnumerable<string> insertedIngredientNames = modelDto.ShoppingListIngredients.Select(x => x.Name.ToLower());
 
             return await _context.Ingredient
                 .Where(x => insertedIngredientNames.Contains(x.Name.ToLower()))
-                .ToListAsync(model.CancellationToken);
+                .ToListAsync(modelDto.CancellationToken);
         }
     }
 }

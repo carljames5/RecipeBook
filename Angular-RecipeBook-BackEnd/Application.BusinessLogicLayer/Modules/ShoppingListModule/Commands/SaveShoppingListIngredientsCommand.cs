@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos.InitialNewShoppingListIngredients;
-using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos.RemoveExistingShoppingList;
+using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels;
 using Application.Core.CommonModels;
@@ -18,11 +17,12 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 {
     public class SaveShoppingListIngredientsCommand : IRequest<Result>
     {
-        public IEnumerable<SaveShoppingListIngredientListItemRequestModel> ShoppingListIngredients { get; }
+        public IEnumerable<ShoppingListIngredientListItemDto> ShoppingListIngredients { get; }
 
         public SaveShoppingListIngredientsCommand(SaveShoppingListIngredientsRequestModel requestModel)
         {
-            ShoppingListIngredients = requestModel.ShoppingListIngredientListItems;
+            ShoppingListIngredients = requestModel.ShoppingListIngredientListItems.Select(x =>
+                new ShoppingListIngredientListItemDto(x.Name, x.Amount));
         }
     }
 
@@ -37,20 +37,20 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 
         protected override async Task<Result> Handler(SaveShoppingListIngredientsCommand request, CancellationToken cancellationToken)
         {
-            ApplicationUser user =
-                await Context.Users.Where(x => x.NormalizedUserName == ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper()).FirstOrDefaultAsync(cancellationToken);
+            ApplicationUser user = await Context.Users
+                .Include(x => x.ShoppingList)
+                .Where(x => x.NormalizedUserName == ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper())
+                .FirstOrDefaultAsync(cancellationToken);
 
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user)); // TODO UserNotFoundException!!
             }
 
-            await _saveShoppingListIngredientsService.RemoveExistingShoppingList(new RemoveExistingShoppingListDto(user, cancellationToken));
+            Context.ShoppingList.RemoveRange(user.ShoppingList);
 
-            IEnumerable<ShoppingList> newShoppingList = await _saveShoppingListIngredientsService.InitialNewShoppingListIngredients(
-                new InitialNewShoppingListIngredientsDto(user, request.ShoppingListIngredients, cancellationToken));
-
-            await Context.ShoppingList.AddRangeAsync(newShoppingList, cancellationToken);
+            user.ShoppingList = await _saveShoppingListIngredientsService.InitialNewShoppingListIngredients(
+                new InitialNewShoppingListIngredientsDto(request.ShoppingListIngredients, cancellationToken));
 
             await Context.SaveChangesAsync(cancellationToken);
 
