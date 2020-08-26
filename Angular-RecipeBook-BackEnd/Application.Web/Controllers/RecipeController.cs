@@ -5,7 +5,6 @@ using Application.BusinessLogicLayer.Modules.RecipeModule.Commands;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Queries;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UpdateRecipeRequestModel = Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels.UpdateRecipeRequestModel;
@@ -16,15 +15,12 @@ namespace Application.Web.Controllers
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private readonly IMapper _mapper;
-
         private readonly IRecipeEngine _recipeEngine;
 
         private readonly IMediator _mediator;
 
-        public RecipeController(IRecipeEngine recipeEngine, IMapper mapper, IMediator mediator)
+        public RecipeController(IRecipeEngine recipeEngine, IMediator mediator)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _recipeEngine = recipeEngine ?? throw new ArgumentNullException(nameof(recipeEngine));
 
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));

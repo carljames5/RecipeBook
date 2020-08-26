@@ -1,7 +1,6 @@
 using Application.DataAccessLayer.Context;
 using Application.Web.Core.Configurations;
 using Application.Web.Core.Providers;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -38,8 +37,6 @@ namespace Application.Web
 
             services.AddCors();
             services.AddControllers();
-
-            services.AddAutoMapper(typeof(Startup));
 
             services.AddSwaggerGen();
         }
