@@ -5,8 +5,6 @@ using Application.BusinessLogicLayer.Modules.RecipeModule.Commands;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Queries;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels;
-using Application.Core.DTOs.Recipe.RequestDtos;
-using Application.Web.Models.Recipe.RequestModels;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -49,9 +47,9 @@ namespace Application.Web.Controllers
         }
 
         [HttpPost("Create")]
-        public IActionResult CreateRecipe([FromBody] CreateRecipeRequestModel model)
+        public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeRequestModel requestModel)
         {
-            _recipeEngine.AddRecipe(_mapper.Map<CreateRecipeRequestModel, CreateRecipeRequestDto>(model));
+            await _mediator.Send(new CreateRecipeCommand(requestModel));
 
             return Ok();
         }

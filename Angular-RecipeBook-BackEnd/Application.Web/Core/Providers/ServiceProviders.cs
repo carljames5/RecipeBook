@@ -11,7 +11,7 @@ namespace Application.Web.Core.Providers
         public static IServiceCollection AddScopedServices(this IServiceCollection services)
         {
             services.AddScoped<ISaveShoppingListIngredientsService, SaveShoppingListIngredientsService>();
-            services.AddScoped<IAddAndUpdateRecipeService, AddAndUpdateRecipeService>();
+            services.AddScoped<ICreateAndUpdateRecipeService, CreateAndUpdateRecipeService>();
 
             return services;
         }

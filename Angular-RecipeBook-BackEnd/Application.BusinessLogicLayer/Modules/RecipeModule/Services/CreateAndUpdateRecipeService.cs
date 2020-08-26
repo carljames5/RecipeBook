@@ -11,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.BusinessLogicLayer.Modules.RecipeModule.Services
 {
-    public class AddAndUpdateRecipeService : IAddAndUpdateRecipeService
+    public class CreateAndUpdateRecipeService : ICreateAndUpdateRecipeService
     {
         private readonly RecipeBookDbContext _context;
 
-        public AddAndUpdateRecipeService(RecipeBookDbContext context)
+        public CreateAndUpdateRecipeService(RecipeBookDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

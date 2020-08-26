@@ -10,14 +10,11 @@ using Application.Core.CommonModels;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 {
-    public class UpdateRecipeCommand : IRequest<Result>
+    public class CreateRecipeCommand : IRequest<Result>
     {
-        public int Id { get; }
-
         public string Name { get; }
 
         public string Description { get; }
@@ -26,9 +23,8 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
         public List<RecipeIngredientListItemDto> Ingredients { get; }
 
-        public UpdateRecipeCommand(UpdateRecipeRequestModel requestModel)
+        public CreateRecipeCommand(CreateRecipeRequestModel requestModel)
         {
-            Id = requestModel.Id;
             Name = requestModel.Name;
             Description = requestModel.Description;
             ImagePath = requestModel.ImagePath;
@@ -36,32 +32,27 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
         }
     }
 
-    public class UpdateRecipeCommandHandler : CommandBase<UpdateRecipeCommand, Result>
+    public class CreateRecipeCommandHandler : CommandBase<CreateRecipeCommand, Result>
     {
         private readonly ICreateAndUpdateRecipeService _createAndUpdateRecipeService;
 
-        public UpdateRecipeCommandHandler(RecipeBookDbContext context, ICreateAndUpdateRecipeService createAndUpdateRecipeService) : base(context)
+        public CreateRecipeCommandHandler(RecipeBookDbContext context, ICreateAndUpdateRecipeService createAndUpdateRecipeService) : base(context)
         {
             _createAndUpdateRecipeService = createAndUpdateRecipeService ?? throw new ArgumentNullException(nameof(createAndUpdateRecipeService));
         }
 
-        protected override async Task<Result> Handler(UpdateRecipeCommand request, CancellationToken cancellationToken)
+        protected override async Task<Result> Handler(CreateRecipeCommand request, CancellationToken cancellationToken)
         {
-            Recipe recipe = Context.Recipe
-                .Include(x => x.RecipeIngredients)
-                .FirstOrDefault(x => x.RecipeId == request.Id);
-
-            if (recipe == null)
+            Recipe recipe = new Recipe
             {
-                throw new ArgumentNullException(nameof(recipe)); // TODO RecipeNotFoundException
-            }
+                Name = request.Name,
+                Description = request.Description,
+                ImagePath = request.ImagePath,
+                RecipeIngredients =
+                    await _createAndUpdateRecipeService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto(request.Ingredients, cancellationToken))
+            };
 
-            Context.RecipeIngredient.RemoveRange(recipe.RecipeIngredients);
-
-            recipe.Name = request.Name;
-            recipe.Description = request.Description;
-            recipe.ImagePath = request.ImagePath;
-            recipe.RecipeIngredients = await _createAndUpdateRecipeService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto(request.Ingredients, cancellationToken));
+            await Context.Recipe.AddAsync(recipe, cancellationToken);
 
             await Context.SaveChangesAsync(cancellationToken);
 
