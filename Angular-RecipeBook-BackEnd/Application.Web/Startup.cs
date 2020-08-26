@@ -33,8 +33,6 @@ namespace Application.Web
             services.ConfigureAuthService();
             services.AddScopedServices();
 
-            services.ConfigureBusinessEngines();
-
             services.AddCors();
             services.AddControllers();
 

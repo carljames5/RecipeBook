@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Application.BusinessLogicLayer.Interfaces;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Commands;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Queries;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
@@ -14,19 +13,15 @@ namespace Application.Web.Controllers
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private readonly IRecipeEngine _recipeEngine;
-
         private readonly IMediator _mediator;
 
-        public RecipeController(IRecipeEngine recipeEngine, IMediator mediator)
+        public RecipeController(IMediator mediator)
         {
-            _recipeEngine = recipeEngine ?? throw new ArgumentNullException(nameof(recipeEngine));
-
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpPost("GetById")]
-        public async Task<ActionResult<GetRecipeByIdResponseModel>> GetRecipeById(GetRecipeByIdRequestModel requestModel)
+        public async Task<ActionResult<GetRecipeByIdResponseModel>> GetRecipeById([FromBody] GetRecipeByIdRequestModel requestModel)
         {
             GetRecipeByIdResponseModel recipe = await _mediator.Send(new GetRecipeByIdQuery(requestModel));
 
@@ -50,7 +45,7 @@ namespace Application.Web.Controllers
         }
 
         [HttpPost("Edit")]
-        public async Task<ActionResult<EditRecipeResponseModel>> EditRecipe(EditRecipeRequestModel requestModel)
+        public async Task<ActionResult<EditRecipeResponseModel>> EditRecipe([FromBody] EditRecipeRequestModel requestModel)
         {
             EditRecipeResponseModel result = await _mediator.Send(new EditRecipeQuery(requestModel));
 
@@ -65,10 +60,10 @@ namespace Application.Web.Controllers
             return Ok();
         }
 
-        [HttpDelete("Delete")]
-        public IActionResult DeleteRecipe(int id)
+        [HttpPost("Delete")]
+        public async Task<IActionResult> DeleteRecipe([FromBody] DeleteRecipeRequestModel requestModel)
         {
-            _recipeEngine.DeleteRecipe(id);
+            await _mediator.Send(new DeleteRecipeCommand(requestModel));
 
             return Ok();
         }

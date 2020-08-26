@@ -11,6 +11,7 @@ import { EditRecipeResponseModel } from '../models/response-models/edit-recipe-r
 import { EditRecipeRequestModel } from '../models/request-models/edit-recipe-request.model';
 import { UpdateRecipeRequestModel } from '../models/request-models/update-recipe-request.model';
 import { CreateRecipeRequestModel } from '../models/request-models/create-recipe-request.model';
+import { DeleteRecipeRequestModel } from '../models/request-models/delete-recipe-request.model';
 
 @Injectable()
 export class RecipeHttpService {
@@ -43,12 +44,10 @@ export class RecipeHttpService {
   }
 
   public deleteRecipe(id: number): Observable<Object> {
-    let searchParamteres = new HttpParams();
-    searchParamteres = searchParamteres.append('id', id.toString());
+    const requestModel: DeleteRecipeRequestModel = {} as DeleteRecipeRequestModel;
+    requestModel.id = id;
 
-    return this.http.delete(ApiConsts.API_URL + '/api/Recipe/Delete', {
-      params: searchParamteres,
-    });
+    return this.http.post(ApiConsts.API_URL + '/api/Recipe/Delete', requestModel);
   }
 
   public checkRecipeNameIsExist(recipeId: number, recipeName: string) {
