@@ -7,7 +7,6 @@ using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using UpdateRecipeRequestModel = Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels.UpdateRecipeRequestModel;
 
 namespace Application.Web.Controllers
 {
