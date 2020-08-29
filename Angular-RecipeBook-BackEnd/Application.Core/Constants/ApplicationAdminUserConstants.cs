@@ -4,20 +4,20 @@
     {
         public static class UserMeta
         {
-            public static string FIRST_NAME = "Administrator";
+            public const string FIRST_NAME = "Administrator";
 
-            public static string LAST_NAME = "Technical";
+            public const string LAST_NAME = "Technical";
 
-            public static string USERNAME = "admin";
+            public const string USERNAME = "admin";
 
-            public static string EMAIL = "admin@recipebook.com";
+            public const string EMAIL = "admin@recipebook.com";
 
-            public static string PASSWORD = "techadmin2020";
+            public const string PASSWORD = "techadmin2020";
         }
 
         public static class RoleMeta
         {
-            public static string NAME = "technical-administrator";
+            public const string NAME = "technical-administrator";
         }
     }
 }
