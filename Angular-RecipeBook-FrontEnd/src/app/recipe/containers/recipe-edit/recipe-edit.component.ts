@@ -5,8 +5,9 @@ import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { RecipeFormValidator } from 'src/app/recipes/validators/recipe-form-validators';
-import { RecipeService } from 'src/app/recipes/services/recipe.service';
+
 import { EditRecipeIngredientListItemResponseModel } from '../../models/response-models/edit-recipe-ingredient-list-item-response.model';
+import { RecipeService } from '../../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-edit',

@@ -14,8 +14,6 @@ import { DropDownDirective } from './shared/directives/dropdown.directive';
 import { ShoppingListService } from './shopping-list/services/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
 
-import { RecipeService } from './recipes/services/recipe.service';
-import { RecipeHttpService } from './recipes/services/recipe-http.service';
 import { LoadingComponent } from './shared/components/loading/loading.component';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -28,6 +26,8 @@ import { RecipeEditComponent } from './recipe/containers/recipe-edit/recipe-edit
 import { ShoppingListHttpService } from './shopping-list/services/shopping-list-http.service';
 import { RecipeListComponent } from './recipe/containers/recipe-list/recipe-list.component';
 import { RecipeItemComponent } from './recipe/containers/recipe-list/recipe-item/recipe-item.component';
+import { RecipeHttpService } from './recipe/services/recipe-http.service';
+import { RecipeService } from './recipe/services/recipe.service';
 
 @NgModule({
   declarations: [

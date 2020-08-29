@@ -3,8 +3,7 @@ import { FormControl, AbstractControl, ValidationErrors, AsyncValidatorFn } from
 
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
-
-import { RecipeHttpService } from '../services/recipe-http.service';
+import { RecipeHttpService } from 'src/app/recipe/services/recipe-http.service';
 
 @Injectable()
 export class RecipeFormValidator {
