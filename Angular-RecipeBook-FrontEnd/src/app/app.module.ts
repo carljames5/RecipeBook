@@ -7,10 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { HeaderComponent } from './header/header.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { ShoppingListIngredientEditComponent } from './shopping-list/shopping-list-ingredient-edit/shopping-list-ingredient-edit.component';
 import { FooterComponent } from './footer/footer.component';
-import { DropDownDirective } from './shared/directives/dropdown.directive';
 import { ShoppingListService } from './shopping-list/services/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -20,6 +17,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShoppingListHttpService } from './shopping-list/services/shopping-list-http.service';
 import { SharedModule } from './shared/shared.module';
+import { ShoppingListComponent } from './shopping-list/containers/shopping-list.component';
+import { ShoppingListIngredientEditComponent } from './shopping-list/containers/shopping-list-ingredient-edit/shopping-list-ingredient-edit.component';
 
 @NgModule({
   declarations: [
