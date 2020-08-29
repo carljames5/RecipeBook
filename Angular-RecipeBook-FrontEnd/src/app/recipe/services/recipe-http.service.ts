@@ -13,7 +13,9 @@ import { DeleteRecipeRequestModel } from 'src/app/recipe/models/request-models/d
 import { RecipeNameIsExistRequestModel } from 'src/app/recipe/models/request-models/recipe-name-is-exist-request.model';
 import { RecipeNameIsExistResponseModel } from 'src/app/recipe/models/response-models/recipe-name-is-exist-response.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class RecipeHttpService {
   constructor(private http: HttpClient) {}
 

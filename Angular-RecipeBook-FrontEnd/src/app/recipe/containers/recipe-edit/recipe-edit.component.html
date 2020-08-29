@@ -1,9 +1,7 @@
 <div *ngIf="recipeForm; else loading">
   <form id="recipeForm" [formGroup]="recipeForm" (ngSubmit)="onUpdateRecipe()">
     <div id="details" class="card">
-      <div class="card-header">
-        Details
-      </div>
+      <div class="card-header">Details</div>
       <div class="card-body">
         <input type="text" id="id" class="form-control hidden" formControlName="id" />
         <div class="form-group">
@@ -49,9 +47,7 @@
     </div>
 
     <div id="ingredients" class="card">
-      <div class="card-header">
-        Ingredients
-      </div>
+      <div class="card-header">Ingredients</div>
       <div class="card-body" formArrayName="ingredients">
         <div class="form-row">
           <button type="button" class="btn btn-success" (click)="onAddNewRecipeIngredient()">
@@ -109,5 +105,5 @@
 </div>
 
 <ng-template #loading>
-  <app-loading loadingClass="recipe-details-block-loading"></app-loading>
+  <!-- <app-loading loadingClass="recipe-details-block-loading"></app-loading> -->
 </ng-template>

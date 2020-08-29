@@ -12,7 +12,9 @@ import { CreateRecipeRequestModel } from 'src/app/recipe/models/request-models/c
 import { UpdateRecipeRequestModel } from 'src/app/recipe/models/request-models/update-recipe-request.model';
 import { GetRecipeByIdIngredientListItemResponseModel } from 'src/app/recipe/models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class RecipeService {
   public recipeGetByIdResolve = new Subject<GetRecipeByIdResponseModel>();
   public recipesChanged = new Subject<GetAllRecipeListItemResponseModel[]>();

@@ -18,35 +18,20 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
 
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RecipesComponent } from './recipe/containers/recipe.component';
-import { RecipeDetailComponent } from './recipe/containers/recipe-detail/recipe-detail.component';
-import { DefaultRecipeComponent } from './recipe/containers/default-recipe/default-recipe.component';
-import { RecipeCreateComponent } from './recipe/containers/recipe-create/recipe-create.component';
-import { RecipeEditComponent } from './recipe/containers/recipe-edit/recipe-edit.component';
 import { ShoppingListHttpService } from './shopping-list/services/shopping-list-http.service';
-import { RecipeListComponent } from './recipe/containers/recipe-list/recipe-list.component';
-import { RecipeItemComponent } from './recipe/containers/recipe-list/recipe-item/recipe-item.component';
-import { RecipeHttpService } from './recipe/services/recipe-http.service';
-import { RecipeService } from './recipe/services/recipe.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
     ShoppingListComponent,
     ShoppingListIngredientEditComponent,
     FooterComponent,
-    DropDownDirective,
-    DefaultRecipeComponent,
-    RecipeCreateComponent,
-    RecipeEditComponent,
     LoadingComponent,
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     FontAwesomeModule,
     ReactiveFormsModule,
@@ -55,7 +40,7 @@ import { RecipeService } from './recipe/services/recipe.service';
     BrowserAnimationsModule,
     ToastrModule.forRoot({ positionClass: 'toast-bottom-full-width', closeButton: true }),
   ],
-  providers: [ShoppingListService, RecipeService, RecipeHttpService, ShoppingListHttpService],
+  providers: [ShoppingListService, ShoppingListHttpService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
