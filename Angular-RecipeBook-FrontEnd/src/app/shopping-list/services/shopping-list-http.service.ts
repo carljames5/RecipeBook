@@ -6,7 +6,9 @@ import { ShoppingListIngredient } from '../models/shopping-list.model';
 import { SaveShoppingListIngredientsRequestModel } from '../models/request-models/save-shopping-list-ingredients-request.model';
 import { FetchShoppingListIngredientsResponseModels } from '../models/response-models/fetch-shopping-list-ingredients-response.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ShoppingListHttpService {
   constructor(private http: HttpClient) {}
 

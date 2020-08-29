@@ -6,7 +6,9 @@ import { FetchShoppingListIngredientsResponseModels } from '../models/response-m
 import { GetRecipeByIdIngredientListItemResponseModel } from 'src/app/recipe/models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ShoppingListService {
   private shoppingListIngredients: ShoppingListIngredient[];
 

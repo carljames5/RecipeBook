@@ -8,27 +8,16 @@ import { AppComponent } from './app.component';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { ShoppingListService } from './shopping-list/services/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
 
 import { LoadingComponent } from './shared/components/loading/loading.component';
 
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ShoppingListHttpService } from './shopping-list/services/shopping-list-http.service';
 import { SharedModule } from './shared/shared.module';
-import { ShoppingListComponent } from './shopping-list/containers/shopping-list.component';
-import { ShoppingListIngredientEditComponent } from './shopping-list/containers/shopping-list-ingredient-edit/shopping-list-ingredient-edit.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    ShoppingListComponent,
-    ShoppingListIngredientEditComponent,
-    FooterComponent,
-    LoadingComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, LoadingComponent],
   imports: [
     SharedModule,
     BrowserModule,
@@ -39,7 +28,7 @@ import { ShoppingListIngredientEditComponent } from './shopping-list/containers/
     BrowserAnimationsModule,
     ToastrModule.forRoot({ positionClass: 'toast-bottom-full-width', closeButton: true }),
   ],
-  providers: [ShoppingListService, ShoppingListHttpService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
