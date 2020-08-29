@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 
 import { RecipeHttpService } from '../services/recipe-http.service';
-import { RecipeNameIsExistRequestModel } from '../models/request-models/recipe-name-is-exist-request.model';
 
 @Injectable()
 export class RecipeFormValidator {

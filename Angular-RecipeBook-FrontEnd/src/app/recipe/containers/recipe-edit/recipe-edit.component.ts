@@ -6,7 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { RecipeFormValidator } from 'src/app/recipes/validators/recipe-form-validators';
 import { RecipeService } from 'src/app/recipes/services/recipe.service';
-import { EditRecipeIngredientListItemResponseModel } from 'src/app/recipes/models/response-models/edit-recipe-ingredient-list-item-response.model';
+import { EditRecipeIngredientListItemResponseModel } from '../../models/response-models/edit-recipe-ingredient-list-item-response.model';
 
 @Component({
   selector: 'app-recipe-edit',
