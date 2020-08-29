@@ -21,7 +21,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 
         public SaveShoppingListIngredientsCommand(SaveShoppingListIngredientsRequestModel requestModel)
         {
-            ShoppingListIngredients = requestModel.ShoppingListIngredientListItems.Select(x =>
+            ShoppingListIngredients = requestModel.ShoppingListIngredientListItems?.Select(x =>
                 new ShoppingListIngredientListItemDto(x.Name, x.Amount));
         }
     }

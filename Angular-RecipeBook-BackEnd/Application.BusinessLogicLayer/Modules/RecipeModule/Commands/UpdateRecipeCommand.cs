@@ -28,11 +28,11 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
         public UpdateRecipeCommand(UpdateRecipeRequestModel requestModel)
         {
-            Id = requestModel.Id;
+            Id = requestModel.Id.Value;
             Name = requestModel.Name;
             Description = requestModel.Description;
             ImagePath = requestModel.ImagePath;
-            Ingredients = requestModel.Ingredients.Select(x => new RecipeIngredientListItemDto(x.Name, x.Amount)).ToList();
+            Ingredients = requestModel.Ingredients?.Select(x => new RecipeIngredientListItemDto(x.Name, x.Amount)).ToList();
         }
     }
 

@@ -16,7 +16,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
         public DeleteRecipeCommand(DeleteRecipeRequestModel requestModel)
         {
-            Id = requestModel.Id;
+            Id = requestModel.Id.Value;
         }
     }
 

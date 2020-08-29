@@ -28,7 +28,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
             Name = requestModel.Name;
             Description = requestModel.Description;
             ImagePath = requestModel.ImagePath;
-            Ingredients = requestModel.Ingredients.Select(x => new RecipeIngredientListItemDto(x.Name, x.Amount)).ToList();
+            Ingredients = requestModel.Ingredients?.Select(x => new RecipeIngredientListItemDto(x.Name, x.Amount)).ToList();
         }
     }
 

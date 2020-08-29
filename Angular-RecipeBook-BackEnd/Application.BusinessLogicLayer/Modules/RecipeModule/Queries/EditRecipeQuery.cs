@@ -17,7 +17,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 
         public EditRecipeQuery(EditRecipeRequestModel requestModel)
         {
-            Id = requestModel.Id;
+            Id = requestModel.Id.Value;
         }
     }
 

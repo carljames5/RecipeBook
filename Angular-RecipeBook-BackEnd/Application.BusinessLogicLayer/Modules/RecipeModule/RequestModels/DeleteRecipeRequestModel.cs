@@ -1,7 +1,10 @@
-﻿namespace Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels
 {
     public class DeleteRecipeRequestModel
     {
-        public int Id { get; set; }
+        [Required]
+        public int? Id { get; set; }
     }
 }
