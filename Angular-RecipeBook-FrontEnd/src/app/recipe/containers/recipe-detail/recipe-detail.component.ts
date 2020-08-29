@@ -3,9 +3,8 @@ import { faTasks, faPlusSquare, faCogs, faTrashAlt, IconDefinition } from '@fort
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-import { RecipeService } from '../services/recipe.service';
-import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
+import { GetRecipeByIdResponseModel } from 'src/app/recipes/models/response-models/get-recipe-by-id-response.model';
+import { RecipeService } from 'src/app/recipes/services/recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
