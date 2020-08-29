@@ -11,6 +11,7 @@ const appRoutes: Routes = [
     path: 'shopping-list',
     loadChildren: () => import('./shopping-list/shopping-list.module').then(x => x.ShoppingListModule),
   },
+  { path: '**', redirectTo: 'recipe', pathMatch: 'full' },
 ];
 
 @NgModule({
