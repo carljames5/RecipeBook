@@ -1,11 +1,10 @@
 import { faSave, faPlus, faRedoAlt, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { RecipeService } from '../../services/recipe.service';
-import { RecipeFormValidator } from '../../validators/recipe-form-validators';
+import { RecipeFormValidator } from 'src/app/recipe/validators/recipe-form-validators';
+import { RecipeService } from 'src/app/recipe/services/recipe.service';
 
 @Component({
   selector: 'app-recipe-create',

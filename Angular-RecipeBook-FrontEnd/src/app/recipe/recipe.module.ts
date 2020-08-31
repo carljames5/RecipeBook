@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
-
-import { RecipesComponent } from './containers/recipe.component';
-import { RecipeListComponent } from './containers/recipe-list/recipe-list.component';
-import { RecipeItemComponent } from './containers/recipe-list/recipe-item/recipe-item.component';
-import { DefaultRecipeComponent } from './containers/default-recipe/default-recipe.component';
-import { RecipeCreateComponent } from './containers/recipe-create/recipe-create.component';
-import { RecipeEditComponent } from './containers/recipe-edit/recipe-edit.component';
-import { RecipeDetailComponent } from './containers/recipe-detail/recipe-detail.component';
-
 import { RecipeRoutingModule } from './recipe-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { RecipesComponent } from './container/recipe.component';
+import { RecipeListComponent } from './container/components/recipe-list/recipe-list.component';
+import { RecipeItemComponent } from './container/components/recipe-list/recipe-item/recipe-item.component';
+import { DefaultRecipeComponent } from './container/components/default-recipe/default-recipe.component';
+import { RecipeCreateComponent } from './container/components/recipe-create/recipe-create.component';
+import { RecipeEditComponent } from './container/components/recipe-edit/recipe-edit.component';
+import { RecipeDetailComponent } from './container/components/recipe-detail/recipe-detail.component';
 
 @NgModule({
   declarations: [

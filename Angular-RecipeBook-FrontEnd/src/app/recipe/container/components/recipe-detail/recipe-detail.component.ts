@@ -1,11 +1,9 @@
 import { faTasks, faPlusSquare, faCogs, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-import { RecipeService } from '../../services/recipe.service';
-import { GetRecipeByIdResponseModel } from '../../models/response-models/get-recipe-by-id-response.model';
+import { GetRecipeByIdResponseModel } from 'src/app/recipe/models/response-models/get-recipe-by-id-response.model';
+import { RecipeService } from 'src/app/recipe/services/recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
