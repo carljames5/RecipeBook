@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { ShoppingListHttpService } from './shopping-list-http.service';
 import { FetchShoppingListIngredientsResponseModels } from '../models/response-models/fetch-shopping-list-ingredients-response.model';
-import { GetRecipeByIdIngredientListItemResponseModel } from 'src/app/recipe/models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 import { ShoppingListIngredient } from '../models/shopping-list.model';
+import { GetRecipeByIdIngredientListItemResponseModel } from '../../recipe/models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 
 @Injectable({
   providedIn: 'root',

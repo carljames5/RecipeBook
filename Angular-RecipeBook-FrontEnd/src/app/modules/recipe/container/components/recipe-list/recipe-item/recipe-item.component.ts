@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GetRecipeByIdResponseModel } from 'src/app/recipe/models/response-models/get-recipe-by-id-response.model';
+import { GetRecipeByIdResponseModel } from 'src/app/modules/recipe/models/response-models/get-recipe-by-id-response.model';
 
 @Component({
   selector: 'app-recipe-item',

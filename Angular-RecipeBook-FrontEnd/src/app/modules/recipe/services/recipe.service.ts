@@ -4,13 +4,13 @@ import { Subject } from 'rxjs';
 import { ShoppingListService } from '../../shopping-list/services/shopping-list.service';
 
 import { RecipeHttpService } from './recipe-http.service';
-import { GetRecipeByIdResponseModel } from 'src/app/recipe/models/response-models/get-recipe-by-id-response.model';
-import { GetAllRecipeListItemResponseModel } from 'src/app/recipe/models/response-models/get-all-recipe-list-item-response.model';
-import { EditRecipeResponseModel } from 'src/app/recipe/models/response-models/edit-recipe-response.model';
-import { GetAllRecipeResponseModel } from 'src/app/recipe/models/response-models/get-all-recipe-response.model';
-import { CreateRecipeRequestModel } from 'src/app/recipe/models/request-models/create-recipe-request.model';
-import { UpdateRecipeRequestModel } from 'src/app/recipe/models/request-models/update-recipe-request.model';
-import { GetRecipeByIdIngredientListItemResponseModel } from 'src/app/recipe/models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
+import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
+import { GetAllRecipeListItemResponseModel } from '../models/response-models/get-all-recipe-list-item-response.model';
+import { EditRecipeResponseModel } from '../models/response-models/edit-recipe-response.model';
+import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
+import { CreateRecipeRequestModel } from '../models/request-models/create-recipe-request.model';
+import { UpdateRecipeRequestModel } from '../models/request-models/update-recipe-request.model';
+import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 
 @Injectable({
   providedIn: 'root',

@@ -3,9 +3,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { RecipeService } from 'src/app/recipe/services/recipe.service';
-import { RecipeFormValidator } from 'src/app/recipe/validators/recipe-form-validators';
-import { EditRecipeIngredientListItemResponseModel } from 'src/app/recipe/models/response-models/edit-recipe-ingredient-list-item-response.model';
+import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
+import { RecipeService } from '../../../services/recipe.service';
+import { EditRecipeIngredientListItemResponseModel } from '../../../models/response-models/edit-recipe-ingredient-list-item-response.model';
 
 @Component({
   selector: 'app-recipe-edit',

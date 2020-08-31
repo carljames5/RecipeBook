@@ -2,8 +2,8 @@ import { faPlus, faTrashAlt, faSyncAlt, IconDefinition, faEraser } from '@fortaw
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ShoppingListService } from 'src/app/shopping-list/services/shopping-list.service';
-import { ShoppingListIngredientFormValidator } from 'src/app/shopping-list/validators/shopping-list-ingredient-form-validators';
+import { ShoppingListService } from '../../../services/shopping-list.service';
+import { ShoppingListIngredientFormValidator } from '../../../validators/shopping-list-ingredient-form-validators';
 
 @Component({
   selector: 'app-shopping-edit',

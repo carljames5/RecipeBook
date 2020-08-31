@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingListHttpService } from '../shopping-list/services/shopping-list-http.service';
-import { ShoppingListService } from '../shopping-list/services/shopping-list.service';
+
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { ShoppingListService } from '../modules/shopping-list/services/shopping-list.service';
 
 @Component({
   selector: 'app-header',

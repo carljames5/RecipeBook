@@ -3,8 +3,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { RecipeFormValidator } from 'src/app/recipe/validators/recipe-form-validators';
-import { RecipeService } from 'src/app/recipe/services/recipe.service';
+import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
+import { RecipeService } from '../../../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-create',
