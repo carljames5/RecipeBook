@@ -5,11 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NavBarComponent } from './containers/nav-bar/nav-bar.component';
 
 @NgModule({
-  declarations: [DropDownDirective],
+  declarations: [NavBarComponent, DropDownDirective],
   imports: [RouterModule, ReactiveFormsModule, CommonModule, HttpClientModule, FontAwesomeModule],
-  exports: [RouterModule, ReactiveFormsModule, CommonModule, DropDownDirective, FontAwesomeModule],
+  exports: [RouterModule, ReactiveFormsModule, CommonModule, DropDownDirective, FontAwesomeModule, NavBarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}

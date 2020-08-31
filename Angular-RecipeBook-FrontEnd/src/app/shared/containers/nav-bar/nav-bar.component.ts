@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { ShoppingListService } from '../modules/shopping-list/services/shopping-list.service';
+import { ShoppingListService } from 'src/app/modules/shopping-list/services/shopping-list.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'app-nav-bar',
+  templateUrl: './nav-bar.component.html',
+  styleUrls: ['./nav-bar.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class NavBarComponent implements OnInit {
   private shoppingListIngredientsSavedSubscription: Subscription;
 
   constructor(private shoppingListService: ShoppingListService, private toastr: ToastrService) {}
