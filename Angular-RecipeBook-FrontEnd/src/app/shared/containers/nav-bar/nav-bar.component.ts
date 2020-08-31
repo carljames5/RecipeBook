@@ -12,6 +12,8 @@ import { ShoppingListService } from 'src/app/modules/shopping-list/services/shop
 export class NavBarComponent implements OnInit {
   private shoppingListIngredientsSavedSubscription: Subscription;
 
+  public isExpanded: boolean = false;
+
   constructor(private shoppingListService: ShoppingListService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
@@ -20,6 +22,14 @@ export class NavBarComponent implements OnInit {
         this.toastr.success('Shopping list saved successfully!', 'Congratulations!');
       }
     );
+  }
+
+  public collapse() {
+    this.isExpanded = false;
+  }
+
+  public toggle() {
+    this.isExpanded = !this.isExpanded;
   }
 
   onSaveShoppingList(): void {
