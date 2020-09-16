@@ -1,24 +1,42 @@
-a {
-  cursor: pointer;
-
+li.recipe-list-group-item {
   &.list-group-item {
+    cursor: pointer;
+
     &.active {
       background-color: #cfcfcf;
       border-color: #bdbdbd;
       color: #727272;
     }
 
-    > div.header {
-      > span > img {
-        max-height: 50px;
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      color: #727272;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h4 {
+        word-break: break-word;
+      }
+
+      .img-fluid {
+        max-width: 4em;
       }
     }
 
-    > div.content {
-      margin-top: 15px;
+    .item-content {
+      display: flex;
+      align-items: center;
 
       > p {
-        word-break: break-all;
+        margin-top: 15px;
+        word-break: break-word;
       }
     }
   }

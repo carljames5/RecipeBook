@@ -1,108 +1,101 @@
 <form id="recipeForm" [formGroup]="recipeForm" (ngSubmit)="onCreateRecipe()">
-  <div id="details" class="card">
-    <div class="card-header">
-      Details
-    </div>
-    <div class="card-body">
-      <input type="text" id="id" class="form-control hidden" formControlName="id" />
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" formControlName="name" />
-        <div class="validation-errors" *ngIf="!recipeForm.get('name').valid && recipeForm.get('name').touched">
-          <div class="p-2" *ngIf="recipeForm.get('name').errors?.required">
-            <span class="validation-error"> <strong>Name</strong> is required </span>
-          </div>
-          <div class="p-2" *ngIf="recipeForm.get('name').errors?.recipeNameIsExist">
-            <span class="validation-error"> <strong>Name</strong> is exists! Please choose an another one!</span>
+  <div class="flex-container">
+    <div class="card">
+      <div class="card-header">Details</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" class="form-control" formControlName="name" />
+          <div class="validation-error" *ngIf="!recipeForm.get('name').valid && recipeForm.get('name').touched">
+            <span *ngIf="recipeForm.get('name').errors?.required"> <strong>Name</strong> is required </span>
+            <span *ngIf="recipeForm.get('name').errors?.recipeNameIsExist">
+              <strong>Name</strong> is exists! Please choose an another one!
+            </span>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="imagePath">Image Path</label>
-        <input type="text" class="form-control" id="imagePath" formControlName="imagePath" #imagePath />
-        <div
-          class="validation-errors"
-          *ngIf="!recipeForm.get('imagePath').valid && recipeForm.get('imagePath').touched"
-        >
-          <div class="p-2" *ngIf="recipeForm.get('imagePath').errors?.required">
-            <span class="validation-error"> <strong>Image path</strong> is required </span>
+        <div class="form-group">
+          <div class="flex-container">
+            <div class="flex-item">
+              <label for="imagePath">Image Path</label>
+              <input id="imagePath" type="text" class="form-control" formControlName="imagePath" #imagePath />
+              <div
+                class="validation-error"
+                *ngIf="!recipeForm.get('imagePath').valid && recipeForm.get('imagePath').touched"
+              >
+                <span> <strong>Image path</strong> is required </span>
+              </div>
+            </div>
+            <div class="flex-item">
+              <img [src]="imagePath.value" class="img-fluid" />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group text-center">
-        <img [src]="imagePath.value" class="img-responsive" />
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="6" formControlName="description"></textarea>
-        <div
-          class="validation-errors"
-          *ngIf="!recipeForm.get('description').valid && recipeForm.get('description').touched"
-        >
-          <div class="p-2" *ngIf="recipeForm.get('description').errors?.required">
-            <span class="validation-error"> <strong>Description</strong> is required </span>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" class="form-control" formControlName="description" rows="6"></textarea>
+          <div
+            class="validation-error"
+            *ngIf="!recipeForm.get('description').valid && recipeForm.get('description').touched"
+          >
+            <span><strong>Description</strong> is required</span>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="ingredients" class="card">
-    <div class="card-header">
-      Ingredients
-    </div>
-    <div class="card-body" formArrayName="ingredients">
-      <div class="form-row">
+    <div class="card">
+      <div class="card-header">
+        <span>Ingredients</span>
         <button type="button" class="btn btn-success" (click)="onAddNewRecipeIngredient()">
           <span><fa-icon [icon]="plusIcon"></fa-icon></span> New Ingredient
         </button>
       </div>
-      <hr />
-      <div class="form-row" *ngFor="let ingredientCtrl of ingredients.controls; let i = index" [formGroupName]="i">
-        <input type="text" id="id" class="form-control hidden" formControlName="id" />
-        <div class="form-group col-md-8">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" formControlName="name" />
-        </div>
-        <div class="form-group col-md-2">
-          <label for="amount">Amount</label>
-          <input type="number" class="form-control" id="amount" formControlName="amount" />
-        </div>
-        <div class="form-group col-md-2 delete-btn">
-          <button type="button" class="btn btn-danger" (click)="onDeleteRecipeIngredient(i)">
-            <span><fa-icon [icon]="deleteIcon"></fa-icon></span>
-          </button>
-        </div>
-        <div class="d-flex flex-column validation-errors">
-          <div class="p-2" *ngIf="!ingredientName(i).valid && ingredientName(i).touched">
-            <span class="validation-error"> <strong>Name</strong> is required </span>
+      <div class="card-body" formArrayName="ingredients">
+        <div *ngFor="let ingredientCtrl of ingredients.controls; let i = index" [formGroupName]="i">
+          <div class="flex-container">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" type="text" class="form-control" formControlName="name" />
+            </div>
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <input id="amount" type="number" class="form-control" formControlName="amount" />
+            </div>
+            <div class="form-group">
+              <button type="button" class="btn btn-danger" (click)="onDeleteRecipeIngredient(i)">
+                <span><fa-icon [icon]="deleteIcon"></fa-icon></span>
+              </button>
+            </div>
           </div>
-          <div *ngIf="!ingredientAmount(i).valid && ingredientAmount(i).touched">
-            <div class="p-2" *ngIf="ingredientAmount(i).errors['required']">
-              <span class="validation-error"> <strong>Amount</strong> is required </span>
+          <div class="flex-container">
+            <div class="validation-error" *ngIf="!ingredientName(i).valid && ingredientName(i).touched">
+              <span><strong>Name</strong> is required</span>
             </div>
-            <div class="p-2" *ngIf="ingredientAmount(i).errors?.notValidAmount">
-              <span class="validation-error"> <strong>Amount</strong> must be greater or equal than zero </span>
-            </div>
-            <div class="p-2" *ngIf="ingredientAmount(i).errors?.notValidMaxAmountValue">
-              <span class="validation-error"> <strong>Amount</strong> must be less than 1.000.000 </span>
+            <div class="validation-error" *ngIf="!ingredientAmount(i).valid && ingredientAmount(i).touched">
+              <span *ngIf="ingredientAmount(i).errors['required']"> <strong>Amount</strong> is required </span>
+              <span *ngIf="ingredientAmount(i).errors?.notValidAmount">
+                <strong>Amount</strong> must be greater or equal than zero
+              </span>
+              <span *ngIf="ingredientAmount(i).errors?.notValidMaxAmountValue">
+                <strong>Amount</strong> must be less than 1.000.000
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="d-flex flex-row justify-content-center">
-    <button
-      type="submit"
-      class="btn btn-success mr-2"
-      [disabled]="!recipeForm.valid || !recipeForm.get('ingredients').valid"
-    >
-      <span> <fa-icon [icon]="saveIcon"></fa-icon> Save</span>
-    </button>
-    <button type="button" class="btn btn-secondary mr-2" (click)="onCancel()">
-      <span> <fa-icon [icon]="cancelIcon"></fa-icon> Cancel</span>
-    </button>
+    <div id="operation-btns-container">
+      <button
+        type="submit"
+        class="btn btn-success mr-2"
+        [disabled]="!recipeForm.valid || !recipeForm.get('ingredients').valid"
+      >
+        <span> <fa-icon [icon]="saveIcon"></fa-icon> Save</span>
+      </button>
+      <button type="button" class="btn btn-secondary mr-2" (click)="onCancel()">
+        <span> <fa-icon [icon]="cancelIcon"></fa-icon> Cancel</span>
+      </button>
+    </div>
   </div>
 </form>

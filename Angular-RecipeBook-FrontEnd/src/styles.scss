@@ -1,8 +1,33 @@
 @import '~ngx-toastr/toastr';
 
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #f5f5f5 #cecece;
+
+  &::-webkit-scrollbar {
+    width: 0.8em;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: white;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cecece;
+    border-radius: 6px;
+    border: 3px solid #f5f5f5;
+  }
+}
+
 #wrapper {
   .content-container {
     min-height: calc(100vh - 131px);
+
+    .validation-error {
+      padding-top: 0.3em;
+      margin-bottom: 1.5em;
+      color: #e53935;
+    }
   }
 }
 

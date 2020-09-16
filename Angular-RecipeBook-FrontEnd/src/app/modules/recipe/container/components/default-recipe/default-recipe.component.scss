@@ -1,7 +1,10 @@
-div#default-info {
-  > div {
-    > h2 {
-      color: #e53935;
-    }
+#default-info {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #info-label {
+    color: #e53935;
   }
 }

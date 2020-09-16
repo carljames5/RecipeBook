@@ -1,13 +1,12 @@
-<div class="d-flex">
+<section id="recipe-list">
   <button class="btn btn-success" (click)="onCreateRecipe()">
     <span><fa-icon [icon]="plusIcon"></fa-icon></span> New Recipe
   </button>
-</div>
-<hr />
+  <hr />
 
-<div class="p-2">
-  <div class="list-group recipes">
-    <app-recipe-item class="list-item" *ngFor="let recipe of recipes" [recipe]="recipe" [index]="recipe.id">
-    </app-recipe-item>
+  <div class="p-2">
+    <div class="list-group">
+      <app-recipe-item *ngFor="let recipe of recipes" [recipe]="recipe" [index]="recipe.id"> </app-recipe-item>
+    </div>
   </div>
-</div>
+</section>

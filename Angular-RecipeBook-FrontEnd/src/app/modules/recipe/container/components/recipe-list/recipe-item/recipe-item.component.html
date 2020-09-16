@@ -1,11 +1,15 @@
-<a class="list-group-item list-group-item-action" [routerLink]="[index]" routerLinkActive="active">
-  <div class="d-flex justify-content-between header">
+<li
+  class="recipe-list-group-item list-group-item list-group-item-action"
+  [routerLink]="[index]"
+  routerLinkActive="active"
+>
+  <div class="item-header">
     <h4>{{ recipe.name }}</h4>
-    <span>
-      <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-response" />
-    </span>
+    <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid" />
   </div>
-  <div class="align-items-center content">
+  <hr />
+
+  <div class="item-content">
     <p>{{ recipe.description }}</p>
   </div>
-</a>
+</li>
