@@ -1,33 +1,29 @@
-<h2 class="text-center">Shopping List</h2>
-<hr />
+<div id="shopping-list">
+  <h2 class="text-center">Shopping List</h2>
+  <hr />
 
-<div class="row mt-5">
-  <div class="col-md-7">
-    <div class="d-flex">
-      <div>
-        <h2>Edit Shopping Item</h2>
-        <app-shopping-edit></app-shopping-edit>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-5">
-    <h2>Ingredients</h2>
-    <div class="mt-4">
-      <div class="list-group">
-        <a
-          class="list-group-item align-items-start"
-          *ngFor="let ingredient of shoppingListIngredients; let ingredientIndex = index"
-          (click)="onEditItem(ingredientIndex)"
-        >
-          <div class="row">
-            <div class="col-md-10">
-              {{ ingredient.name }}
+  <div class="flex-container">
+    <create-or-edit-shopping-list-ingredient></create-or-edit-shopping-list-ingredient>
+    <div id="shopping-list-ingredients">
+      <h2>Ingredients</h2>
+      <hr />
+      <div class="mt-4">
+        <div class="list-group">
+          <a
+            class="list-group-item align-items-start"
+            *ngFor="let ingredient of shoppingListIngredients; let ingredientIndex = index"
+            (click)="onEditItem(ingredientIndex)"
+          >
+            <div class="row">
+              <div class="col-md-10">
+                {{ ingredient.name }}
+              </div>
+              <div class="col-md-2 text-right">
+                {{ ingredient.amount }}
+              </div>
             </div>
-            <div class="col-md-2 text-right">
-              {{ ingredient.amount }}
-            </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
   </div>

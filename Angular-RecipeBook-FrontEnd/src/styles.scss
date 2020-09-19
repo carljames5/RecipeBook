@@ -23,6 +23,11 @@ body {
   .content-container {
     min-height: calc(100vh - 129px);
 
+    input.ng-invalid.ng-touched,
+    textarea.ng-invalid.ng-touched {
+      border: 1px solid #e53935;
+    }
+
     .validation-error {
       padding-top: 0.3em;
       margin-bottom: 1.5em;

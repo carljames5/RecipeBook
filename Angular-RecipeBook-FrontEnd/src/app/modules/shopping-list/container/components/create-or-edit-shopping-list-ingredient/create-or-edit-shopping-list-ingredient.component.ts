@@ -6,9 +6,9 @@ import { ShoppingListService } from '../../../services/shopping-list.service';
 import { ShoppingListIngredientFormValidator } from '../../../validators/shopping-list-ingredient-form-validators';
 
 @Component({
-  selector: 'app-shopping-edit',
-  templateUrl: './shopping-list-ingredient-edit.component.html',
-  styleUrls: ['./shopping-list-ingredient-edit.component.scss'],
+  selector: 'create-or-edit-shopping-list-ingredient',
+  templateUrl: './create-or-edit-shopping-list-ingredient.component.html',
+  styleUrls: ['./create-or-edit-shopping-list-ingredient.component.scss'],
 })
 export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   private shoppingListIngredientEditingSubscript: Subscription;
@@ -22,15 +22,15 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
 
   //#region GETTERS
 
-  public get arrayIndex(): AbstractControl {
+  public get ingredientArrayIndex(): AbstractControl {
     return this.shoppingListIngredientForm.get('arrayIndex');
   }
 
-  public get name(): AbstractControl {
+  public get ingredientName(): AbstractControl {
     return this.shoppingListIngredientForm.get('name');
   }
 
-  public get amount(): AbstractControl {
+  public get ingredientAmount(): AbstractControl {
     return this.shoppingListIngredientForm.get('amount');
   }
 
@@ -66,8 +66,8 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
     this.shoppingListIngredientEditingSubscript.unsubscribe();
   }
 
-  public onCreateOrUpdateItem(): void {
-    if (this.arrayIndex.value !== null && this.arrayIndex.value !== undefined) {
+  public onCreateOrEditItem(): void {
+    if (this.ingredientArrayIndex.value !== null && this.ingredientArrayIndex.value !== undefined) {
       this.shoppingListService.updateIngredientInShoppingList(this.shoppingListIngredientForm.value);
     } else {
       this.shoppingListService.addIngredientToShoppingList(this.shoppingListIngredientForm.value);
@@ -81,7 +81,7 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   }
 
   public onDelete(): void {
-    this.shoppingListService.deleteIngredientFromShoppingList(this.arrayIndex.value);
+    this.shoppingListService.deleteIngredientFromShoppingList(this.ingredientArrayIndex.value);
 
     this.onClear();
   }
