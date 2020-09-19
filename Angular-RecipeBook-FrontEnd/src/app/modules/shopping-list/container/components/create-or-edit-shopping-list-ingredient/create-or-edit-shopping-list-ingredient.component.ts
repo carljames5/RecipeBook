@@ -1,4 +1,3 @@
-import { faPlus, faTrashAlt, faSyncAlt, IconDefinition, faEraser } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -12,11 +11,6 @@ import { ShoppingListIngredientFormValidator } from '../../../validators/shoppin
 })
 export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   private shoppingListIngredientEditingSubscript: Subscription;
-
-  public plusIcon: IconDefinition = faPlus;
-  public trashIcon: IconDefinition = faTrashAlt;
-  public clearIcon: IconDefinition = faEraser;
-  public updateIcon: IconDefinition = faSyncAlt;
 
   public shoppingListIngredientForm: FormGroup;
 

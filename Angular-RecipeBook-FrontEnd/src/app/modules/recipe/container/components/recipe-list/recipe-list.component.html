@@ -1,12 +1,12 @@
 <section id="recipe-list">
   <button class="btn btn-success" (click)="onCreateRecipe()">
-    <span><fa-icon [icon]="plusIcon"></fa-icon></span> New Recipe
+    <span><fa-icon icon="plus"></fa-icon></span> New Recipe
   </button>
   <hr />
 
   <div class="p-2">
     <div class="list-group">
-      <app-recipe-item *ngFor="let recipe of recipes" [recipe]="recipe" [index]="recipe.id"> </app-recipe-item>
+      <app-recipe-item *ngFor="let recipe of recipes" [recipe]="recipe" [index]="recipe.id"></app-recipe-item>
     </div>
   </div>
 </section>

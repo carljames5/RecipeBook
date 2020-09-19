@@ -1,4 +1,3 @@
-import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,8 +10,6 @@ import { RecipeService } from '../../../services/recipe.service';
   styleUrls: ['./recipe-list.component.scss'],
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
-  public plusIcon: IconDefinition = faPlus;
-
   private recipesChangedSubscription: Subscription;
   private recipeAddedSubscription: Subscription;
   private recipeUpdatedSubscription: Subscription;

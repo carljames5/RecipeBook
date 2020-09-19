@@ -1,4 +1,3 @@
-import { faTasks, faPlusSquare, faCogs, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -13,11 +12,6 @@ import { RecipeService } from '../../../services/recipe.service';
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   private recipeGetByIdResolveSubsription: Subscription;
   private recipeDeletedSubscription: Subscription;
-
-  public tasksIcon: IconDefinition = faTasks;
-  public plusSquareIcon: IconDefinition = faPlusSquare;
-  public cogsIcon: IconDefinition = faCogs;
-  public trashAltIcon: IconDefinition = faTrashAlt;
 
   public recipe: GetRecipeByIdResponseModel;
 

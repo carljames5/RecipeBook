@@ -1,4 +1,3 @@
-import { faSave, faPlus, faRedoAlt, faTrashAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,11 +13,6 @@ import { RecipeService } from '../../../services/recipe.service';
 })
 export class RecipeCreateComponent implements OnInit, OnDestroy {
   private recipeAddedSubscription: Subscription;
-
-  public plusIcon: IconDefinition = faPlus;
-  public saveIcon: IconDefinition = faSave;
-  public cancelIcon: IconDefinition = faRedoAlt;
-  public deleteIcon: IconDefinition = faTrashAlt;
 
   public recipeForm: FormGroup;
 

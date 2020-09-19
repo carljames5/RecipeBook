@@ -6,14 +6,14 @@
 
     <div class="flex-container p-2 btn-group" appDropDown #r="appDropDown">
       <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-        <span><fa-icon [icon]="tasksIcon"></fa-icon></span>
+        <span><fa-icon icon="tasks"></fa-icon></span>
       </button>
 
       <ul id="operations" class="dropdown-menu dropdown-menu-right" [ngClass]="{ show: r.isOpen }">
         <li>
           <a class="dropdown-item" (click)="onAddRecipeIngredientsToShoppingList()">
             <div class="flex-container">
-              <div class="btn-icon"><fa-icon [icon]="plusSquareIcon"></fa-icon></div>
+              <div class="btn-icon"><fa-icon icon="plus-square"></fa-icon></div>
               <div class="btn-content"><span>To Shopping List</span></div>
             </div>
           </a>
@@ -21,7 +21,7 @@
         <li>
           <a class="dropdown-item" (click)="onEditRecipe()">
             <div class="flex-container">
-              <div class="btn-icon"><fa-icon [icon]="cogsIcon"></fa-icon></div>
+              <div class="btn-icon"><fa-icon icon="cogs"></fa-icon></div>
               <div class="btn-content"><span>Edit Recipe</span></div>
             </div>
           </a>
@@ -29,7 +29,7 @@
         <li>
           <a class="dropdown-item" (click)="onDeleteRecipe(recipe.id)">
             <div class="flex-container">
-              <div class="btn-icon"><fa-icon [icon]="trashAltIcon"></fa-icon></div>
+              <div class="btn-icon"><fa-icon icon="trash-alt"></fa-icon></div>
               <div class="btn-content"><span>Delete Recipe</span></div>
             </div>
           </a>
