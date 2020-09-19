@@ -4,6 +4,11 @@
     align-items: center;
     justify-content: center;
 
+    > span {
+      max-width: 40em;
+      word-break: break-all;
+    }
+
     .flex-container {
       ul#operations.dropdown-menu {
         a {
@@ -44,6 +49,10 @@
 
     #recipe-img {
       text-align: center;
+
+      .img-fluid {
+        max-width: 15em;
+      }
     }
 
     #recipe-ingredients {
