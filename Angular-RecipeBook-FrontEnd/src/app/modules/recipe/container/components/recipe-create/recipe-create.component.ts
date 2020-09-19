@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
+
 import { RecipeService } from '../../../services/recipe.service';
+import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
 
 @Component({
   selector: 'app-recipe-create',
@@ -12,18 +13,22 @@ import { RecipeService } from '../../../services/recipe.service';
   providers: [RecipeFormValidator],
 })
 export class RecipeCreateComponent implements OnInit, OnDestroy {
-  private recipeAddedSubscription: Subscription;
+  private createdRecipeItemSubscription: Subscription;
 
   public recipeForm: FormGroup;
 
   //#region GETTERS
 
-  public recipeId(): AbstractControl {
-    return this.recipeForm.get('id');
-  }
-
   public recipeName(): AbstractControl {
     return this.recipeForm.get('name');
+  }
+
+  public recipeImgPath(): AbstractControl {
+    return this.recipeForm.get('imagePath');
+  }
+
+  public recipeDescription(): AbstractControl {
+    return this.recipeForm.get('description');
   }
 
   public get ingredients(): FormArray {
@@ -48,23 +53,32 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.createdRecipeItemSubscription = this.recipeService.createdRecipeItemSubject.subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
+
     this.recipeForm = new FormGroup({
-      id: new FormControl(null),
       name: new FormControl(null, [Validators.required]),
       imagePath: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
       ingredients: new FormArray([]),
     });
 
-    this.recipeForm.controls['name'].setAsyncValidators(this.recipeFormValidator.recipeNameValidator(this.recipeId()));
-
-    this.recipeAddedSubscription = this.recipeService.recipeAdded.subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.recipeName().setAsyncValidators(this.recipeFormValidator.recipeNameValidator());
   }
 
   ngOnDestroy(): void {
-    this.recipeAddedSubscription.unsubscribe();
+    this.createdRecipeItemSubscription.unsubscribe();
+  }
+
+  public onAddNewRecipeIngredient(): void {
+    this.ingredients.push(this.createNewRecipeIngredientFormGroup());
+  }
+
+  public onDeleteRecipeIngredient(arrayIndex: number): void {
+    if (arrayIndex !== null && arrayIndex !== undefined && arrayIndex >= 0) {
+      this.ingredients.removeAt(arrayIndex);
+    }
   }
 
   public onCreateRecipe(): void {
@@ -75,27 +89,12 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  public onAddNewRecipeIngredient(): void {
-    this.ingredients.push(this.createNewRecipeIngredientFormGroup());
-  }
-
-  public onDeleteRecipeIngredient(index: number): void {
-    if (index !== null && index !== undefined && index >= 0) {
-      this.ingredients.removeAt(index);
-    }
-  }
-
   // #region PRIVATE Helper Methods
 
   private createNewRecipeIngredientFormGroup(): FormGroup {
     return new FormGroup({
-      id: new FormControl(null),
       name: new FormControl(null, Validators.required),
-      amount: new FormControl(null, [
-        Validators.required,
-        this.recipeFormValidator.ingredientAmountValidator,
-        this.recipeFormValidator.maxIngredientAmountValueValidator,
-      ]),
+      amount: new FormControl(null, [Validators.required, this.recipeFormValidator.maxIngredientAmountValueValidator]),
     });
   }
 

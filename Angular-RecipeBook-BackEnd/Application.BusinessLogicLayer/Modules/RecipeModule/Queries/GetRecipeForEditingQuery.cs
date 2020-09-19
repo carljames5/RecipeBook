@@ -11,22 +11,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 {
-    public class EditRecipeQuery : IRequest<EditRecipeResponseModel>
+    public class GetRecipeForEditingQuery : IRequest<GetRecipeForEditingResponseModel>
     {
         public int Id { get; }
 
-        public EditRecipeQuery(EditRecipeRequestModel requestModel)
+        public GetRecipeForEditingQuery(GetRecipeForEditingRequestModel requestModel)
         {
-            Id = requestModel.Id.Value;
+            Id = requestModel.Id;
         }
     }
 
-    public class EditRecipeQueryHandler : QueryBase<EditRecipeQuery, EditRecipeResponseModel>
+    public class GetRecipeForEditingQueryHandler : QueryBase<GetRecipeForEditingQuery, GetRecipeForEditingResponseModel>
     {
-        public EditRecipeQueryHandler(RecipeBookReadOnlyDbContext context) : base(context)
+        public GetRecipeForEditingQueryHandler(RecipeBookReadOnlyDbContext context) : base(context)
         { }
 
-        public override async Task<EditRecipeResponseModel> Handle(EditRecipeQuery request, CancellationToken cancellationToken)
+        public override async Task<GetRecipeForEditingResponseModel> Handle(GetRecipeForEditingQuery request, CancellationToken cancellationToken)
         {
             Recipe recipe = await Context.Recipes
                 .Include(x => x.RecipeIngredients)
@@ -38,7 +38,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
                 throw new ArgumentNullException(nameof(recipe)); // TODO RecipeNotFoundException
             }
 
-            return new EditRecipeResponseModel
+            return new GetRecipeForEditingResponseModel
             {
                 Id = recipe.RecipeId,
                 Name = recipe.Name,

@@ -8,9 +8,9 @@
         <div class="form-group">
           <label for="name">Name</label>
           <input id="name" type="text" class="form-control" formControlName="name" />
-          <div class="validation-error" *ngIf="!recipeForm.get('name').valid && recipeForm.get('name').touched">
-            <span *ngIf="recipeForm.get('name').errors?.required"> <strong>Name</strong> is required </span>
-            <span *ngIf="recipeForm.get('name').errors?.recipeNameIsExist">
+          <div class="validation-error" *ngIf="!recipeName().valid && recipeName().touched">
+            <span *ngIf="recipeName().errors?.required"> <strong>Name</strong> is required </span>
+            <span *ngIf="recipeName().errors?.recipeNameIsExist">
               <strong>Name</strong> is exists! Please choose an another one!
             </span>
           </div>
@@ -19,26 +19,20 @@
           <div class="flex-container">
             <div class="flex-item">
               <label for="imagePath">Image Path</label>
-              <input id="imagePath" type="text" class="form-control" formControlName="imagePath" #imagePath />
-              <div
-                class="validation-error"
-                *ngIf="!recipeForm.get('imagePath').valid && recipeForm.get('imagePath').touched"
-              >
-                <span> <strong>Image path</strong> is required </span>
+              <input id="imagePath" type="text" class="form-control" formControlName="imagePath" />
+              <div class="validation-error" *ngIf="!recipeImgPath().valid && recipeImgPath().touched">
+                <span><strong>Image path</strong> is required</span>
               </div>
             </div>
             <div class="flex-item">
-              <img [src]="imagePath.value" class="img-fluid" />
+              <img [src]="recipeImgPath().value" class="img-fluid" />
             </div>
           </div>
         </div>
         <div class="form-group">
           <label for="description">Description</label>
           <textarea id="description" class="form-control" formControlName="description" rows="6"></textarea>
-          <div
-            class="validation-error"
-            *ngIf="!recipeForm.get('description').valid && recipeForm.get('description').touched"
-          >
+          <div class="validation-error" *ngIf="!recipeDescription().valid && recipeDescription().touched">
             <span><strong>Description</strong> is required</span>
           </div>
         </div>
@@ -61,7 +55,16 @@
             </div>
             <div class="form-group">
               <label for="amount">Amount</label>
-              <input id="amount" type="number" class="form-control" formControlName="amount" />
+              <input
+                id="amount"
+                type="number"
+                class="form-control"
+                inputmode="numeric"
+                min="0"
+                max="999999"
+                digitOnly
+                formControlName="amount"
+              />
             </div>
             <div class="form-group">
               <button type="button" class="btn btn-danger" (click)="onDeleteRecipeIngredient(i)">

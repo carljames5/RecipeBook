@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { GetAllRecipeListItemResponseModel } from '../../../models/response-models/get-all-recipe-list-item-response.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { RecipeService } from '../../../services/recipe.service';
+import { GetAllRecipeListItemResponseModel } from '../../../models/response-models/get-all-recipe-list-item-response.model';
 
 @Component({
   selector: 'app-recipe-list',
@@ -10,42 +11,24 @@ import { RecipeService } from '../../../services/recipe.service';
   styleUrls: ['./recipe-list.component.scss'],
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
-  private recipesChangedSubscription: Subscription;
-  private recipeAddedSubscription: Subscription;
-  private recipeUpdatedSubscription: Subscription;
-  private recipeDeletedSubscription: Subscription;
+  private recipeItemsRefreshSubscription: Subscription;
 
   public recipes: GetAllRecipeListItemResponseModel[];
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {}
 
   public ngOnInit() {
-    this.recipesChangedSubscription = this.recipeService.recipesChanged.subscribe(
-      (recipes: GetAllRecipeListItemResponseModel[]) => {
-        this.recipes = recipes;
+    this.recipeItemsRefreshSubscription = this.recipeService.refreshRecipeItemsSubject.subscribe(
+      (recipeItems: GetAllRecipeListItemResponseModel[]) => {
+        this.recipes = recipeItems;
       }
     );
 
-    this.recipeAddedSubscription = this.recipeService.recipeAdded.subscribe(() => {
-      this.recipeService.getAllRecipe();
-    });
-
-    this.recipeUpdatedSubscription = this.recipeService.recipeUpdated.subscribe(() => {
-      this.recipeService.getAllRecipe();
-    });
-
-    this.recipeDeletedSubscription = this.recipeService.recipeDeleted.subscribe(() => {
-      this.recipeService.getAllRecipe();
-    });
-
-    this.recipeService.getAllRecipe();
+    this.recipeService.refreshRecipeItems();
   }
 
   public ngOnDestroy() {
-    this.recipesChangedSubscription.unsubscribe();
-    this.recipeAddedSubscription.unsubscribe();
-    this.recipeUpdatedSubscription.unsubscribe();
-    this.recipeDeletedSubscription.unsubscribe();
+    this.recipeItemsRefreshSubscription.unsubscribe();
   }
 
   public onCreateRecipe() {

@@ -1,4 +1,4 @@
 export interface RecipeNameIsExistRequestModel {
-  recipeId: number;
+  recipeId?: number;
   recipeName: string;
 }

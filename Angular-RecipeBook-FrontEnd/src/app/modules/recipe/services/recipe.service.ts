@@ -1,34 +1,38 @@
-import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-
-import { ShoppingListService } from '../../shopping-list/services/shopping-list.service';
+import { Injectable } from '@angular/core';
 
 import { RecipeHttpService } from './recipe-http.service';
-import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
-import { GetAllRecipeListItemResponseModel } from '../models/response-models/get-all-recipe-list-item-response.model';
-import { EditRecipeResponseModel } from '../models/response-models/edit-recipe-response.model';
-import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
+import { ShoppingListService } from '../../shopping-list/services/shopping-list.service';
+
 import { CreateRecipeRequestModel } from '../models/request-models/create-recipe-request.model';
 import { UpdateRecipeRequestModel } from '../models/request-models/update-recipe-request.model';
+import { DeleteRecipeRequestModel } from '../models/request-models/delete-recipe-request.model';
+import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
+import { GetRecipeByIdRequestModel } from '../models/request-models/get-recipe-by-id-request.model';
+import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
+import { GetRecipeForEditingRequestModel } from '../models/request-models/get-recipe-for-editing-request.model';
+import { GetRecipeForEditingResponseModel } from '../models/response-models/get-recipe-for-editing-response.model';
+import { GetAllRecipeListItemResponseModel } from '../models/response-models/get-all-recipe-list-item-response.model';
 import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
-  public recipeGetByIdResolve = new Subject<GetRecipeByIdResponseModel>();
-  public recipesChanged = new Subject<GetAllRecipeListItemResponseModel[]>();
-  public recipeAdded = new Subject();
-  public recipeEditSubject = new Subject<EditRecipeResponseModel>();
-  public recipeUpdated = new Subject();
-  public recipeDeleted = new Subject();
+  public refreshRecipeItemsSubject = new Subject<GetAllRecipeListItemResponseModel[]>();
+  public getRecipeByIdSubject = new Subject<GetRecipeByIdResponseModel>();
+
+  public createdRecipeItemSubject = new Subject();
+  public updatedRecipeItemSubject = new Subject();
+  public deletedRecipeItemSubject = new Subject();
+  public recipeWasLoadedForEditingSubject = new Subject<GetRecipeForEditingResponseModel>();
 
   public constructor(private shoppingListService: ShoppingListService, private recipeHttpService: RecipeHttpService) {}
 
-  public getAllRecipe(): void {
+  public refreshRecipeItems(): void {
     this.recipeHttpService.getAllRecipe().subscribe(
-      (response: GetAllRecipeResponseModel) => {
-        this.recipesChanged.next(response.recipes);
+      (resposne: GetAllRecipeResponseModel) => {
+        this.refreshRecipeItemsSubject.next(resposne.recipes);
       },
       err => {
         console.log(err);
@@ -37,9 +41,12 @@ export class RecipeService {
   }
 
   public getRecipeById(id: number): void {
-    this.recipeHttpService.getRecipeById(id).subscribe(
+    const requestModel: GetRecipeByIdRequestModel = {} as GetRecipeByIdRequestModel;
+    requestModel.id = id;
+
+    this.recipeHttpService.getRecipeById(requestModel).subscribe(
       (recipe: GetRecipeByIdResponseModel) => {
-        this.recipeGetByIdResolve.next(recipe);
+        this.getRecipeByIdSubject.next(recipe);
       },
       err => {
         console.log(err);
@@ -47,10 +54,13 @@ export class RecipeService {
     );
   }
 
-  public editRecipe(id: number): void {
-    this.recipeHttpService.editRecipe(id).subscribe(
-      (recipe: EditRecipeResponseModel) => {
-        this.recipeEditSubject.next(recipe);
+  public getrecipeForEditing(id: number): void {
+    const requestModel: GetRecipeForEditingRequestModel = {} as GetRecipeForEditingRequestModel;
+    requestModel.id = id;
+
+    this.recipeHttpService.getRecipeForEditing(requestModel).subscribe(
+      (recipe: GetRecipeForEditingResponseModel) => {
+        this.recipeWasLoadedForEditingSubject.next(recipe);
       },
       err => {
         console.log(err);
@@ -58,10 +68,13 @@ export class RecipeService {
     );
   }
 
-  public createRecipe(recipe: CreateRecipeRequestModel): void {
-    this.recipeHttpService.createNewRecipe(recipe).subscribe(
+  public createRecipe(createRecipeFormValue: any): void {
+    const requestModel: CreateRecipeRequestModel = createRecipeFormValue;
+
+    this.recipeHttpService.createNewRecipe(requestModel).subscribe(
       () => {
-        this.recipeAdded.next();
+        this.refreshRecipeItems();
+        this.createdRecipeItemSubject.next();
       },
       err => {
         console.log(err);
@@ -69,10 +82,13 @@ export class RecipeService {
     );
   }
 
-  public updateRecipe(requestModel: UpdateRecipeRequestModel): void {
+  public updateRecipe(updateRecipeFormValue: any): void {
+    const requestModel: UpdateRecipeRequestModel = updateRecipeFormValue;
+
     this.recipeHttpService.updateRecipe(requestModel).subscribe(
       () => {
-        this.recipeUpdated.next();
+        this.refreshRecipeItems();
+        this.updatedRecipeItemSubject.next();
       },
       err => {
         console.log(err);
@@ -81,9 +97,13 @@ export class RecipeService {
   }
 
   public deleteRecipe(id: number): void {
-    this.recipeHttpService.deleteRecipe(id).subscribe(
+    const requestModel: DeleteRecipeRequestModel = {} as DeleteRecipeRequestModel;
+    requestModel.id = id;
+
+    this.recipeHttpService.deleteRecipe(requestModel).subscribe(
       () => {
-        this.recipeDeleted.next();
+        this.refreshRecipeItems();
+        this.deletedRecipeItemSubject.next();
       },
       err => {
         console.log(err);

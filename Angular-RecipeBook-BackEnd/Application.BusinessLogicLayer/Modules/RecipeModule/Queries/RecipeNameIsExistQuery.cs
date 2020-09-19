@@ -11,7 +11,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 {
     public class RecipeNameIsExistQuery : IRequest<RecipeNameIsExistResponseModel>
     {
-        public int RecipeId { get; }
+        public int? RecipeId { get; }
 
         public string RecipeName { get; }
 
@@ -29,12 +29,23 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 
         public override async Task<RecipeNameIsExistResponseModel> Handle(RecipeNameIsExistQuery request, CancellationToken cancellationToken)
         {
-            Recipe recipe = await Context.Recipes.FirstOrDefaultAsync(x => x.RecipeId != request.RecipeId && x.Name.ToLower() == request.RecipeName, cancellationToken);
+            RecipeNameIsExistResponseModel responseModel = new RecipeNameIsExistResponseModel();
 
-            return new RecipeNameIsExistResponseModel
+            if (request.RecipeId.HasValue)
             {
-                RecipeNameIsExist = recipe != null
-            };
+                Recipe existingRecipe = await Context.Recipes.FirstAsync(x => x.RecipeId == request.RecipeId, cancellationToken);
+
+                if (existingRecipe.Name.ToLower() == request.RecipeName)
+                {
+                    responseModel.RecipeNameIsExist = false;
+
+                    return responseModel;
+                }
+            }
+
+            responseModel.RecipeNameIsExist = await Context.Recipes.AnyAsync(x => x.Name.ToLower() == request.RecipeName.Trim().ToLower(), cancellationToken);
+
+            return responseModel;
         }
     }
 }

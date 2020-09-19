@@ -2,9 +2,9 @@
 
 namespace Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels
 {
-    public class EditRecipeRequestModel
+    public class GetRecipeForEditingRequestModel
     {
         [Required]
-        public int? Id { get; set; }
+        public int Id { get; set; }
     }
 }

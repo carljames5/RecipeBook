@@ -2,7 +2,7 @@
 
 namespace Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels
 {
-    public class EditRecipeResponseModel
+    public class GetRecipeForEditingResponseModel
     {
         public int Id { get; set; }
 

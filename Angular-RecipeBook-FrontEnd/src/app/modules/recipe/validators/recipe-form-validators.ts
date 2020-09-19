@@ -1,23 +1,14 @@
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/internal/operators/map';
+import { Observable } from 'rxjs/internal/Observable';
 import { FormControl, AbstractControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
 
-import { Observable } from 'rxjs/internal/Observable';
-import { map } from 'rxjs/internal/operators/map';
 import { RecipeHttpService } from '../services/recipe-http.service';
+import { RecipeNameIsExistRequestModel } from '../models/request-models/recipe-name-is-exist-request.model';
 
 @Injectable()
 export class RecipeFormValidator {
   constructor(private recipeHttpService: RecipeHttpService) {}
-
-  public ingredientAmountValidator(control: FormControl): { [s: string]: boolean } {
-    const regexp: RegExp = new RegExp('^[1-9]+[0-9]*$');
-
-    if (control.value !== null && !regexp.test(control.value)) {
-      return { notValidAmount: true };
-    }
-
-    return null;
-  }
 
   public maxIngredientAmountValueValidator(control: FormControl): { [s: string]: boolean } {
     const amountValue: any = control.value;
@@ -29,15 +20,19 @@ export class RecipeFormValidator {
     return null;
   }
 
-  public recipeNameValidator(recipeIdControl: AbstractControl): AsyncValidatorFn {
+  public recipeNameValidator(recipeIdControl?: AbstractControl): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.recipeHttpService.checkRecipeNameIsExist(recipeIdControl.value, control.value).pipe(
+      const requestModel: RecipeNameIsExistRequestModel = {} as RecipeNameIsExistRequestModel;
+      requestModel.recipeName = control.value;
+      requestModel.recipeId = recipeIdControl?.value;
+
+      return this.recipeHttpService.checkRecipeNameIsExist(requestModel).pipe(
         map(response => {
           if (response.recipeNameIsExist) {
             return { recipeNameIsExist: true };
-          } else {
-            return null;
           }
+
+          return null;
         })
       );
     };

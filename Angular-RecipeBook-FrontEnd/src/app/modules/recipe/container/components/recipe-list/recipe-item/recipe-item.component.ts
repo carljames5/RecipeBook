@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { GetRecipeByIdResponseModel } from 'src/app/modules/recipe/models/response-models/get-recipe-by-id-response.model';
+
+import { GetAllRecipeListItemResponseModel } from 'src/app/modules/recipe/models/response-models/get-all-recipe-list-item-response.model';
 
 @Component({
   selector: 'app-recipe-item',
@@ -7,6 +8,6 @@ import { GetRecipeByIdResponseModel } from 'src/app/modules/recipe/models/respon
   styleUrls: ['./recipe-item.component.scss'],
 })
 export class RecipeItemComponent {
-  @Input() recipe: GetRecipeByIdResponseModel;
+  @Input() recipe: GetAllRecipeListItemResponseModel;
   @Input() index: number;
 }

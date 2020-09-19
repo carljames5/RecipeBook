@@ -1,8 +1,9 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { GetRecipeByIdResponseModel } from '../../../models/response-models/get-recipe-by-id-response.model';
+
 import { RecipeService } from '../../../services/recipe.service';
+import { GetRecipeByIdResponseModel } from '../../../models/response-models/get-recipe-by-id-response.model';
 
 @Component({
   selector: 'app-recipe-details',
@@ -10,7 +11,7 @@ import { RecipeService } from '../../../services/recipe.service';
   styleUrls: ['./recipe-details.component.scss'],
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
-  private recipeGetByIdResolveSubsription: Subscription;
+  private getRecipeByIdSubscription: Subscription;
   private recipeDeletedSubscription: Subscription;
 
   public recipe: GetRecipeByIdResponseModel;
@@ -18,21 +19,21 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.recipeService.getRecipeById(+params['id']);
-    });
-
-    this.recipeGetByIdResolveSubsription = this.recipeService.recipeGetByIdResolve.subscribe(recipe => {
+    this.getRecipeByIdSubscription = this.recipeService.getRecipeByIdSubject.subscribe(recipe => {
       this.recipe = recipe;
     });
 
-    this.recipeDeletedSubscription = this.recipeService.recipeDeleted.subscribe(() => {
+    this.recipeDeletedSubscription = this.recipeService.deletedRecipeItemSubject.subscribe(() => {
       this.router.navigate(['/recipes']);
+    });
+
+    this.route.params.subscribe((params: Params) => {
+      this.recipeService.getRecipeById(+params['id']);
     });
   }
 
   ngOnDestroy(): void {
-    this.recipeGetByIdResolveSubsription.unsubscribe();
+    this.getRecipeByIdSubscription.unsubscribe();
     this.recipeDeletedSubscription.unsubscribe();
   }
 

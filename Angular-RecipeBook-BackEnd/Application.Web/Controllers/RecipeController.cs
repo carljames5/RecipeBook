@@ -44,10 +44,10 @@ namespace Application.Web.Controllers
             return Ok();
         }
 
-        [HttpPost("Edit")]
-        public async Task<ActionResult<EditRecipeResponseModel>> EditRecipe([FromBody] EditRecipeRequestModel requestModel)
+        [HttpPost("GetRecipeForEditing")]
+        public async Task<ActionResult<GetRecipeForEditingResponseModel>> GetRecipeForEditing([FromBody] GetRecipeForEditingRequestModel requestModel)
         {
-            EditRecipeResponseModel result = await _mediator.Send(new EditRecipeQuery(requestModel));
+            GetRecipeForEditingResponseModel result = await _mediator.Send(new GetRecipeForEditingQuery(requestModel));
 
             return Ok(result);
         }
