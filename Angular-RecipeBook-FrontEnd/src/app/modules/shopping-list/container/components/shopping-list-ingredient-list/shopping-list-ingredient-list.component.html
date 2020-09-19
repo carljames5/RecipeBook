@@ -1,0 +1,13 @@
+<div id="shopping-list-ingredients">
+  <h2>Ingredients</h2>
+  <hr />
+
+  <div class="list-group">
+    <shopping-list-ingredient-item
+      *ngFor="let ingredient of shoppingListIngredients; let arrayIndex = index"
+      [ingredient]="ingredient"
+      [arrayIndex]="arrayIndex"
+    >
+    </shopping-list-ingredient-item>
+  </div>
+</div>

@@ -4,27 +4,6 @@
 
   <div class="flex-container">
     <create-or-edit-shopping-list-ingredient></create-or-edit-shopping-list-ingredient>
-    <div id="shopping-list-ingredients">
-      <h2>Ingredients</h2>
-      <hr />
-      <div class="mt-4">
-        <div class="list-group">
-          <a
-            class="list-group-item align-items-start"
-            *ngFor="let ingredient of shoppingListIngredients; let ingredientIndex = index"
-            (click)="onEditItem(ingredientIndex)"
-          >
-            <div class="row">
-              <div class="col-md-10">
-                {{ ingredient.name }}
-              </div>
-              <div class="col-md-2 text-right">
-                {{ ingredient.amount }}
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
+    <shopping-list-ingredient-list></shopping-list-ingredient-list>
   </div>
 </div>
