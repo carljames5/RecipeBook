@@ -56,30 +56,50 @@
     }
 
     #recipe-ingredients {
-      li.list-group-item {
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-right: 0.5em;
+      ul.list-group {
+        max-height: 16em;
+        overflow-y: scroll;
 
-        .flex-container {
-          display: flex;
-          width: 100%;
+        &::-webkit-scrollbar {
+          width: 0.5em;
+          background-color: transparent;
+        }
 
-          span {
-            padding-top: 10px;
-            padding-bottom: 10px;
+        &::-webkit-scrollbar-thumb {
+          border-radius: 3px;
+          background: #959595;
+        }
 
-            &:nth-child(1) {
-              width: 90%;
-              text-align: start;
-              word-break: break-word;
-            }
+        &::-webkit-scrollbar-track {
+          border-radius: 3px;
+          background-color: white;
+        }
 
-            &:nth-child(2) {
-              width: 10%;
-              text-align: end;
-              word-break: break-all;
-              border-left: 1px solid #e9e9e9;
+        li.list-group-item {
+          padding-top: 0px;
+          padding-bottom: 0px;
+          padding-right: 0.5em;
+
+          .flex-container {
+            display: flex;
+            width: 100%;
+
+            span {
+              padding-top: 10px;
+              padding-bottom: 10px;
+
+              &:nth-child(1) {
+                width: 90%;
+                text-align: start;
+                word-break: break-word;
+              }
+
+              &:nth-child(2) {
+                width: 10%;
+                text-align: end;
+                word-break: break-all;
+                border-left: 1px solid #e9e9e9;
+              }
             }
           }
         }
