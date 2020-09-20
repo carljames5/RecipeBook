@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { ShoppingListService } from 'src/app/modules/shopping-list/services/shopping-list.service';
 
 @Component({
@@ -26,19 +26,19 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.shoppingListSavedSubscription.unsubscribe();
   }
 
-  public collapse() {
+  public collapse(): void {
     this.isExpanded = false;
   }
 
-  public toggle() {
+  public toggle(): void {
     this.isExpanded = !this.isExpanded;
   }
 
-  onFetchLastSavedShoppingList(): void {
+  public onFetchLastSavedShoppingList(): void {
     this.shoppingListService.getLastSavedShoppingList();
   }
 
-  onSaveShoppingList(): void {
+  public onSaveShoppingList(): void {
     this.shoppingListService.saveShoppingList();
   }
 }
