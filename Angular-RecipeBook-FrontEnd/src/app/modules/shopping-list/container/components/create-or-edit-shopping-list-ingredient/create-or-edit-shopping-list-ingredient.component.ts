@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+
 import { ShoppingListService } from '../../../services/shopping-list.service';
 import { ShoppingListIngredientFormValidator } from '../../../validators/shopping-list-ingredient-form-validators';
 
@@ -10,7 +11,7 @@ import { ShoppingListIngredientFormValidator } from '../../../validators/shoppin
   styleUrls: ['./create-or-edit-shopping-list-ingredient.component.scss'],
 })
 export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
-  private shoppingListIngredientEditingSubscript: Subscription;
+  private recipeWasLoadedForEditingSubscription: Subscription;
 
   public shoppingListIngredientForm: FormGroup;
 
@@ -34,49 +35,43 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
     this.shoppingListIngredientForm = new FormGroup({
       arrayIndex: new FormControl(null),
       name: new FormControl(null, [Validators.required]),
-      amount: new FormControl(null, [
-        Validators.required,
-        ShoppingListIngredientFormValidator.amountValidator,
-        ShoppingListIngredientFormValidator.maxAmountValueValidator,
-      ]),
+      amount: new FormControl(null, [Validators.required, ShoppingListIngredientFormValidator.amountValidator]),
     });
   }
 
   public ngOnInit(): void {
-    this.shoppingListIngredientEditingSubscript = this.shoppingListService.shoppingListIngredientEditing.subscribe(
-      arrayIndex => {
-        const selectedIngredient = this.shoppingListService.getShoppingListIngredientById(arrayIndex);
-
+    this.recipeWasLoadedForEditingSubscription = this.shoppingListService.shoppingListIngredientWasLoadedForEditingSubject.subscribe(
+      selectedShoppingListIngredient => {
         this.shoppingListIngredientForm.setValue({
-          arrayIndex: arrayIndex,
-          name: selectedIngredient.name,
-          amount: selectedIngredient.amount,
+          arrayIndex: selectedShoppingListIngredient.arrayIndex,
+          name: selectedShoppingListIngredient.name,
+          amount: selectedShoppingListIngredient.amount,
         });
       }
     );
   }
 
   public ngOnDestroy(): void {
-    this.shoppingListIngredientEditingSubscript.unsubscribe();
+    this.recipeWasLoadedForEditingSubscription.unsubscribe();
   }
 
   public onCreateOrEditItem(): void {
     if (this.ingredientArrayIndex.value !== null && this.ingredientArrayIndex.value !== undefined) {
-      this.shoppingListService.updateIngredientInShoppingList(this.shoppingListIngredientForm.value);
+      this.shoppingListService.updateShoppingListIngredientInShoppingList(this.shoppingListIngredientForm.value);
     } else {
-      this.shoppingListService.addIngredientToShoppingList(this.shoppingListIngredientForm.value);
+      this.shoppingListService.addShoppingListIngredientToShoppingList(this.shoppingListIngredientForm.value);
     }
 
     this.onClear();
-  }
-
-  public onClear(): void {
-    this.shoppingListIngredientForm.reset();
   }
 
   public onDelete(): void {
     this.shoppingListService.deleteIngredientFromShoppingList(this.ingredientArrayIndex.value);
 
     this.onClear();
+  }
+
+  public onClear(): void {
+    this.shoppingListIngredientForm.reset();
   }
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { ShoppingListIngredient } from '../models/shopping-list.model';
-import { SaveShoppingListIngredientsRequestModel } from '../models/request-models/save-shopping-list-ingredients-request.model';
-import { FetchShoppingListIngredientsResponseModels } from '../models/response-models/fetch-shopping-list-ingredients-response.model';
 import { environment } from 'src/environments/environment';
+
+import { SaveShoppingListRequestModel } from '../models/request-models/save-shopping-list-request.model';
+import { GetLastSavedShoppingListResponseModel } from '../models/response-models/get-last-saved-shopping-list-response.model.ts';
 
 @Injectable({
   providedIn: 'root',
@@ -16,17 +16,15 @@ export class ShoppingListHttpService {
     this._baseUrl = `${environment.apiUrl}/ShoppingList`;
   }
 
-  public saveShoppingList(shoppingListIngredients: ShoppingListIngredient[]): Observable<any> {
-    const requestUrl: string = `${this._baseUrl}/SaveShoppingList`;
-    const requestModel: SaveShoppingListIngredientsRequestModel = {} as SaveShoppingListIngredientsRequestModel;
-    requestModel.shoppingListIngredientListItems = shoppingListIngredients;
+  public getLastSavedShoppingList(): Observable<GetLastSavedShoppingListResponseModel> {
+    const requestUrl: string = `${this._baseUrl}/GetLastSavedShoppingList`;
 
-    return this.http.post<SaveShoppingListIngredientsRequestModel>(requestUrl, requestModel);
+    return this.http.get<GetLastSavedShoppingListResponseModel>(requestUrl);
   }
 
-  public fetchShoppingListIngredients(): Observable<FetchShoppingListIngredientsResponseModels> {
-    const requestUrl: string = `${this._baseUrl}/FetchShoppingList`;
+  public saveShoppingList(requestModel: SaveShoppingListRequestModel): Observable<any> {
+    const requestUrl: string = `${this._baseUrl}/SaveShoppingList`;
 
-    return this.http.get<FetchShoppingListIngredientsResponseModels>(requestUrl);
+    return this.http.post<SaveShoppingListRequestModel>(requestUrl, requestModel);
   }
 }

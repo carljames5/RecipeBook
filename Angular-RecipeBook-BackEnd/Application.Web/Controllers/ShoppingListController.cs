@@ -20,21 +20,21 @@ namespace Application.Web.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpPost("SaveShoppingList")]
-        public async Task<ActionResult> SaveShoppingList([FromBody] SaveShoppingListIngredientsRequestModel requestModel)
+        [HttpGet("GetLastSavedShoppingList")]
+        public async Task<ActionResult<GetLastSavedShoppingListResponseModel>> GetLastSavedShoppingList()
         {
-            await _mediator.Send(new SaveShoppingListIngredientsCommand(requestModel));
-
-            return Ok();
-        }
-
-        [HttpGet("FetchShoppingList")]
-        public async Task<ActionResult<FetchShoppingListIngredientsResponseModel>> FetchShoppingList()
-        {
-            FetchShoppingListIngredientsResponseModel result =
-                await _mediator.Send(new FetchShoppingListIngredientsQuery());
+            GetLastSavedShoppingListResponseModel result =
+                await _mediator.Send(new GetLastSavedShoppingListQuery());
 
             return Ok(result);
+        }
+
+        [HttpPost("SaveShoppingList")]
+        public async Task<ActionResult> SaveShoppingList([FromBody] SaveShoppingListRequestModel requestModel)
+        {
+            await _mediator.Send(new SaveShoppingListCommand(requestModel));
+
+            return Ok();
         }
     }
 }

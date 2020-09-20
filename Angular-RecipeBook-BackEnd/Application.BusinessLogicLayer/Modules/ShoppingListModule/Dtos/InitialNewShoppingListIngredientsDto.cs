@@ -5,14 +5,14 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos
 {
     public class InitialNewShoppingListIngredientsDto
     {
-        public IEnumerable<ShoppingListIngredientListItemDto> ShoppingListIngredients { get; }
+        public IEnumerable<ShoppingListIngredientListItemDto> Ingredients { get; }
 
         public CancellationToken CancellationToken { get; }
 
         public InitialNewShoppingListIngredientsDto(IEnumerable<ShoppingListIngredientListItemDto> shoppingListIngredients,
                                                     CancellationToken cancellationToken)
         {
-            ShoppingListIngredients = shoppingListIngredients;
+            Ingredients = shoppingListIngredients;
             CancellationToken = cancellationToken;
         }
     }

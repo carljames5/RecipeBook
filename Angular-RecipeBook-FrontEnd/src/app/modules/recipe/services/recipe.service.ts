@@ -41,8 +41,7 @@ export class RecipeService {
   }
 
   public getRecipeById(id: number): void {
-    const requestModel: GetRecipeByIdRequestModel = {} as GetRecipeByIdRequestModel;
-    requestModel.id = id;
+    const requestModel: GetRecipeByIdRequestModel = { id: id } as GetRecipeByIdRequestModel;
 
     this.recipeHttpService.getRecipeById(requestModel).subscribe(
       (recipe: GetRecipeByIdResponseModel) => {
@@ -55,8 +54,7 @@ export class RecipeService {
   }
 
   public getrecipeForEditing(id: number): void {
-    const requestModel: GetRecipeForEditingRequestModel = {} as GetRecipeForEditingRequestModel;
-    requestModel.id = id;
+    const requestModel: GetRecipeForEditingRequestModel = { id: id } as GetRecipeForEditingRequestModel;
 
     this.recipeHttpService.getRecipeForEditing(requestModel).subscribe(
       (recipe: GetRecipeForEditingResponseModel) => {
@@ -97,8 +95,7 @@ export class RecipeService {
   }
 
   public deleteRecipe(id: number): void {
-    const requestModel: DeleteRecipeRequestModel = {} as DeleteRecipeRequestModel;
-    requestModel.id = id;
+    const requestModel: DeleteRecipeRequestModel = { id: id } as DeleteRecipeRequestModel;
 
     this.recipeHttpService.deleteRecipe(requestModel).subscribe(
       () => {
@@ -112,6 +109,6 @@ export class RecipeService {
   }
 
   public addRecipeIngredientsToShoppingList(ingredients: GetRecipeByIdIngredientListItemResponseModel[]): void {
-    this.shoppingListService.addIngredientsToShoppingList(ingredients);
+    this.shoppingListService.addRecipeIngredientsToShoppingList(ingredients);
   }
 }

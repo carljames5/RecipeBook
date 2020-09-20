@@ -11,17 +11,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries
 {
-    public class FetchShoppingListIngredientsQuery : IRequest<FetchShoppingListIngredientsResponseModel>
+    public class GetLastSavedShoppingListQuery : IRequest<GetLastSavedShoppingListResponseModel>
     { }
 
-    public class FetchShoppingListIngredientsQueryHandler : QueryBase<FetchShoppingListIngredientsQuery, FetchShoppingListIngredientsResponseModel>
+    public class GetLastSavedShoppingListQueryHandler : QueryBase<GetLastSavedShoppingListQuery, GetLastSavedShoppingListResponseModel>
     {
-        public FetchShoppingListIngredientsQueryHandler(RecipeBookReadOnlyDbContext context) : base(context)
+        public GetLastSavedShoppingListQueryHandler(RecipeBookReadOnlyDbContext context) : base(context)
         { }
 
-        public override async Task<FetchShoppingListIngredientsResponseModel> Handle(FetchShoppingListIngredientsQuery request, CancellationToken cancellationToken)
+        public override async Task<GetLastSavedShoppingListResponseModel> Handle(GetLastSavedShoppingListQuery request, CancellationToken cancellationToken)
         {
-            FetchShoppingListIngredientsResponseModel result = new FetchShoppingListIngredientsResponseModel();
+            GetLastSavedShoppingListResponseModel result = new GetLastSavedShoppingListResponseModel();
 
             ApplicationUser user = await Context.Users
                 .Where(x => x.NormalizedUserName == ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper())
@@ -32,11 +32,11 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries
                 throw new ArgumentNullException(nameof(user)); // TODO UserNotFoundException!
             }
 
-            result.ShoppingListIngredients = await Context.ShoppingLists
+            result.Ingredients = await Context.ShoppingLists
                 .Include(x => x.User)
                 .Include(x => x.Ingredient)
                 .Where(x => x.User == user)
-                .Select(x => new ShoppingListIngredientListItemResponseModel
+                .Select(x => new GetLastSavedShoppingListIngredientListItemResponseModel
                 {
                     Name = x.Ingredient.Name,
                     Amount = x.Amount

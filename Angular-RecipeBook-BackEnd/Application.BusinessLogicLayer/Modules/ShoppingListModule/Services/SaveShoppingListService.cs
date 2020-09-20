@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Services
 {
-    public class SaveShoppingListIngredientsService : ISaveShoppingListIngredientsService
+    public class SaveShoppingListService : ISaveShoppingListService
     {
         private readonly RecipeBookDbContext _context;
 
-        public SaveShoppingListIngredientsService(RecipeBookDbContext context)
+        public SaveShoppingListService(RecipeBookDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -25,7 +25,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Services
 
             List<Ingredient> existingIngredients = await GetExistingIngredientsAsync(modelDto);
 
-            foreach (ShoppingListIngredientListItemDto newShoppingListIngredient in modelDto.ShoppingListIngredients)
+            foreach (ShoppingListIngredientListItemDto newShoppingListIngredient in modelDto.Ingredients)
             {
                 Ingredient insertedIngredient =
                     existingIngredients.FirstOrDefault(x => x.Name.ToLower() == newShoppingListIngredient.Name.ToLower());
@@ -55,7 +55,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Services
 
         private async Task<List<Ingredient>> GetExistingIngredientsAsync(InitialNewShoppingListIngredientsDto modelDto)
         {
-            IEnumerable<string> insertedIngredientNames = modelDto.ShoppingListIngredients.Select(x => x.Name.ToLower());
+            IEnumerable<string> insertedIngredientNames = modelDto.Ingredients.Select(x => x.Name.ToLower());
 
             return await _context.Ingredient
                 .Where(x => insertedIngredientNames.Contains(x.Name.ToLower()))

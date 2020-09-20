@@ -15,27 +15,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 {
-    public class SaveShoppingListIngredientsCommand : IRequest<Result>
+    public class SaveShoppingListCommand : IRequest<Result>
     {
-        public IEnumerable<ShoppingListIngredientListItemDto> ShoppingListIngredients { get; }
+        public IEnumerable<ShoppingListIngredientListItemDto> Ingredients { get; }
 
-        public SaveShoppingListIngredientsCommand(SaveShoppingListIngredientsRequestModel requestModel)
+        public SaveShoppingListCommand(SaveShoppingListRequestModel requestModel)
         {
-            ShoppingListIngredients = requestModel.ShoppingListIngredientListItems?.Select(x =>
+            Ingredients = requestModel.Ingredients?.Select(x =>
                 new ShoppingListIngredientListItemDto(x.Name, x.Amount));
         }
     }
 
-    public class SaveShoppingLIstIngredientsCommandHandler : CommandBase<SaveShoppingListIngredientsCommand, Result>
+    public class SaveShoppingListCommandHandler : CommandBase<SaveShoppingListCommand, Result>
     {
-        private readonly ISaveShoppingListIngredientsService _saveShoppingListIngredientsService;
+        private readonly ISaveShoppingListService _saveShoppingListService;
 
-        public SaveShoppingLIstIngredientsCommandHandler(RecipeBookDbContext context, ISaveShoppingListIngredientsService saveShoppingListIngredientsService) : base(context)
+        public SaveShoppingListCommandHandler(RecipeBookDbContext context, ISaveShoppingListService saveShoppingListService) : base(context)
         {
-            _saveShoppingListIngredientsService = saveShoppingListIngredientsService ?? throw new ArgumentNullException(nameof(saveShoppingListIngredientsService));
+            _saveShoppingListService = saveShoppingListService ?? throw new ArgumentNullException(nameof(saveShoppingListService));
         }
 
-        protected override async Task<Result> Handler(SaveShoppingListIngredientsCommand request, CancellationToken cancellationToken)
+        protected override async Task<Result> Handler(SaveShoppingListCommand request, CancellationToken cancellationToken)
         {
             ApplicationUser user = await Context.Users
                 .Include(x => x.ShoppingList)
@@ -49,8 +49,8 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 
             Context.ShoppingList.RemoveRange(user.ShoppingList);
 
-            user.ShoppingList = await _saveShoppingListIngredientsService.InitialNewShoppingListIngredients(
-                new InitialNewShoppingListIngredientsDto(request.ShoppingListIngredients, cancellationToken));
+            user.ShoppingList = await _saveShoppingListService.InitialNewShoppingListIngredients(
+                new InitialNewShoppingListIngredientsDto(request.Ingredients, cancellationToken));
 
             await Context.SaveChangesAsync(cancellationToken);
 

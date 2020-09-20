@@ -1,3 +1,5 @@
-export class ShoppingListIngredient {
-  constructor(public name: string, public amount: number) {}
+import { ShoppingListIngredientModel } from './shopping-list-ingredient.model';
+
+export interface ShoppingListModel {
+  ingredients: ShoppingListIngredientModel[];
 }

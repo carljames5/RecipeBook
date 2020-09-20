@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -9,19 +9,21 @@ import { ShoppingListService } from 'src/app/modules/shopping-list/services/shop
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss'],
 })
-export class NavBarComponent implements OnInit {
-  private shoppingListIngredientsSavedSubscription: Subscription;
+export class NavBarComponent implements OnInit, OnDestroy {
+  private shoppingListSavedSubscription: Subscription;
 
   public isExpanded: boolean = false;
 
   constructor(private shoppingListService: ShoppingListService, private toastr: ToastrService) {}
 
-  ngOnInit(): void {
-    this.shoppingListIngredientsSavedSubscription = this.shoppingListService.shoppingListIngredientSaved.subscribe(
-      () => {
-        this.toastr.success('Shopping list saved successfully!', 'Congratulations!');
-      }
-    );
+  public ngOnInit(): void {
+    this.shoppingListSavedSubscription = this.shoppingListService.shoppingListSavedSubject.subscribe(() => {
+      this.toastr.success('Shopping list saved successfully!', 'Congratulations!');
+    });
+  }
+
+  public ngOnDestroy(): void {
+    this.shoppingListSavedSubscription.unsubscribe();
   }
 
   public collapse() {
@@ -32,11 +34,11 @@ export class NavBarComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
-  onSaveShoppingList(): void {
-    this.shoppingListService.saveShoppingListIngredients();
+  onFetchLastSavedShoppingList(): void {
+    this.shoppingListService.getLastSavedShoppingList();
   }
 
-  onFetchShoppingListIngredients(): void {
-    this.shoppingListService.fetchShoppingListIngredients();
+  onSaveShoppingList(): void {
+    this.shoppingListService.saveShoppingList();
   }
 }

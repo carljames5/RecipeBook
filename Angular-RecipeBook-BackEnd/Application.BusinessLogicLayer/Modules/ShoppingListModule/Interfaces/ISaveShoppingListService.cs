@@ -5,7 +5,7 @@ using Application.DataAccessLayer.Entities;
 
 namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces
 {
-    public interface ISaveShoppingListIngredientsService
+    public interface ISaveShoppingListService
     {
         Task<ICollection<ShoppingList>> InitialNewShoppingListIngredients(InitialNewShoppingListIngredientsDto modelDto);
     }

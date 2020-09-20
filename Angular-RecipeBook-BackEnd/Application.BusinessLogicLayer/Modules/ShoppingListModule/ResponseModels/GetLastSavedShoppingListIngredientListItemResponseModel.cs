@@ -1,6 +1,6 @@
 ﻿namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.ResponseModels
 {
-    public class ShoppingListIngredientListItemResponseModel
+    public class GetLastSavedShoppingListIngredientListItemResponseModel
     {
         public string Name { get; set; }
 

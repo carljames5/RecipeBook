@@ -10,14 +10,4 @@ export class ShoppingListIngredientFormValidator {
 
     return null;
   }
-
-  public static maxAmountValueValidator(control: FormControl): { [s: string]: boolean } {
-    const amountValue: any = control.value;
-
-    if (amountValue !== null && +amountValue > 999999) {
-      return { notValidMaxAmountValue: true };
-    }
-
-    return null;
-  }
 }

@@ -1,5 +1,6 @@
 <div id="create-or-edit-shopping-list-ingredient">
   <div id="header" *ngIf="ingredientArrayIndex.value === null; then createHeaderTmp; else editHeaderTmp"></div>
+  <hr />
 
   <form id="create-or-edit-form" [formGroup]="shoppingListIngredientForm" (ngSubmit)="onCreateOrEditItem()">
     <input type="text" id="arrayIndex" class="form-control hidden" formControlName="arrayIndex" />
@@ -12,7 +13,16 @@
         </div>
         <div class="form-group">
           <label for="amount">Amount</label>
-          <input id="amount" type="number" class="form-control" formControlName="amount" />
+          <input
+            id="amount"
+            type="number"
+            class="form-control"
+            inputmode="numeric"
+            min="0"
+            max="999999"
+            digitOnly
+            formControlName="amount"
+          />
         </div>
       </div>
       <div class="flex-container">
@@ -23,9 +33,6 @@
           <span *ngIf="ingredientAmount.errors?.required"><strong>Amount</strong> is required</span>
           <span *ngIf="ingredientAmount.errors?.notValidAmount">
             <strong>Amount</strong> must be greater or equal than zero
-          </span>
-          <span *ngIf="ingredientAmount.errors?.notValidMaxAmountValue">
-            <strong>Amount</strong> must be less than 1.000.000
           </span>
         </div>
       </div>
