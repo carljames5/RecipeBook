@@ -12,6 +12,7 @@ import { ShoppingListIngredientFormValidator } from '../../../validators/shoppin
 })
 export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   private recipeWasLoadedForEditingSubscription: Subscription;
+  private shoppingListClearedSubscription: Subscription;
 
   public shoppingListIngredientForm: FormGroup;
 
@@ -49,10 +50,15 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
         });
       }
     );
+
+    this.shoppingListClearedSubscription = this.shoppingListService.shoppingListClearedSubject.subscribe(() => {
+      this.onClear();
+    });
   }
 
   public ngOnDestroy(): void {
     this.recipeWasLoadedForEditingSubscription.unsubscribe();
+    this.shoppingListClearedSubscription.unsubscribe();
   }
 
   public onCreateOrEditItem(): void {

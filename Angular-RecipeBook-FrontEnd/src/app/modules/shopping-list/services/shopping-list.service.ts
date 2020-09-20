@@ -17,6 +17,7 @@ export class ShoppingListService {
   private shoppingList: ShoppingListModel;
 
   public shoppingListSavedSubject = new Subject();
+  public shoppingListClearedSubject = new Subject();
   public refreshShoppingListIngredientsSubject = new Subject<ShoppingListIngredientModel[]>();
   public shoppingListIngredientWasLoadedForEditingSubject = new Subject<EditShoppingListIngredientModel>();
 
@@ -106,6 +107,13 @@ export class ShoppingListService {
     }
 
     this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
+  }
+
+  public clearingShoppingListIngredients(): void {
+    this.shoppingList.ingredients = [];
+
+    this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
+    this.shoppingListClearedSubject.next();
   }
 
   //#region PRIVATE Helper Methods

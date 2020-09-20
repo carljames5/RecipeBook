@@ -16,7 +16,7 @@ export class ShoppingListIngredientListComponent implements OnInit, OnDestroy {
 
   constructor(private shoppingListService: ShoppingListService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.shoppingListIngredientsRefreshSubscription = this.shoppingListService.refreshShoppingListIngredientsSubject.subscribe(
       (shoppingListIngredients: ShoppingListIngredientModel[]) => {
         this.shoppingListIngredients = shoppingListIngredients;
@@ -28,5 +28,9 @@ export class ShoppingListIngredientListComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.shoppingListIngredientsRefreshSubscription.unsubscribe();
+  }
+
+  public onClearingShoppingListIngredients(): void {
+    this.shoppingListService.clearingShoppingListIngredients();
   }
 }

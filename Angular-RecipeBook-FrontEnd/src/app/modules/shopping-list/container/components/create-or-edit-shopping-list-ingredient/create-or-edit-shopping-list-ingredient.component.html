@@ -1,5 +1,7 @@
 <div id="create-or-edit-shopping-list-ingredient">
-  <div id="header" *ngIf="ingredientArrayIndex.value === null; then createHeaderTmp; else editHeaderTmp"></div>
+  <div id="header">
+    <h2 *ngIf="ingredientArrayIndex.value === null; then createHeaderTmp; else editHeaderTmp"></h2>
+  </div>
   <hr />
 
   <form id="create-or-edit-form" [formGroup]="shoppingListIngredientForm" (ngSubmit)="onCreateOrEditItem()">
