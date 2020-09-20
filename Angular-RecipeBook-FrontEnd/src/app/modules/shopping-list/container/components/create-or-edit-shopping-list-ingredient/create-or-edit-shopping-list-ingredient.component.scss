@@ -4,12 +4,6 @@
   }
 
   #create-or-edit-form {
-    input {
-      &.form-control.hidden {
-        display: none;
-      }
-    }
-
     #input-fields {
       .flex-container {
         &:nth-child(1) {
