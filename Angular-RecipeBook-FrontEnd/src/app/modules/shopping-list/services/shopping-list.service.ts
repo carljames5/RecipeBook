@@ -26,16 +26,13 @@ export class ShoppingListService {
   }
 
   public getLastSavedShoppingList() {
-    this.shoppingListHttpService.getLastSavedShoppingList().subscribe(
-      (response: GetLastSavedShoppingListResponseModel) => {
+    this.shoppingListHttpService
+      .getLastSavedShoppingList()
+      .subscribe((response: GetLastSavedShoppingListResponseModel) => {
         this.shoppingList.ingredients = response.ingredients;
 
         this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+      });
   }
 
   public getShoppingListIngredients(): ShoppingListIngredientModel[] {
@@ -88,14 +85,9 @@ export class ShoppingListService {
       ingredients: this.shoppingList.ingredients,
     } as SaveShoppingListRequestModel;
 
-    this.shoppingListHttpService.saveShoppingList(requestModel).subscribe(
-      () => {
-        this.shoppingListSavedSubject.next();
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.shoppingListHttpService.saveShoppingList(requestModel).subscribe(() => {
+      this.shoppingListSavedSubject.next();
+    });
   }
 
   public addRecipeIngredientsToShoppingList(recipeIngredients: GetRecipeByIdIngredientListItemResponseModel[]): void {

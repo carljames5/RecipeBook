@@ -1,5 +1,7 @@
 @import '~ngx-toastr/toastr';
 
+@import './styles/custom-toast-messages.scss';
+
 body {
   scrollbar-width: thin;
   scrollbar-color: #f5f5f5 #cecece;
@@ -38,9 +40,4 @@ body {
       color: #e53935;
     }
   }
-}
-
-#toast-container > .toast-success {
-  background-color: #b0ceb2;
-  color: black;
 }

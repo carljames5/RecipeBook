@@ -14,11 +14,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   public isExpanded: boolean = false;
 
-  constructor(private shoppingListService: ShoppingListService, private toastr: ToastrService) {}
+  constructor(private shoppingListService: ShoppingListService, private toastrService: ToastrService) {}
 
   public ngOnInit(): void {
     this.shoppingListSavedSubscription = this.shoppingListService.shoppingListSavedSubject.subscribe(() => {
-      this.toastr.success('Shopping list saved successfully!', 'Congratulations!');
+      this.toastrService.success('Shopping list saved successfully!', null, {
+        titleClass: 'title success',
+      });
     });
   }
 

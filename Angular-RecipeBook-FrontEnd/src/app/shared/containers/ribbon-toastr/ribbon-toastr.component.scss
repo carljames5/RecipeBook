@@ -1,0 +1,26 @@
+.ribbon-toastr-container {
+  background-image: none;
+
+  .title {
+    font-size: 16px;
+
+    &.error {
+      color: #b71c1c;
+    }
+
+    &.success {
+      color: #558b2f;
+    }
+  }
+
+  .message {
+    padding-top: 0.6em;
+    color: #000000;
+    font-size: 12px;
+  }
+}
+
+:host {
+  background-color: #ffffff;
+  pointer-events: all;
+}

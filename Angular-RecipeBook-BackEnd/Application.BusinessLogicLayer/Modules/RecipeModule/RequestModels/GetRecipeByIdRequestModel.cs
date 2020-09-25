@@ -4,7 +4,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels
 {
     public class GetRecipeByIdRequestModel
     {
-        [Required]
-        public int? Id { get; set; }
+        [Required(ErrorMessage = "The Recipe ID is required!")]
+        public int Id { get; set; }
     }
 }

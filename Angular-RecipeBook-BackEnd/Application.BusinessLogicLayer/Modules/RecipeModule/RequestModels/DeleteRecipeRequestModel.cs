@@ -4,7 +4,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels
 {
     public class DeleteRecipeRequestModel
     {
-        [Required]
-        public int? Id { get; set; }
+        [Required(ErrorMessage = "The ID of the Recipe to be deleted is Required!")]
+        public int Id { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.ResponseModels;
 using Application.Core.Constants;
+using Application.Core.Exceptions;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;
@@ -29,7 +29,8 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user)); // TODO UserNotFoundException!
+                throw new RecipeBookException(RecipeBookExceptionCode.UserNotFound,
+                    $"User not found in database! {nameof(ApplicationAdminUserConstants.UserMeta.USERNAME)}: {ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper()}"); // TODO Replace it UserId
             }
 
             result.Ingredients = await Context.ShoppingLists

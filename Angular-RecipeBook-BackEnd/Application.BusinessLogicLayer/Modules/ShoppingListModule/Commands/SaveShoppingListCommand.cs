@@ -8,6 +8,7 @@ using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels;
 using Application.Core.CommonModels;
 using Application.Core.Constants;
+using Application.Core.Exceptions;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;
@@ -44,7 +45,8 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user)); // TODO UserNotFoundException!!
+                throw new RecipeBookException(RecipeBookExceptionCode.UserNotFound,
+                    $"User not found in database! {nameof(ApplicationAdminUserConstants.UserMeta.USERNAME)}: {ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper()}"); // TODO Replace it UserId
             }
 
             Context.ShoppingList.RemoveRange(user.ShoppingList);

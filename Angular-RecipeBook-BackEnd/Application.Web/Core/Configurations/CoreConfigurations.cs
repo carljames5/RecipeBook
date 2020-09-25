@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Application.BusinessLogicLayer;
 using Application.BusinessLogicLayer.Interfaces;
-using Application.Core;
 using Application.Core.Helpers;
 using Application.DataAccessLayer.Context;
 using MediatR;

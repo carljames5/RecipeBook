@@ -5,11 +5,11 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModel
 {
     public class SaveShoppingListIngredientListItemRequestModel
     {
-        [Required]
+        [Required(ErrorMessage = "The Ingredient Name field must be required!")]
         public string Name { get; set; }
 
         [Range(ShoppingListModuleConstants.RangeValues.INGREDIENT_AMOUNT_MIN_VALUE, ShoppingListModuleConstants.RangeValues.INGREDIENT_AMOUNT_MAX_VALUE,
-            ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+            ErrorMessage = "The Ingredient Amount value for {0} must be between {1} and {2}.")]
         public int Amount { get; set; }
     }
 }

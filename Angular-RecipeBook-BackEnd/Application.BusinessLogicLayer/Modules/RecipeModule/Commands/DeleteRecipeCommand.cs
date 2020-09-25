@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.Core.CommonModels;
+using Application.Core.Exceptions;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;
@@ -16,7 +16,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
         public DeleteRecipeCommand(DeleteRecipeRequestModel requestModel)
         {
-            Id = requestModel.Id.Value;
+            Id = requestModel.Id;
         }
     }
 
@@ -31,7 +31,8 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
             if (recipe == null)
             {
-                throw new ArgumentNullException(nameof(recipe)); // TODO RecipeNotFoundException
+                throw new RecipeBookException(RecipeBookExceptionCode.DeletableRecipeNotFound,
+                    $"Deletable recipe not found in database! {nameof(recipe.RecipeId)}: {request.Id}");
             }
 
             Context.Recipe.Remove(recipe);

@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Web.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class RecipeController : ControllerBase
     {
         private readonly IMediator _mediator;
