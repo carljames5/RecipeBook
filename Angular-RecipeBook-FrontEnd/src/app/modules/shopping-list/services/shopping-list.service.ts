@@ -1,7 +1,10 @@
 import { Subject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
+import { ToastrService } from 'ngx-toastr';
 import { ShoppingListHttpService } from './shopping-list-http.service';
+import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
 
 import { ShoppingListModel } from '../models/shopping-list.model';
 import { ShoppingListIngredientModel } from '../models/shopping-list-ingredient.model';
@@ -16,20 +19,30 @@ import { GetRecipeByIdIngredientListItemResponseModel } from '../../recipe/model
 export class ShoppingListService {
   private shoppingList: ShoppingListModel;
 
-  public shoppingListSavedSubject = new Subject();
   public shoppingListClearedSubject = new Subject();
   public refreshShoppingListIngredientsSubject = new Subject<ShoppingListIngredientModel[]>();
   public shoppingListIngredientWasLoadedForEditingSubject = new Subject<EditShoppingListIngredientModel>();
 
-  constructor(private shoppingListHttpService: ShoppingListHttpService) {
+  constructor(
+    private shoppingListHttpService: ShoppingListHttpService,
+    private loadingSpinnerService: LoadingSpinnerService,
+    private toastrService: ToastrService
+  ) {
     this.shoppingList = { ingredients: [] } as ShoppingListModel;
   }
 
   public getLastSavedShoppingList() {
+    this.loadingSpinnerService.show('Fetching shopping list...');
+
     this.shoppingListHttpService
       .getLastSavedShoppingList()
+      .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe((response: GetLastSavedShoppingListResponseModel) => {
         this.shoppingList.ingredients = response.ingredients;
+
+        this.toastrService.success('The shopping list was fetch successfully!', null, {
+          titleClass: 'title success',
+        });
 
         this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
       });
@@ -85,9 +98,16 @@ export class ShoppingListService {
       ingredients: this.shoppingList.ingredients,
     } as SaveShoppingListRequestModel;
 
-    this.shoppingListHttpService.saveShoppingList(requestModel).subscribe(() => {
-      this.shoppingListSavedSubject.next();
-    });
+    this.loadingSpinnerService.show('Saving shopping list...');
+
+    this.shoppingListHttpService
+      .saveShoppingList(requestModel)
+      .pipe(finalize(() => this.loadingSpinnerService.hide()))
+      .subscribe(() => {
+        this.toastrService.success('Shopping list saved successfully!', null, {
+          titleClass: 'title success',
+        });
+      });
   }
 
   public addRecipeIngredientsToShoppingList(recipeIngredients: GetRecipeByIdIngredientListItemResponseModel[]): void {
@@ -97,6 +117,10 @@ export class ShoppingListService {
         amount: item.amount,
       } as ShoppingListIngredientModel);
     }
+
+    this.toastrService.success('This recipe ingredients successfully added to your shopping list!', null, {
+      titleClass: 'title success',
+    });
 
     this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
   }
