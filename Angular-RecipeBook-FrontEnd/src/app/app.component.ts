@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component } from '@angular/core';
+
 import { LoadingSpinnerService } from './core/services/loading-spinner.service';
 
 @Component({
@@ -6,7 +7,7 @@ import { LoadingSpinnerService } from './core/services/loading-spinner.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements AfterContentChecked {
   title: string = 'Angular-RecipeBook';
 
   //#region GETTERS
@@ -17,5 +18,9 @@ export class AppComponent {
 
   //#endregion
 
-  constructor(private loadingSpinnerService: LoadingSpinnerService) {}
+  constructor(private loadingSpinnerService: LoadingSpinnerService, private cdr: ChangeDetectorRef) {}
+
+  public ngAfterContentChecked(): void {
+    this.cdr.detectChanges();
+  }
 }
