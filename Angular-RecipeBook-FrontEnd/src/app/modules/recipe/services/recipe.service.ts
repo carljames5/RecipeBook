@@ -103,7 +103,7 @@ export class RecipeService {
   public deleteRecipe(id: number): void {
     const requestModel: DeleteRecipeRequestModel = { id: id } as DeleteRecipeRequestModel;
 
-    this.loadingSpinnerService.show('Update recipe...');
+    this.loadingSpinnerService.show('Delete recipe...');
 
     this.recipeHttpService
       .deleteRecipe(requestModel)

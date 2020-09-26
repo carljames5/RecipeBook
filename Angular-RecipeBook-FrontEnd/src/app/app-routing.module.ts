@@ -4,6 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 const appRoutes: Routes = [
   { path: '', redirectTo: 'recipe', pathMatch: 'full' },
   {
+    path: 'login',
+    loadChildren: () => import('./modules/authentication/authentication.module').then(x => x.AuthenticationModule),
+  },
+  {
     path: 'recipe',
     loadChildren: () => import('./modules/recipe/recipe.module').then(x => x.RecipeModule),
   },
