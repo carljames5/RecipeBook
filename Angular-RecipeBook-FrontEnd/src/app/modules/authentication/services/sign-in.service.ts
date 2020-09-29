@@ -17,8 +17,8 @@ export class SignInService {
     const requestModel: SignInRequestModel = {
       userName: signInFormValue.get('userName').value,
       password: signInFormValue.get('password').value,
-    };
+    } as SignInRequestModel;
 
-    console.log(requestModel);
+    this.signInHttpService.signIn(requestModel).subscribe(() => {});
   }
 }
