@@ -13,14 +13,14 @@ export class SignInComponent implements OnInit {
 
   public constructor(private signInService: SignInService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.signInForm = new FormGroup({
       userName: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
     });
   }
 
-  onSignIn(): void {
-    console.log(this.signInForm);
+  public onSignIn(): void {
+    this.signInService.signIn(this.signInForm);
   }
 }
