@@ -30,6 +30,8 @@ namespace Application.Web
             services.ConfigureMediatR();
 
             services.ConfigureAuthService();
+            services.ConfigureApplicationCookies();
+
             services.AddScopedServices();
 
             services.AddCors();
