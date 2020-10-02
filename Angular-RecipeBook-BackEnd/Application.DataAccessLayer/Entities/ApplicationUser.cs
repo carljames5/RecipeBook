@@ -10,6 +10,8 @@ namespace Application.DataAccessLayer.Entities
 
         public string LastName { get; set; }
 
+        public bool IsActive { get; set; }
+
         public ICollection<ShoppingList> ShoppingList { get; set; }
 
         public ApplicationUser()

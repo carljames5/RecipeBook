@@ -1,3 +1,5 @@
+using System.Linq;
+using Application.Core.Constants;
 using Application.DataAccessLayer.Context;
 using Application.Web.Core.Configurations;
 using Application.Web.Core.Extensions;
@@ -44,12 +46,15 @@ namespace Application.Web
         {
             app.AddApiExceptionHandler();
 
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(builder => builder.WithOrigins(CorsConstants.SPECIFIED_ORIGINS.ToArray())
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSwagger();
             app.UseSwaggerUI(o =>

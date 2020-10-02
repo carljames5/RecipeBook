@@ -10,6 +10,10 @@
       <input id="password" type="password" autocomplete="off" formControlName="password" />
       <label for="password">Password</label>
     </div>
+    <div id="stay-logged-in-group">
+      <ui-switch id="is-persistent-switch" formControlName="isPersistent"></ui-switch>
+      <label>Stay logged in?</label>
+    </div>
     <button type="submit" class="submit-btn" [disabled]="!signInForm.valid">
       <span><fa-icon icon="sign-in-alt"></fa-icon> Sign In</span>
     </button>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { SignInHttpService } from './sign-in-http.service';
 import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
+
 import { SignInRequestModel } from '../models/request-models/sign-in-request.model';
 
 @Injectable({
@@ -17,6 +18,7 @@ export class SignInService {
     const requestModel: SignInRequestModel = {
       userName: signInFormValue.get('userName').value,
       password: signInFormValue.get('password').value,
+      isPersistent: signInFormValue.get('isPersistent').value,
     } as SignInRequestModel;
 
     this.signInHttpService.signIn(requestModel).subscribe(() => {});

@@ -1,0 +1,21 @@
+ui-switch {
+  button {
+    &.switch {
+      &.checked {
+        border: none;
+      }
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &#is-persistent-switch {
+    .switch {
+      &.checked {
+        background: #52747d;
+      }
+    }
+  }
+}

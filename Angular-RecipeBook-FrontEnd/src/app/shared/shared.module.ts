@@ -12,10 +12,19 @@ import { FontAwesomeIconsModule } from './modules/fontawesome-icons.module';
 import { RibbonToastrComponent } from './containers/ribbon-toastr/ribbon-toastr.component';
 import { LoadingSpinnerComponent } from './containers/loading-spinner/loading-spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { UiSwitchModule } from 'ngx-ui-switch';
 
 @NgModule({
   declarations: [NavBarComponent, FooterComponent, DropDownDirective, RibbonToastrComponent, LoadingSpinnerComponent],
-  imports: [RouterModule, ReactiveFormsModule, CommonModule, HttpClientModule, DigitOnlyModule, NgxSpinnerModule],
+  imports: [
+    RouterModule,
+    ReactiveFormsModule,
+    CommonModule,
+    HttpClientModule,
+    DigitOnlyModule,
+    NgxSpinnerModule,
+    UiSwitchModule,
+  ],
   exports: [
     RouterModule,
     ReactiveFormsModule,
@@ -27,6 +36,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     DigitOnlyModule,
     NgxSpinnerModule,
     LoadingSpinnerComponent,
+    UiSwitchModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [RibbonToastrComponent],

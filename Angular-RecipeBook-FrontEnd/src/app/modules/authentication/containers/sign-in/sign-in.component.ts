@@ -17,6 +17,7 @@ export class SignInComponent implements OnInit {
     this.signInForm = new FormGroup({
       userName: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
+      isPersistent: new FormControl(false),
     });
   }
 

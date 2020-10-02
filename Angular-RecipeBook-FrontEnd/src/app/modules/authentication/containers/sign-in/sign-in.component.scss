@@ -68,6 +68,16 @@
       }
     }
 
+    #stay-logged-in-group {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      ui-switch {
+        width: 15%;
+      }
+    }
+
     .submit-btn {
       display: block;
       margin-left: auto;

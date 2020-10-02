@@ -21,7 +21,8 @@ namespace Application.DataAccessLayer.DataMigration
                     Email = ApplicationAdminUserConstants.UserMeta.EMAIL,
                     UserName = ApplicationAdminUserConstants.UserMeta.USERNAME,
                     EmailConfirmed = true,
-                    LockoutEnabled = false
+                    LockoutEnabled = false,
+                    IsActive = true
                 };
 
                 ApplicationRole adminRole = new ApplicationRole
