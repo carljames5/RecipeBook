@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { AuthGuard } from './core/guards/auth.guard';
+import { SignedInGuard } from './core/guards/signed-in.guard';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'recipe', pathMatch: 'full' },
   {
     path: 'sign-in',
+    canActivate: [SignedInGuard],
     loadChildren: () => import('./modules/authentication/authentication.module').then(x => x.AuthenticationModule),
   },
   {
