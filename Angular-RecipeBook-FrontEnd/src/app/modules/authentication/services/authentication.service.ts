@@ -4,6 +4,7 @@ import { AuthenticationHttpService } from './authentication-http.service';
 import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
 
 import { SignInRequestModel } from '../models/request-models/sign-in-request.model';
+import { finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,11 @@ export class AuthenticationService {
       isPersistent: signInFormValue.get('isPersistent').value,
     } as SignInRequestModel;
 
-    this.authenticationHttpService.signIn(requestModel).subscribe(() => {});
+    this.loadingSpinnerService.show('Sign in...');
+
+    this.authenticationHttpService
+      .signIn(requestModel)
+      .pipe(finalize(() => this.loadingSpinnerService.hide()))
+      .subscribe(() => {});
   }
 }
