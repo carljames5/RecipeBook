@@ -14,7 +14,7 @@ export class SignedInGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const userIsSignedIn: boolean = this.localeStorageService.getItemValue<boolean>(
-      LOCALE_SOTRAGE_KEYS['USER_IS_LOGGED_IN']
+      LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN']
     );
 
     if (userIsSignedIn) {

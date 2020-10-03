@@ -18,19 +18,28 @@ export class CoreAuthenticationService {
 
   public signOut() {
     this.coreAuthenticationHttpService.signOut().subscribe(() => {
-      this.localStorageService.setItem<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_LOGGED_IN'], false);
+      this.localStorageService.setItem<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN'], false);
     });
   }
 
   public get userIsSignedIn(): Observable<boolean> {
     return this.coreAuthenticationHttpService.userIsSignedIn().pipe(
       tap(() => {
-        console.log(LOCALE_SOTRAGE_KEYS['USER_IS_LOGGED_IN_KEY']);
-        this.localStorageService.setItem<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_LOGGED_IN'], true);
+        this.localStorageService.setItem<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN'], true);
       }),
       map(() => {
         return true;
       })
     );
+  }
+
+  public get userIsSignedInFromLocaleStorage(): boolean {
+    const userIsLoggedIn = this.localStorageService.getItemValue<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN']);
+
+    if (userIsLoggedIn) {
+      return true;
+    }
+
+    return false;
   }
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
   faCogs,
   faEraser,
@@ -12,12 +12,10 @@ import {
   faTasks,
   faTrashAlt,
   faSignInAlt,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
-@NgModule({
-  imports: [FontAwesomeModule],
-  exports: [FontAwesomeModule],
-})
+@NgModule({})
 export class FontAwesomeIconsModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(
@@ -30,7 +28,8 @@ export class FontAwesomeIconsModule {
       faCogs,
       faEraser,
       faSyncAlt,
-      faSignInAlt
+      faSignInAlt,
+      faSignOutAlt
     );
   }
 }

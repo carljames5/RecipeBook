@@ -13,6 +13,7 @@ import { RibbonToastrComponent } from './containers/ribbon-toastr/ribbon-toastr.
 import { LoadingSpinnerComponent } from './containers/loading-spinner/loading-spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UiSwitchModule } from 'ngx-ui-switch';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [NavBarComponent, FooterComponent, DropDownDirective, RibbonToastrComponent, LoadingSpinnerComponent],
@@ -24,6 +25,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     DigitOnlyModule,
     NgxSpinnerModule,
     UiSwitchModule,
+    FontAwesomeModule,
   ],
   exports: [
     RouterModule,
@@ -32,11 +34,12 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     DropDownDirective,
     NavBarComponent,
     FooterComponent,
-    FontAwesomeIconsModule,
     DigitOnlyModule,
     NgxSpinnerModule,
     LoadingSpinnerComponent,
     UiSwitchModule,
+    FontAwesomeIconsModule,
+    FontAwesomeModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [RibbonToastrComponent],
