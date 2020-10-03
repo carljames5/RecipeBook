@@ -30,6 +30,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       tap(null, (err: any) => {
         if (err.status === this._httpUnauthorizedStatusCode) {
+          // For Unauthorized Error Handling
           this.router.navigate(['/sign-in']);
           this.authenticationService.signOut({ showLoadingSpinner: false });
         } else if (err.status === this._httpBadRequestStatusCode) {
