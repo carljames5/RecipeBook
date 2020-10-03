@@ -5,6 +5,7 @@ import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.ser
 
 import { SignInRequestModel } from '../models/request-models/sign-in-request.model';
 import { finalize } from 'rxjs/operators';
+import { SignOutModel } from '../models/sign-out.model';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,22 @@ export class AuthenticationService {
       .signIn(requestModel)
       .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe(() => {});
+  }
+
+  public signOut(signOutModel: SignOutModel) {
+    if (signOutModel.showLoadingSpinner) {
+      this.loadingSpinnerService.show('Sign out...');
+    }
+
+    this.authenticationHttpService
+      .signOut()
+      .pipe(
+        finalize(() => {
+          if (signOutModel.showLoadingSpinner) {
+            this.loadingSpinnerService.hide();
+          }
+        })
+      )
+      .subscribe();
   }
 }
