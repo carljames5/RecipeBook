@@ -8,7 +8,7 @@ import { SignInRequestModel } from '../models/request-models/sign-in-request.mod
 @Injectable({
   providedIn: 'root',
 })
-export class SignInHttpService {
+export class AuthenticationHttpService {
   private readonly _baseUrl: string;
 
   public constructor(private http: HttpClient) {

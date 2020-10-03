@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { SignInHttpService } from './sign-in-http.service';
+import { AuthenticationHttpService } from './authentication-http.service';
 import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
 
 import { SignInRequestModel } from '../models/request-models/sign-in-request.model';
@@ -8,9 +8,9 @@ import { SignInRequestModel } from '../models/request-models/sign-in-request.mod
 @Injectable({
   providedIn: 'root',
 })
-export class SignInService {
+export class AuthenticationService {
   public constructor(
-    private signInHttpService: SignInHttpService,
+    private authenticationHttpService: AuthenticationHttpService,
     private loadingSpinnerService: LoadingSpinnerService
   ) {}
 
@@ -21,6 +21,6 @@ export class SignInService {
       isPersistent: signInFormValue.get('isPersistent').value,
     } as SignInRequestModel;
 
-    this.signInHttpService.signIn(requestModel).subscribe(() => {});
+    this.authenticationHttpService.signIn(requestModel).subscribe(() => {});
   }
 }
