@@ -5,12 +5,14 @@ using Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.ResponseModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class ShoppingListController : ControllerBase
     {
         private readonly IMediator _mediator;

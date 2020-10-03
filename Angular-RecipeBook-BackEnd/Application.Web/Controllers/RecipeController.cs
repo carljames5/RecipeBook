@@ -5,10 +5,12 @@ using Application.BusinessLogicLayer.Modules.RecipeModule.Queries;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Web.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class RecipeController : ControllerBase
