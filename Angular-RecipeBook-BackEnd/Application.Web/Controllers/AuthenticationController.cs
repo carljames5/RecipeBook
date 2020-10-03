@@ -36,8 +36,8 @@ namespace Application.Web.Controllers
         }
 
         [Authorize]
-        [HttpGet("UserIsLoggedIn")]
-        public ActionResult UserIsLoggedIn()
+        [HttpGet("UserIsSignedIn")]
+        public ActionResult UserIsSignedIn()
         {
             return Ok();
         }

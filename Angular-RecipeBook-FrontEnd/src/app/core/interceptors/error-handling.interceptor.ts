@@ -10,7 +10,7 @@ import {
   getInternalServerErrorMessage,
   localizeException,
 } from '../../shared/helpers/interceptors/error-handling.helper';
-import { AuthenticationService } from 'src/app/modules/authentication/services/authentication.service';
+import { CoreAuthenticationService } from '../services/core-authentication.service';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {
@@ -20,7 +20,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     private toastrService: ToastrService,
-    private authenticationService: AuthenticationService
+    private coreAuthenticationService: CoreAuthenticationService
   ) {
     this._httpBadRequestStatusCode = 400;
     this._httpUnauthorizedStatusCode = 401;
@@ -32,7 +32,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
         if (err.status === this._httpUnauthorizedStatusCode) {
           // For Unauthorized Error Handling
           this.router.navigate(['/sign-in']);
-          this.authenticationService.signOut({ showLoadingSpinner: false });
+          this.coreAuthenticationService.signOut();
         } else if (err.status === this._httpBadRequestStatusCode) {
           if (err.error.ExceptionCode) {
             // For Custom Error Handling

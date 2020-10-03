@@ -1,11 +1,10 @@
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { AuthenticationHttpService } from './authentication-http.service';
 import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
 
-import { SignOutModel } from '../models/sign-out.model';
 import { SignInRequestModel } from '../models/request-models/sign-in-request.model';
 
 @Injectable({
@@ -35,18 +34,14 @@ export class AuthenticationService {
       });
   }
 
-  public signOut(signOutModel: SignOutModel) {
-    if (signOutModel.showLoadingSpinner) {
-      this.loadingSpinnerService.show('Sign out...');
-    }
+  public signOut() {
+    this.loadingSpinnerService.show('Sign out...');
 
     this.authenticationHttpService
       .signOut()
       .pipe(
         finalize(() => {
-          if (signOutModel.showLoadingSpinner) {
-            this.loadingSpinnerService.hide();
-          }
+          this.loadingSpinnerService.hide();
         })
       )
       .subscribe();
