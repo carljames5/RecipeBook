@@ -20,4 +20,10 @@ export class AuthenticationHttpService {
 
     return this.http.post(requestUrl, requestModel);
   }
+
+  public signOut(): Observable<Object> {
+    const requestUrl: string = `${this._baseUrl}/SignOut`;
+
+    return this.http.get(requestUrl);
+  }
 }
