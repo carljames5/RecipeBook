@@ -21,7 +21,15 @@ namespace Application.Web.Controllers
         [HttpPost("SignIn")]
         public async Task<ActionResult> SignIn(SignInRequestModel requestModel)
         {
-            await _mediator.Send(new SignedInCommand(requestModel));
+            await _mediator.Send(new SignInCommand(requestModel));
+
+            return Ok();
+        }
+
+        [HttpGet("SignOut")]
+        public async Task<ActionResult> SignOut()
+        {
+            await _mediator.Send(new SignOutCommand());
 
             return Ok();
         }
