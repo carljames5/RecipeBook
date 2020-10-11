@@ -7,8 +7,8 @@ using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels;
 using Application.Core.CommonModels;
-using Application.Core.Constants;
 using Application.Core.Exceptions;
+using Application.Core.Interfaces.Services;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;
@@ -31,22 +31,25 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
     {
         private readonly ISaveShoppingListService _saveShoppingListService;
 
-        public SaveShoppingListCommandHandler(RecipeBookDbContext context, ISaveShoppingListService saveShoppingListService) : base(context)
+        private readonly int _authorizedUserId;
+
+        public SaveShoppingListCommandHandler(RecipeBookDbContext context, ICurrentUserService currentUserService, ISaveShoppingListService saveShoppingListService) : base(context)
         {
             _saveShoppingListService = saveShoppingListService ?? throw new ArgumentNullException(nameof(saveShoppingListService));
+
+            _authorizedUserId = currentUserService?.GetAuthorizedUserId() ?? throw new ArgumentNullException(nameof(currentUserService));
         }
 
         protected override async Task<Result> Handler(SaveShoppingListCommand request, CancellationToken cancellationToken)
         {
             ApplicationUser user = await Context.Users
                 .Include(x => x.ShoppingList)
-                .Where(x => x.NormalizedUserName == ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper())
+                .Where(x => x.Id == _authorizedUserId)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (user == null)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UserNotFound,
-                    $"User not found in database! {nameof(ApplicationAdminUserConstants.UserMeta.USERNAME)}: {ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper()}"); // TODO Replace it UserId
+                throw new RecipeBookException(RecipeBookExceptionCode.UserNotFound, $"User not found in database! {nameof(user.Id)}: {_authorizedUserId}");
             }
 
             Context.ShoppingList.RemoveRange(user.ShoppingList);

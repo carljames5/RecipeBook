@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.ResponseModels;
-using Application.Core.Constants;
 using Application.Core.Exceptions;
+using Application.Core.Interfaces.Services;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;
@@ -16,21 +17,24 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries
 
     public class GetLastSavedShoppingListQueryHandler : QueryBase<GetLastSavedShoppingListQuery, GetLastSavedShoppingListResponseModel>
     {
-        public GetLastSavedShoppingListQueryHandler(RecipeBookReadOnlyDbContext context) : base(context)
-        { }
+        private readonly int _authorizedUserId;
+
+        public GetLastSavedShoppingListQueryHandler(RecipeBookReadOnlyDbContext context, ICurrentUserService currentUserService) : base(context)
+        {
+            _authorizedUserId = currentUserService?.GetAuthorizedUserId() ?? throw new ArgumentNullException(nameof(currentUserService));
+        }
 
         public override async Task<GetLastSavedShoppingListResponseModel> Handle(GetLastSavedShoppingListQuery request, CancellationToken cancellationToken)
         {
             GetLastSavedShoppingListResponseModel result = new GetLastSavedShoppingListResponseModel();
 
             ApplicationUser user = await Context.Users
-                .Where(x => x.NormalizedUserName == ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper())
+                .Where(x => x.Id == _authorizedUserId)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (user == null)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UserNotFound,
-                    $"User not found in database! {nameof(ApplicationAdminUserConstants.UserMeta.USERNAME)}: {ApplicationAdminUserConstants.UserMeta.USERNAME.ToUpper()}"); // TODO Replace it UserId
+                throw new RecipeBookException(RecipeBookExceptionCode.UserNotFound, $"User not found in database! {nameof(user.Id)}: {_authorizedUserId}");
             }
 
             result.Ingredients = await Context.ShoppingLists

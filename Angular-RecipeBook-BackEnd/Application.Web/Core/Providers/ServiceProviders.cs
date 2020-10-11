@@ -2,6 +2,8 @@
 using Application.BusinessLogicLayer.Modules.RecipeModule.Services;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Services;
+using Application.Core.Interfaces.Services;
+using Application.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Web.Core.Providers
@@ -12,6 +14,7 @@ namespace Application.Web.Core.Providers
         {
             services.AddScoped<ISaveShoppingListService, SaveShoppingListService>();
             services.AddScoped<ICreateAndUpdateRecipeService, CreateAndUpdateRecipeService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             return services;
         }

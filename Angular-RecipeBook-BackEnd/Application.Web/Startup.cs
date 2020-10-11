@@ -31,6 +31,8 @@ namespace Application.Web
             services.ConfigureReadOnlyDbContext();
             services.ConfigureMediatR();
 
+            services.AddHttpContextAccessor();
+
             services.ConfigureAuthService();
             services.ConfigureApplicationCookies();
 
