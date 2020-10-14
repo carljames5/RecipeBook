@@ -1,4 +1,4 @@
-﻿namespace Application.Core.Constants
+﻿namespace Application.DataAccessLayer.DataMigration.Constants
 {
     public static class ApplicationAdminUserConstants
     {

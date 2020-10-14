@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Application.Core.Constants;
 using Application.DataAccessLayer.Context;
+using Application.DataAccessLayer.DataMigration.Constants;
 using Application.DataAccessLayer.DataMigration.Interfaces;
 using Application.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
