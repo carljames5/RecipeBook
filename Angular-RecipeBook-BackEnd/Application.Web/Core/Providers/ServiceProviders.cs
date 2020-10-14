@@ -13,6 +13,7 @@ namespace Application.Web.Core.Providers
         public static IServiceCollection AddScopedServices(this IServiceCollection services)
         {
             services.AddScoped<ISaveShoppingListService, SaveShoppingListService>();
+            services.AddScoped<IRecipeValidatorService, RecipeValidatorService>();
             services.AddScoped<ICreateAndUpdateRecipeService, CreateAndUpdateRecipeService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 

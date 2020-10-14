@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Dtos;
+using Application.BusinessLogicLayer.Modules.RecipeModule.Dtos.Services.RecipeValidatorService;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.Core.CommonModels;
@@ -41,9 +42,12 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
     {
         private readonly ICreateAndUpdateRecipeService _createAndUpdateRecipeService;
 
-        public UpdateRecipeCommandHandler(RecipeBookDbContext context, ICreateAndUpdateRecipeService createAndUpdateRecipeService) : base(context)
+        private readonly IRecipeValidatorService _recipeValidatorService;
+
+        public UpdateRecipeCommandHandler(RecipeBookDbContext context, ICreateAndUpdateRecipeService createAndUpdateRecipeService, IRecipeValidatorService recipeValidatorService) : base(context)
         {
             _createAndUpdateRecipeService = createAndUpdateRecipeService ?? throw new ArgumentNullException(nameof(createAndUpdateRecipeService));
+            _recipeValidatorService = recipeValidatorService ?? throw new ArgumentNullException(nameof(recipeValidatorService));
         }
 
         protected override async Task<Result> Handler(UpdateRecipeCommand request, CancellationToken cancellationToken)
@@ -56,6 +60,11 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
             {
                 throw new RecipeBookException(RecipeBookExceptionCode.UpgradeableRecipeNotFound,
                     $"Upgradeable recipe not found in database! {nameof(recipe.RecipeId)}: {request.Id}");
+            }
+
+            if (await _recipeValidatorService.RecipeNameIsExist(new RecipeNameIsExistDto(request.Id, request.Name, cancellationToken)))
+            {
+                throw new RecipeBookException(RecipeBookExceptionCode.RecipeNameIsAlreadyExist, $"Recipe name is exist! {nameof(request.Name)}: {request.Name}");
             }
 
             Context.RecipeIngredient.RemoveRange(recipe.RecipeIngredients);

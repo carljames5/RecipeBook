@@ -9,6 +9,7 @@ const exceptionCodeMessages: { [exceptionCode: number]: string } = {
   [8]: 'This recipe not found in the system!',
   [9]: 'This upgradeable recipe is not found in this system!',
   [10]: 'This deletable recipe is not found in this system!',
+  [11]: 'This recipe name is already exist in the system!',
 };
 
 export function localizeException(exceptionCode: number): string {

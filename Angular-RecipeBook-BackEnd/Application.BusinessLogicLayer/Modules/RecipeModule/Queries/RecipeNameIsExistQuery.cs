@@ -1,11 +1,12 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Application.BusinessLogicLayer.Modules.RecipeModule.Dtos.Services.RecipeValidatorService;
+using Application.BusinessLogicLayer.Modules.RecipeModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels;
 using Application.DataAccessLayer.Context;
-using Application.DataAccessLayer.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 {
@@ -24,26 +25,19 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 
     public class RecipeNameIsExistQueryHandler : QueryBase<RecipeNameIsExistQuery, RecipeNameIsExistResponseModel>
     {
-        public RecipeNameIsExistQueryHandler(RecipeBookReadOnlyDbContext context) : base(context)
-        { }
+        private readonly IRecipeValidatorService _recipeValidatorService;
+
+        public RecipeNameIsExistQueryHandler(RecipeBookReadOnlyDbContext context, IRecipeValidatorService recipeValidatorService) : base(context)
+        {
+            _recipeValidatorService = recipeValidatorService ?? throw new ArgumentNullException(nameof(recipeValidatorService));
+        }
 
         public override async Task<RecipeNameIsExistResponseModel> Handle(RecipeNameIsExistQuery request, CancellationToken cancellationToken)
         {
             RecipeNameIsExistResponseModel responseModel = new RecipeNameIsExistResponseModel();
 
-            if (request.RecipeId.HasValue)
-            {
-                Recipe existingRecipe = await Context.Recipes.FirstAsync(x => x.RecipeId == request.RecipeId, cancellationToken);
-
-                if (existingRecipe.Name.ToLower() == request.RecipeName)
-                {
-                    responseModel.RecipeNameIsExist = false;
-
-                    return responseModel;
-                }
-            }
-
-            responseModel.RecipeNameIsExist = await Context.Recipes.AnyAsync(x => x.Name.ToLower() == request.RecipeName.Trim().ToLower(), cancellationToken);
+            responseModel.RecipeNameIsExist = await _recipeValidatorService.RecipeNameIsExist(
+                new RecipeNameIsExistDto(request.RecipeId, request.RecipeName, cancellationToken));
 
             return responseModel;
         }

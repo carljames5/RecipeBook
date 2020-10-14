@@ -13,5 +13,6 @@
         RecipeNotFound = 8,
         UpgradeableRecipeNotFound = 9,
         DeletableRecipeNotFound = 10,
+        RecipeNameIsAlreadyExist = 11
     }
 }
