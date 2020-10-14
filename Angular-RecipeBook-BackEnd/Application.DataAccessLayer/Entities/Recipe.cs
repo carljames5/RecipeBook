@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Application.DataAccessLayer.Entities.Core;
+using Application.DataAccessLayer.Entities.Interfaces;
 
 namespace Application.DataAccessLayer.Entities
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Application.DataAccessLayer.Entities.Core;
+using Application.DataAccessLayer.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.DataAccessLayer.Entities
