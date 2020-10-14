@@ -37,6 +37,12 @@ namespace Application.DataAccessLayer.Context
                 .WithMany(i => i.ShoppingList)
                 .HasForeignKey(sl => sl.IngredientId);
 
+            modelBuilder.Entity<Recipe>()
+                .HasIndex(x => x.Name).IsUnique();
+
+            modelBuilder.Entity<Ingredient>()
+                .HasIndex(x => x.Name).IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
 
