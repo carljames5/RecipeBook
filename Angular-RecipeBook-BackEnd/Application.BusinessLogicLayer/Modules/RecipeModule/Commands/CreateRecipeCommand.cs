@@ -38,12 +38,12 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
     {
         private readonly IRecipeValidatorService _recipeValidatorService;
 
-        private readonly ICreateAndUpdateRecipeService _createAndUpdateRecipeService;
+        private readonly IRecipeIngredientService _recipeIngredientService;
 
-        public CreateRecipeCommandHandler(RecipeBookDbContext context, IRecipeValidatorService recipeValidatorService, ICreateAndUpdateRecipeService createAndUpdateRecipeService) : base(context)
+        public CreateRecipeCommandHandler(RecipeBookDbContext context, IRecipeValidatorService recipeValidatorService, IRecipeIngredientService recipeIngredientService) : base(context)
         {
             _recipeValidatorService = recipeValidatorService ?? throw new ArgumentNullException(nameof(recipeValidatorService));
-            _createAndUpdateRecipeService = createAndUpdateRecipeService ?? throw new ArgumentNullException(nameof(createAndUpdateRecipeService));
+            _recipeIngredientService = recipeIngredientService ?? throw new ArgumentNullException(nameof(recipeIngredientService));
         }
 
         protected override async Task<Result> Handler(CreateRecipeCommand request, CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
                 Description = request.Description,
                 ImagePath = request.ImagePath,
                 RecipeIngredients =
-                await _createAndUpdateRecipeService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto(request.Ingredients, cancellationToken))
+                await _recipeIngredientService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto(request.Ingredients, cancellationToken))
             };
 
             await Context.Recipe.AddAsync(recipe, cancellationToken);

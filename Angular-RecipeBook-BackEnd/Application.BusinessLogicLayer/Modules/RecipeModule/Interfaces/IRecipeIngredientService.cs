@@ -5,7 +5,7 @@ using Application.DataAccessLayer.Entities;
 
 namespace Application.BusinessLogicLayer.Modules.RecipeModule.Interfaces
 {
-    public interface ICreateAndUpdateRecipeService
+    public interface IRecipeIngredientService
     {
         Task<ICollection<RecipeIngredient>> InitialNewRecipeIngredients(InitialNewRecipeIngredientsDto modelDto);
     }

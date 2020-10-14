@@ -40,13 +40,13 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
     public class UpdateRecipeCommandHandler : CommandBase<UpdateRecipeCommand, Result>
     {
-        private readonly ICreateAndUpdateRecipeService _createAndUpdateRecipeService;
+        private readonly IRecipeIngredientService _recipeIngredientService;
 
         private readonly IRecipeValidatorService _recipeValidatorService;
 
-        public UpdateRecipeCommandHandler(RecipeBookDbContext context, ICreateAndUpdateRecipeService createAndUpdateRecipeService, IRecipeValidatorService recipeValidatorService) : base(context)
+        public UpdateRecipeCommandHandler(RecipeBookDbContext context, IRecipeIngredientService recipeIngredientService, IRecipeValidatorService recipeValidatorService) : base(context)
         {
-            _createAndUpdateRecipeService = createAndUpdateRecipeService ?? throw new ArgumentNullException(nameof(createAndUpdateRecipeService));
+            _recipeIngredientService = recipeIngredientService ?? throw new ArgumentNullException(nameof(recipeIngredientService));
             _recipeValidatorService = recipeValidatorService ?? throw new ArgumentNullException(nameof(recipeValidatorService));
         }
 
@@ -72,7 +72,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
             recipe.Name = request.Name;
             recipe.Description = request.Description;
             recipe.ImagePath = request.ImagePath;
-            recipe.RecipeIngredients = await _createAndUpdateRecipeService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto(request.Ingredients, cancellationToken));
+            recipe.RecipeIngredients = await _recipeIngredientService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto(request.Ingredients, cancellationToken));
 
             await Context.SaveChangesAsync(cancellationToken);
 

@@ -14,7 +14,7 @@ namespace Application.Web.Core.Providers
         {
             services.AddScoped<ISaveShoppingListService, SaveShoppingListService>();
             services.AddScoped<IRecipeValidatorService, RecipeValidatorService>();
-            services.AddScoped<ICreateAndUpdateRecipeService, CreateAndUpdateRecipeService>();
+            services.AddScoped<IRecipeIngredientService, RecipeIngredientService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             return services;
