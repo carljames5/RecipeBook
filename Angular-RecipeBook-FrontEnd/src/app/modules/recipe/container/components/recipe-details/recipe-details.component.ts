@@ -11,21 +11,20 @@ import { GetRecipeByIdResponseModel } from '../../../models/response-models/get-
   styleUrls: ['./recipe-details.component.scss'],
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
-  private getRecipeByIdSubscription: Subscription;
-  private recipeDeletedSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   public recipe: GetRecipeByIdResponseModel;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.getRecipeByIdSubscription = this.recipeService.getRecipeByIdSubject.subscribe(recipe => {
+    this.subscriptions.push(this.recipeService.getRecipeByIdSubject.subscribe(recipe => {
       this.recipe = recipe;
-    });
+    }));
 
-    this.recipeDeletedSubscription = this.recipeService.deletedRecipeItemSubject.subscribe(() => {
+    this.subscriptions.push(this.recipeService.deletedRecipeItemSubject.subscribe(() => {
       this.router.navigate(['/recipes']);
-    });
+    }));
 
     this.route.params.subscribe((params: Params) => {
       this.recipeService.getRecipeById(+params['id']);
@@ -33,8 +32,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.getRecipeByIdSubscription.unsubscribe();
-    this.recipeDeletedSubscription.unsubscribe();
+    this.subscriptions.forEach(x => x.unsubscribe());
   }
 
   public onAddRecipeIngredientsToShoppingList() {

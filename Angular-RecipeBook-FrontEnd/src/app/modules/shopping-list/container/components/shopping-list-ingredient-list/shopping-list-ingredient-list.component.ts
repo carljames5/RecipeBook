@@ -10,24 +10,24 @@ import { ShoppingListIngredientModel } from '../../../models/shopping-list-ingre
   styleUrls: ['./shopping-list-ingredient-list.component.scss'],
 })
 export class ShoppingListIngredientListComponent implements OnInit, OnDestroy {
-  private shoppingListIngredientsRefreshSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   public shoppingListIngredients: ShoppingListIngredientModel[];
 
   constructor(private shoppingListService: ShoppingListService) {}
 
   public ngOnInit(): void {
-    this.shoppingListIngredientsRefreshSubscription = this.shoppingListService.refreshShoppingListIngredientsSubject.subscribe(
+    this.subscriptions.push(this.shoppingListService.refreshShoppingListIngredientsSubject.subscribe(
       (shoppingListIngredients: ShoppingListIngredientModel[]) => {
         this.shoppingListIngredients = shoppingListIngredients;
       }
-    );
+    ));
 
     this.shoppingListIngredients = this.shoppingListService.getShoppingListIngredients();
   }
 
   public ngOnDestroy(): void {
-    this.shoppingListIngredientsRefreshSubscription.unsubscribe();
+    this.subscriptions.forEach(x => x.unsubscribe());
   }
 
   public onClearingShoppingListIngredients(): void {

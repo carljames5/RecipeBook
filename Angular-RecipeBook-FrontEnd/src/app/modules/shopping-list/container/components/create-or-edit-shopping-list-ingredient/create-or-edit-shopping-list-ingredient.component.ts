@@ -11,9 +11,8 @@ import { ShoppingListIngredientFormValidator } from '../../../validators/shoppin
   styleUrls: ['./create-or-edit-shopping-list-ingredient.component.scss'],
 })
 export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
-  private recipeWasLoadedForEditingSubscription: Subscription;
-  private shoppingListClearedSubscription: Subscription;
-
+  private subscriptions: Subscription[] = [];
+  
   public shoppingListIngredientForm: FormGroup;
 
   //#region GETTERS
@@ -41,7 +40,7 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.recipeWasLoadedForEditingSubscription = this.shoppingListService.shoppingListIngredientWasLoadedForEditingSubject.subscribe(
+    this.subscriptions.push(this.shoppingListService.shoppingListIngredientWasLoadedForEditingSubject.subscribe(
       selectedShoppingListIngredient => {
         this.shoppingListIngredientForm.setValue({
           arrayIndex: selectedShoppingListIngredient.arrayIndex,
@@ -49,16 +48,15 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
           amount: selectedShoppingListIngredient.amount,
         });
       }
-    );
+    ));
 
-    this.shoppingListClearedSubscription = this.shoppingListService.shoppingListClearedSubject.subscribe(() => {
+    this.subscriptions.push(this.shoppingListService.shoppingListClearedSubject.subscribe(() => {
       this.onClear();
-    });
+    }));
   }
 
   public ngOnDestroy(): void {
-    this.recipeWasLoadedForEditingSubscription.unsubscribe();
-    this.shoppingListClearedSubscription.unsubscribe();
+    this.subscriptions.forEach(x => x.unsubscribe());
   }
 
   public onCreateOrEditItem(): void {

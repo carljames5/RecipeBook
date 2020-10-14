@@ -13,7 +13,7 @@ import { RecipeFormValidator } from '../../../validators/recipe-form-validators'
   providers: [RecipeFormValidator],
 })
 export class RecipeCreateComponent implements OnInit, OnDestroy {
-  private createdRecipeItemSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   public recipeForm: FormGroup;
 
@@ -53,9 +53,9 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.createdRecipeItemSubscription = this.recipeService.createdRecipeItemSubject.subscribe(() => {
+    this.subscriptions.push(this.recipeService.createdRecipeItemSubject.subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    }));
 
     this.recipeForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
@@ -68,7 +68,7 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.createdRecipeItemSubscription.unsubscribe();
+    this.subscriptions.forEach(x => x.unsubscribe());
   }
 
   public onAddNewRecipeIngredient(): void {

@@ -14,8 +14,7 @@ import { EditRecipeIngredientListItemResponseModel } from '../../../models/respo
   providers: [RecipeFormValidator],
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
-  private updatedRecipeItemSubscription: Subscription;
-  private recipeWasLoadedForEditingSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   public recipeForm: FormGroup;
 
@@ -63,7 +62,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       this.recipeService.getrecipeForEditing(+params['id']);
     });
 
-    this.recipeWasLoadedForEditingSubscription = this.recipeService.recipeWasLoadedForEditingSubject.subscribe(
+    this.subscriptions.push(this.recipeService.recipeWasLoadedForEditingSubject.subscribe(
       recipe => {
         this.recipeForm = new FormGroup({
           id: new FormControl(recipe.id),
@@ -75,16 +74,15 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
         this.recipeName().setAsyncValidators(this.recipeFormValidator.recipeNameValidator(this.recipeId()));
       }
-    );
+    ));
 
-    this.updatedRecipeItemSubscription = this.recipeService.updatedRecipeItemSubject.subscribe(() => {
+    this.subscriptions.push(this.recipeService.updatedRecipeItemSubject.subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    }));
   }
 
   ngOnDestroy(): void {
-    this.updatedRecipeItemSubscription.unsubscribe();
-    this.recipeWasLoadedForEditingSubscription.unsubscribe();
+    this.subscriptions.forEach(x => x.unsubscribe());
   }
 
   public onAddNewRecipeIngredient() {
