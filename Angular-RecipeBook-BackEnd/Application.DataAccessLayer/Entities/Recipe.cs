@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Application.DataAccessLayer.Entities.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Application.DataAccessLayer.Entities
 {
@@ -23,6 +25,14 @@ namespace Application.DataAccessLayer.Entities
         public Recipe()
         {
             RecipeIngredients = new HashSet<RecipeIngredient>();
+        }
+    }
+
+    public class RecipeEntityConfiguration : IEntityTypeConfiguration<Recipe>
+    {
+        public void Configure(EntityTypeBuilder<Recipe> builder)
+        {
+            builder.HasIndex(x => x.Name).IsUnique();
         }
     }
 }
