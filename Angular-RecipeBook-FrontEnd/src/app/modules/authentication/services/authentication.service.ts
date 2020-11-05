@@ -1,12 +1,13 @@
 import { Router } from '@angular/router';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
+import { SidebarService } from 'src/app/core/services/sidebar.service';
 import { AuthenticationHttpService } from './authentication-http.service';
+import { LocaleStorageService } from 'src/app/core/services/locale-storage.service';
 import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
 
 import { SignInRequestModel } from '../models/request-models/sign-in-request.model';
-import { LocaleStorageService } from 'src/app/core/services/locale-storage.service';
 import { LOCALE_SOTRAGE_KEYS } from 'src/app/core/constants/locale-storage-key.constants';
 
 @Injectable({
@@ -16,6 +17,7 @@ export class AuthenticationService {
   public constructor(
     private authenticationHttpService: AuthenticationHttpService,
     private loadingSpinnerService: LoadingSpinnerService,
+    private sidebarService: SidebarService,
     private router: Router,
     private localStorageService: LocaleStorageService
   ) {}
@@ -49,6 +51,8 @@ export class AuthenticationService {
       )
       .subscribe(() => {
         this.localStorageService.setItem<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN'], false);
+
+        this.sidebarService.setSidebarVisibility(false);
 
         this.router.navigate(['/sign-in']);
       });

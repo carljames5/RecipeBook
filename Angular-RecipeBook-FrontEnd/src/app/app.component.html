@@ -1,9 +1,11 @@
-<div id="wrapper">
-  <app-nav-bar></app-nav-bar>
-  <div class="container content-container">
-    <loading-spinner [message]="loadingSpinnerMessage"></loading-spinner>
+<loading-spinner [message]="loadingSpinnerMessage"></loading-spinner>
 
+<app-sidebar [isVisible$]="sidebarIsVisible$">
+  <app-header *ngIf="userIsSignedIn"></app-header>
+
+  <div class="container content-container" [ngClass]="userIsSignedIn ? 'signed-in' : 'checked-out'">
     <router-outlet></router-outlet>
   </div>
+
   <app-footer></app-footer>
-</div>
+</app-sidebar>

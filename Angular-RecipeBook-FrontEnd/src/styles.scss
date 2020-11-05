@@ -1,46 +1,13 @@
-@import '~ngx-toastr/toastr';
-@import '~ngx-ui-switch/ui-switch.component.scss';
+@import "~ngx-toastr/toastr";
+@import "~ngx-ui-switch/ui-switch.component.scss";
 
-@import './styles/custom-toast-messages.scss';
-@import './styles/custom-loading-spinner.scss';
-@import './styles/custom-ui-switch.scss';
+@import "./styles/custom-toast-messages.scss";
+@import "./styles/custom-loading-spinner.scss";
+@import "./styles/custom-ui-switch.scss";
+@import "./styles/custom-sidebar.scss";
+@import "./styles/custom-avatar.scss";
 
+html,
 body {
-  scrollbar-width: thin;
-  scrollbar-color: #f5f5f5 #cecece;
-
-  &::-webkit-scrollbar {
-    width: 0.8em;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: white;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #cecece;
-    border-radius: 6px;
-    border: 3px solid #f5f5f5;
-  }
-}
-
-#wrapper {
-  .content-container {
-    min-height: calc(100vh - 129px);
-
-    input.ng-invalid.ng-touched,
-    textarea.ng-invalid.ng-touched {
-      border: 1px solid #e53935;
-    }
-
-    input.form-control.hidden {
-      display: none;
-    }
-
-    .validation-error {
-      padding-top: 0.3em;
-      margin-bottom: 1.5em;
-      color: #e53935;
-    }
-  }
+  height: 100%;
 }

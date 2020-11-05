@@ -1,6 +1,13 @@
-import { AfterContentChecked, ChangeDetectorRef, Component } from '@angular/core';
+import {
+  AfterContentChecked,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
+import { Observable } from 'rxjs';
+import { CoreAuthenticationService } from './core/services/core-authentication.service';
 
 import { LoadingSpinnerService } from './core/services/loading-spinner.service';
+import { SidebarService } from './core/services/sidebar.service';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +23,22 @@ export class AppComponent implements AfterContentChecked {
     return this.loadingSpinnerService.message;
   }
 
+  public get sidebarIsVisible$(): Observable<boolean> {
+    return this.sidebarService.isVisible$;
+  }
+
+  public get userIsSignedIn(): boolean {
+    return this.coreAuthenticationService.userIsSignedInFromLocaleStorage;
+  }
+
   //#endregion
 
-  constructor(private loadingSpinnerService: LoadingSpinnerService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private loadingSpinnerService: LoadingSpinnerService,
+    private sidebarService: SidebarService,
+    private coreAuthenticationService: CoreAuthenticationService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   public ngAfterContentChecked(): void {
     this.cdr.detectChanges();

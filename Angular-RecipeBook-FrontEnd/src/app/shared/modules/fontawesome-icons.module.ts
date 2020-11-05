@@ -13,6 +13,9 @@ import {
   faTrashAlt,
   faSignInAlt,
   faSignOutAlt,
+  faBookOpen,
+  faReceipt,
+  faShoppingBasket
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({})
@@ -29,7 +32,10 @@ export class FontAwesomeIconsModule {
       faEraser,
       faSyncAlt,
       faSignInAlt,
-      faSignOutAlt
+      faSignOutAlt,
+      faBookOpen,
+      faReceipt,
+      faShoppingBasket
     );
   }
 }

@@ -9,6 +9,7 @@ import { RibbonToastrComponent } from '../shared/containers/ribbon-toastr/ribbon
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor';
+import { SidebarModule } from 'ng-sidebar';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ErrorHandlingInterceptor } from './interceptors/error-handling.intercep
     UiSwitchModule.forRoot({
       size: 'small',
     }),
+    SidebarModule.forRoot()
   ],
   providers: [
     {

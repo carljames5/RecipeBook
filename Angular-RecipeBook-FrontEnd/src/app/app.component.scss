@@ -1,4 +1,28 @@
 .container {
-    padding-top: 20px;
-    min-height: 612px;
+  padding-top: 20px;
+
+  &.content-container {
+    &.signed-in {
+      min-height: calc(100vh - 149px);
+    }
+
+    &.checked-out {
+      min-height: calc(100vh - 76px);
+    }
+
+    input.ng-invalid.ng-touched,
+    textarea.ng-invalid.ng-touched {
+      border: 1px solid #e53935;
+    }
+
+    input.form-control.hidden {
+      display: none;
+    }
+
+    .validation-error {
+      padding-top: 0.3em;
+      margin-bottom: 1.5em;
+      color: #e53935;
+    }
+  }
 }

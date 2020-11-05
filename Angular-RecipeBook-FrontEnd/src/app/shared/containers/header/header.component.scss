@@ -1,0 +1,63 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em;
+  height: 4.5em;
+  background: #ededed;
+  font-variant: petite-caps;
+
+  #title {
+    margin-left: 1.5em;
+    letter-spacing: 1px;
+    cursor: default;
+
+    #main-title {
+      font-size: 0.8125em;
+      color: #a2a2a2;
+    }
+
+    #sub-title {
+      font-size: 1.25em;
+      font-weight: 700;
+    }
+  }
+
+  #avatar {
+    margin-right: 1.5em;
+
+    .dropdown {
+      .dropdown-menu {
+        border-radius: 0.75rem;
+
+        a {
+          &:hover {
+            background-color: #eeeeee;
+          }
+
+          &.dropdown-item {
+            padding-left: 0.5em;
+            transition: 0.3s;
+            cursor: pointer;
+
+            &:active {
+              background-color: #e0e0e0;
+              color: #000000;
+            }
+
+            .content {
+              display: flex;
+
+              span {
+                &:nth-child(1) {
+                  width: 3em;
+                  text-align: center;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

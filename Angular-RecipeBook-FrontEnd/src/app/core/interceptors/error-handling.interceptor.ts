@@ -31,8 +31,8 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
       tap(null, (err: any) => {
         if (err.status === this._httpUnauthorizedStatusCode) {
           // For Unauthorized Error Handling
-          this.router.navigate(['/sign-in']);
           this.coreAuthenticationService.signOut();
+          this.router.navigate(['/sign-in']);
         } else if (err.status === this._httpBadRequestStatusCode) {
           if (err.error.ExceptionCode) {
             // For Custom Error Handling
@@ -46,12 +46,16 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
             }
           } else {
             // For 400 - Unknow Error
-            this.toastrService.error(getBadRequestMessage(), null, { titleClass: 'title error' });
+            this.toastrService.error(getBadRequestMessage(), null, {
+              titleClass: 'title error',
+            });
 
             console.log(err);
           }
         } else {
-          this.toastrService.error(getInternalServerErrorMessage(), null, { titleClass: 'title error' });
+          this.toastrService.error(getInternalServerErrorMessage(), null, {
+            titleClass: 'title error',
+          });
 
           console.log(err);
         }
