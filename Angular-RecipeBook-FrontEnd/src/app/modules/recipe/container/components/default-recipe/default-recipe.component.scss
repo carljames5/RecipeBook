@@ -3,8 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-variant: petite-caps;
 
-  #info-label {
-    color: #e53935;
+  .content {
+    width: 70%;
+
+    #info-label {
+      text-align: center;
+      color: #e53935;
+    }
   }
 }
