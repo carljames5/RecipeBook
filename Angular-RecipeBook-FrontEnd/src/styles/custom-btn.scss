@@ -1,0 +1,7 @@
+.btn-outline-success {
+  &:not(:disabled):not(.disabled):active:focus,
+  &:focus,
+  &:focus-within {
+    box-shadow: none;
+  }
+}

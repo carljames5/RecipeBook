@@ -1,6 +1,8 @@
 li.recipe-list-group-item {
   &.list-group-item {
+    font-variant: petite-caps;
     cursor: pointer;
+    transition: 0.3s;
 
     &.active {
       background-color: #cfcfcf;
@@ -37,6 +39,12 @@ li.recipe-list-group-item {
       > p {
         margin-top: 15px;
         word-break: break-word;
+      }
+    }
+
+    @media only screen and (max-width: 1346px) {
+      .item-header {
+        flex-direction: column;
       }
     }
   }
