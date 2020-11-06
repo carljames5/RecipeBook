@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppHeaderService } from 'src/app/core/services/app-header.service';
 import { MODULE_NAMES } from '../constants/module-names.constant';
 
@@ -7,8 +7,10 @@ import { MODULE_NAMES } from '../constants/module-names.constant';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss'],
 })
-export class ShoppingListComponent {
-  public constructor(private appHeaderService: AppHeaderService) {
+export class ShoppingListComponent implements OnInit {
+  public constructor(private appHeaderService: AppHeaderService) {}
+
+  ngOnInit(): void {
     this.appHeaderService.subTitle$.next();
     this.appHeaderService.mainTitle$.next(MODULE_NAMES['MAIN']);
   }

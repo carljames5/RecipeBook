@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./recipe.component.scss'],
 })
 export class RecipesComponent {
-  constructor() {}
+  public constructor() {}
 }

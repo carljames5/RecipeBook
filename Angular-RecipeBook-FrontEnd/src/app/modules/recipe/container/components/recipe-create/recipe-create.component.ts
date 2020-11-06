@@ -54,10 +54,7 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
     private recipeService: RecipeService,
     private appHeaderService: AppHeaderService,
     private recipeFormValidator: RecipeFormValidator
-  ) {
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['CREATE']);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -74,6 +71,9 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
     });
 
     this.recipeName().setAsyncValidators(this.recipeFormValidator.recipeNameValidator());
+
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['CREATE']);
   }
 
   ngOnDestroy(): void {

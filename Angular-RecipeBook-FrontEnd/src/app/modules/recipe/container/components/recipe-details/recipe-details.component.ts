@@ -23,10 +23,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private recipeService: RecipeService,
     private appHeaderService: AppHeaderService
-  ) {
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['DETAILS']);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -44,6 +41,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) => {
       this.recipeService.getRecipeById(+params['id']);
     });
+
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['DETAILS']);
   }
 
   ngOnDestroy(): void {

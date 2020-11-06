@@ -58,10 +58,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     private recipeService: RecipeService,
     private appHeaderService: AppHeaderService,
     private recipeFormValidator: RecipeFormValidator
-  ) {
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['EDIT']);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -87,6 +84,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.router.navigate(['../'], { relativeTo: this.route });
       })
     );
+
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['EDIT']);
   }
 
   ngOnDestroy(): void {

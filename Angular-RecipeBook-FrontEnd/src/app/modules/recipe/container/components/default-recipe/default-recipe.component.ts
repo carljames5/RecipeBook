@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppHeaderService } from 'src/app/core/services/app-header.service';
 import { MODULE_NAMES } from '../../../constants/module-names.constant';
 
@@ -7,8 +7,10 @@ import { MODULE_NAMES } from '../../../constants/module-names.constant';
   templateUrl: './default-recipe.component.html',
   styleUrls: ['./default-recipe.component.scss'],
 })
-export class DefaultRecipeComponent {
-  constructor(private appHeaderService: AppHeaderService) {
+export class DefaultRecipeComponent implements OnInit {
+  constructor(private appHeaderService: AppHeaderService) {}
+
+  public ngOnInit(): void {
     this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
     this.appHeaderService.mainTitle$.next(MODULE_NAMES['LIST']);
   }
