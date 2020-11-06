@@ -1,5 +1,10 @@
 .container {
-  padding-top: 20px;
+  max-width: none;
+
+  padding-top: 3em;
+  padding-bottom: 0em;
+  padding-left: 4em;
+  padding-right: 4em;
 
   &.content-container {
     &.signed-in {
