@@ -3,8 +3,11 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 
+import { MODULE_NAMES } from '../../../constants/module-names.constant';
+
 import { RecipeService } from '../../../services/recipe.service';
 import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
+import { AppHeaderService } from 'src/app/core/services/app-header.service';
 
 @Component({
   selector: 'app-recipe-create',
@@ -46,16 +49,22 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
   //#endregion
 
   constructor(
-    private recipeService: RecipeService,
-    private recipeFormValidator: RecipeFormValidator,
+    private router: Router,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private recipeService: RecipeService,
+    private appHeaderService: AppHeaderService,
+    private recipeFormValidator: RecipeFormValidator
+  ) {
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['CREATE']);
+  }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.recipeService.createdRecipeItemSubject.subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    }));
+    this.subscriptions.push(
+      this.recipeService.createdRecipeItemSubject.subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      })
+    );
 
     this.recipeForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),

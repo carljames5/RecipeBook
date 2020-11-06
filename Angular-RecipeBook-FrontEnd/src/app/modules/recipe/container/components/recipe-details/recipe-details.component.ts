@@ -2,7 +2,10 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { MODULE_NAMES } from '../../../constants/module-names.constant';
+
 import { RecipeService } from '../../../services/recipe.service';
+import { AppHeaderService } from 'src/app/core/services/app-header.service';
 import { GetRecipeByIdResponseModel } from '../../../models/response-models/get-recipe-by-id-response.model';
 
 @Component({
@@ -15,16 +18,28 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   public recipe: GetRecipeByIdResponseModel;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private recipeService: RecipeService,
+    private appHeaderService: AppHeaderService
+  ) {
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['DETAILS']);
+  }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.recipeService.getRecipeByIdSubject.subscribe(recipe => {
-      this.recipe = recipe;
-    }));
+    this.subscriptions.push(
+      this.recipeService.getRecipeByIdSubject.subscribe(recipe => {
+        this.recipe = recipe;
+      })
+    );
 
-    this.subscriptions.push(this.recipeService.deletedRecipeItemSubject.subscribe(() => {
-      this.router.navigate(['/recipes']);
-    }));
+    this.subscriptions.push(
+      this.recipeService.deletedRecipeItemSubject.subscribe(() => {
+        this.router.navigate(['/recipes']);
+      })
+    );
 
     this.route.params.subscribe((params: Params) => {
       this.recipeService.getRecipeById(+params['id']);

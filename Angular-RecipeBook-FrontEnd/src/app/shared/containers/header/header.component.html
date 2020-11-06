@@ -1,10 +1,10 @@
 <header>
   <div id="title">
-    <div id="main-title">
-      <span>Main title</span>
-    </div>
     <div id="sub-title">
-      <span>Sub title</span>
+      <span>{{ subTitle$ | async }}</span>
+    </div>
+    <div id="main-title">
+      <span>{{ mainTitle$ | async }}</span>
     </div>
   </div>
   <div id="avatar">
@@ -17,10 +17,7 @@
       #r="appDropDown"
     ></ngx-avatar>
     <div class="dropdown">
-      <div
-        class="dropdown-menu dropdown-menu-right"
-        [ngClass]="{ show: r.isOpen }"
-      >
+      <div class="dropdown-menu dropdown-menu-right" [ngClass]="{ show: r.isOpen }">
         <a class="dropdown-item" (click)="onSignOut()">
           <div class="content">
             <span>

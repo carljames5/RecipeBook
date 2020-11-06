@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Component, Input } from '@angular/core';
 
 import { AuthenticationService } from 'src/app/modules/authentication/services/authentication.service';
 
@@ -8,6 +9,9 @@ import { AuthenticationService } from 'src/app/modules/authentication/services/a
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  @Input() public subTitle$: Observable<string>;
+  @Input() public mainTitle$: Observable<string>;
+
   public constructor(private authenticationService: AuthenticationService) {}
 
   public onSignOut(): void {

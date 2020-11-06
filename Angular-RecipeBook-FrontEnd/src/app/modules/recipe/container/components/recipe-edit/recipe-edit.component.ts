@@ -6,6 +6,8 @@ import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '
 import { RecipeService } from '../../../services/recipe.service';
 import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
 import { EditRecipeIngredientListItemResponseModel } from '../../../models/response-models/edit-recipe-ingredient-list-item-response.model';
+import { AppHeaderService } from 'src/app/core/services/app-header.service';
+import { MODULE_NAMES } from '../../../constants/module-names.constant';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -51,19 +53,23 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   //#endregion
 
   constructor(
-    private recipeService: RecipeService,
-    private recipeFormValidator: RecipeFormValidator,
+    private router: Router,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private recipeService: RecipeService,
+    private appHeaderService: AppHeaderService,
+    private recipeFormValidator: RecipeFormValidator
+  ) {
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['EDIT']);
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.recipeService.getrecipeForEditing(+params['id']);
     });
 
-    this.subscriptions.push(this.recipeService.recipeWasLoadedForEditingSubject.subscribe(
-      recipe => {
+    this.subscriptions.push(
+      this.recipeService.recipeWasLoadedForEditingSubject.subscribe(recipe => {
         this.recipeForm = new FormGroup({
           id: new FormControl(recipe.id),
           name: new FormControl(recipe.name, [Validators.required]),
@@ -73,12 +79,14 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         });
 
         this.recipeName().setAsyncValidators(this.recipeFormValidator.recipeNameValidator(this.recipeId()));
-      }
-    ));
+      })
+    );
 
-    this.subscriptions.push(this.recipeService.updatedRecipeItemSubject.subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    }));
+    this.subscriptions.push(
+      this.recipeService.updatedRecipeItemSubject.subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      })
+    );
   }
 
   ngOnDestroy(): void {

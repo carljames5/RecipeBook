@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AppHeaderService } from 'src/app/core/services/app-header.service';
+import { MODULE_NAMES } from '../constants/module-names.constant';
 
 @Component({
   selector: 'app-shopping-list',
@@ -6,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./shopping-list.component.scss'],
 })
 export class ShoppingListComponent {
-  constructor() {}
+  public constructor(private appHeaderService: AppHeaderService) {
+    this.appHeaderService.subTitle$.next();
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['MAIN']);
+  }
 }

@@ -11,18 +11,18 @@ import { GetAllRecipeListItemResponseModel } from '../../../models/response-mode
   styleUrls: ['./recipe-list.component.scss'],
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription[] = []
+  private subscriptions: Subscription[] = [];
 
   public recipes: GetAllRecipeListItemResponseModel[];
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService) {}
 
   public ngOnInit() {
-    this.subscriptions.push(this.recipeService.refreshRecipeItemsSubject.subscribe(
-      (recipeItems: GetAllRecipeListItemResponseModel[]) => {
+    this.subscriptions.push(
+      this.recipeService.refreshRecipeItemsSubject.subscribe((recipeItems: GetAllRecipeListItemResponseModel[]) => {
         this.recipes = recipeItems;
-      }
-    ));
+      })
+    );
 
     this.recipeService.refreshRecipeItems();
   }
