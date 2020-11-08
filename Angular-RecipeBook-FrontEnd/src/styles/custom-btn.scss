@@ -1,4 +1,5 @@
-.btn-outline-success {
+.btn-outline-success,
+.btn-outline-dark {
   &:not(:disabled):not(.disabled):active:focus,
   &:focus,
   &:focus-within {

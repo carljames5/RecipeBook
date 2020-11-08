@@ -1,4 +1,6 @@
 #recipe-detail {
+  font-variant: petite-caps;
+
   #header {
     display: flex;
     align-items: center;
@@ -6,12 +8,13 @@
 
     > span {
       max-width: 40em;
-      word-break: break-all;
+      word-break: break-word;
     }
 
     .flex-container {
       ul#operations.dropdown-menu {
         a {
+          transition: 0.3s;
           cursor: pointer;
 
           &:hover {
