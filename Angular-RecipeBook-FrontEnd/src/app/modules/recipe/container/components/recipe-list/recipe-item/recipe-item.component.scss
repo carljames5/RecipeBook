@@ -47,5 +47,11 @@ li.recipe-list-group-item {
         flex-direction: column;
       }
     }
+
+    @media only screen and (max-width: 1030px) {
+      .item-header {
+        flex-direction: row;
+      }
+    }
   }
 }

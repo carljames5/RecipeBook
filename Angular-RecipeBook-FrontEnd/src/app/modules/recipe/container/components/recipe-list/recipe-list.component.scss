@@ -1,4 +1,8 @@
 #recipe-list {
+  #create-recipe-btn {
+    font-variant: petite-caps;
+  }
+
   .list-group {
     max-height: 45em;
     overflow-y: scroll;
@@ -25,14 +29,6 @@
 
     app-recipe-item + app-recipe-item {
       margin-top: 20px;
-    }
-  }
-
-  @media only screen and (max-width: 714px) {
-    #create-recipe-btn {
-      .label {
-        display: none;
-      }
     }
   }
 }
