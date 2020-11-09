@@ -40,14 +40,19 @@
       </div>
     </div>
     <div id="operation-btns">
-      <button class="btn btn-success mr-2" type="submit" [disabled]="!shoppingListIngredientForm.valid">
+      <button class="btn btn-outline-success mr-2" type="submit" [disabled]="!shoppingListIngredientForm.valid">
         <span *ngIf="ingredientArrayIndex.value === null"> <fa-icon icon="plus"></fa-icon> Add</span>
         <span *ngIf="ingredientArrayIndex.value !== null"><fa-icon icon="sync-alt"></fa-icon> Update</span>
       </button>
-      <button class="btn btn-secondary mr-2" type="button" (click)="onClear()">
+      <button class="btn btn-outline-dark mr-2" type="button" (click)="onClear()">
         <span> <fa-icon icon="eraser"></fa-icon> Clear</span>
       </button>
-      <button *ngIf="ingredientArrayIndex.value !== null" class="btn btn-danger" type="button" (click)="onDelete()">
+      <button
+        *ngIf="ingredientArrayIndex.value !== null"
+        class="btn btn-outline-danger"
+        type="button"
+        (click)="onDelete()"
+      >
         <span> <fa-icon icon="trash-alt"></fa-icon> Remove</span>
       </button>
     </div>
@@ -55,8 +60,8 @@
 </div>
 
 <ng-template #createHeaderTmp>
-  <h2>Create Shopping List Ingredient</h2>
+  <h2>Create shopping list ingredient</h2>
 </ng-template>
 <ng-template #editHeaderTmp>
-  <h2>Edit Shopping List Ingredient</h2>
+  <h2>Edit shopping list ingredient</h2>
 </ng-template>
