@@ -5,6 +5,7 @@
     }
 
     .card:nth-child(1) {
+      font-variant: petite-caps;
       &:nth-child(1) {
         margin-top: 1.5em;
 
@@ -27,15 +28,21 @@
     }
 
     .card:nth-child(2) {
+      font-variant: petite-caps;
       .card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        button {
+          font-variant: petite-caps;
+        }
       }
 
       .card-body {
         display: flex;
         flex-direction: column;
+        padding-right: 0.43em;
 
         .flex-container {
           &:nth-child(1) {
@@ -47,11 +54,12 @@
               margin-right: 1em;
 
               &:nth-child(1) {
-                width: 72%;
+                width: 85%;
               }
 
               &:nth-child(2) {
-                width: 18%;
+                width: 10%;
+                min-width: 7em;
               }
 
               &:nth-child(3) {
@@ -73,12 +81,34 @@
           }
         }
       }
+
+      @media only screen and (max-width: 1030px) {
+        .card-body {
+          .flex-container {
+            &:nth-child(1) {
+              .form-group {
+                &:nth-child(1) {
+                  min-width: 5.3em;
+                }
+
+                &:nth-child(2) {
+                  min-width: 6em;
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     #operation-btns-container {
       display: flex;
       align-items: center;
       justify-content: center;
+
+      button {
+        font-variant: petite-caps;
+      }
     }
   }
 }

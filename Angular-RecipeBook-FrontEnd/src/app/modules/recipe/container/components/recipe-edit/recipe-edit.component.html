@@ -18,7 +18,7 @@
         <div class="form-group">
           <div class="flex-container">
             <div class="flex-item">
-              <label for="imagePath">Image Path</label>
+              <label for="imagePath">Image path</label>
               <input id="imagePath" type="text" class="form-control" formControlName="imagePath" />
               <div class="validation-error" *ngIf="!recipeImgPath().valid && recipeImgPath().touched">
                 <span><strong>Image path</strong> is required</span>
@@ -42,7 +42,7 @@
     <div class="card">
       <div class="card-header">
         <span>Ingredients</span>
-        <button type="button" class="btn btn-success" (click)="onAddNewRecipeIngredient()">
+        <button type="button" class="btn btn-outline-success" (click)="onAddNewRecipeIngredient()">
           <span><fa-icon icon="plus"></fa-icon></span> New Ingredient
         </button>
       </div>
@@ -67,7 +67,7 @@
               />
             </div>
             <div class="form-group">
-              <button type="button" class="btn btn-danger" (click)="onDeleteRecipeIngredient(i)">
+              <button type="button" class="btn btn-outline-danger" (click)="onDeleteRecipeIngredient(i)">
                 <span><fa-icon icon="trash-alt"></fa-icon></span>
               </button>
             </div>
@@ -90,12 +90,12 @@
     <div id="operation-btns-container">
       <button
         type="submit"
-        class="btn btn-success mr-2"
+        class="btn btn-outline-success mr-2"
         [disabled]="!recipeForm.valid || !recipeForm.get('ingredients').valid"
       >
         <span> <fa-icon icon="save"></fa-icon> Save</span>
       </button>
-      <button type="button" class="btn btn-secondary mr-2" (click)="onCancel()">
+      <button type="button" class="btn btn-outline-dark mr-2" (click)="onCancel()">
         <span> <fa-icon icon="redo-alt"></fa-icon> Cancel</span>
       </button>
     </div>
