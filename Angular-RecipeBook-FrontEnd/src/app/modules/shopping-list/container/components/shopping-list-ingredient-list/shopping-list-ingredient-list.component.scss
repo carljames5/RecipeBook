@@ -2,6 +2,7 @@
   #header {
     display: flex;
     justify-content: space-between;
+    font-variant: petite-caps;
   }
 
   .list-group {
@@ -15,7 +16,7 @@
 
     &::-webkit-scrollbar-thumb {
       border-radius: 3px;
-      background: #959595;
+      background: #ededed;
     }
 
     &::-webkit-scrollbar-track {
