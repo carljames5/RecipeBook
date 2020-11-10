@@ -15,7 +15,8 @@ import {
   faSignOutAlt,
   faBookOpen,
   faReceipt,
-  faShoppingBasket
+  faShoppingBasket,
+  faFileDownload,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({})
@@ -35,7 +36,8 @@ export class FontAwesomeIconsModule {
       faSignOutAlt,
       faBookOpen,
       faReceipt,
-      faShoppingBasket
+      faShoppingBasket,
+      faFileDownload
     );
   }
 }

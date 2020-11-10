@@ -17,11 +17,13 @@ export class ShoppingListIngredientListComponent implements OnInit, OnDestroy {
   constructor(private shoppingListService: ShoppingListService) {}
 
   public ngOnInit(): void {
-    this.subscriptions.push(this.shoppingListService.refreshShoppingListIngredientsSubject.subscribe(
-      (shoppingListIngredients: ShoppingListIngredientModel[]) => {
-        this.shoppingListIngredients = shoppingListIngredients;
-      }
-    ));
+    this.subscriptions.push(
+      this.shoppingListService.refreshShoppingListIngredientsSubject.subscribe(
+        (shoppingListIngredients: ShoppingListIngredientModel[]) => {
+          this.shoppingListIngredients = shoppingListIngredients;
+        }
+      )
+    );
 
     this.shoppingListIngredients = this.shoppingListService.getShoppingListIngredients();
   }
@@ -32,5 +34,13 @@ export class ShoppingListIngredientListComponent implements OnInit, OnDestroy {
 
   public onClearingShoppingListIngredients(): void {
     this.shoppingListService.clearingShoppingListIngredients();
+  }
+
+  public onFetchLastSavedShoppingList(): void {
+    this.shoppingListService.getLastSavedShoppingList();
+  }
+
+  public onSaveShoppingList(): void {
+    this.shoppingListService.saveShoppingList();
   }
 }
