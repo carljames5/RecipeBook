@@ -13,7 +13,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Dtos.Services.Reci
         public RecipeNameIsExistDto(int? recipeId, string recipeName, CancellationToken cancellationToken)
         {
             RecipeId = recipeId;
-            RecipeName = recipeName;
+            RecipeName = recipeName.Trim().ToLower();
             CancellationToken = cancellationToken;
         }
     }

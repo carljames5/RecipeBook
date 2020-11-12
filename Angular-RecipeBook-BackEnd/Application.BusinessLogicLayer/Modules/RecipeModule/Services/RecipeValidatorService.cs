@@ -29,7 +29,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Services
                 }
             }
 
-            return await _context.Recipes.AnyAsync(x => x.Name.ToLower() == dtoModel.RecipeName.Trim().ToLower(), dtoModel.CancellationToken);
+            return await _context.Recipes.AnyAsync(x => x.Name.ToLower() == dtoModel.RecipeName, dtoModel.CancellationToken);
         }
     }
 }
