@@ -1,50 +1,42 @@
-import { AfterContentChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CoreAuthenticationService } from './core/services/core-authentication.service';
-import { AppHeaderService } from './core/services/app-header.service';
+import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { LoadingSpinnerService } from './core/services/loading-spinner.service';
-import { SidebarService } from './core/services/sidebar.service';
+import { AuthorizedUserService } from './core/services/authorized-user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements AfterContentChecked {
+export class AppComponent implements AfterContentChecked, OnInit {
   title: string = 'Angular-RecipeBook';
 
+  public userIsSignedIn: boolean;
+
   //#region GETTERS
-
-  public get sidebarIsVisible$(): Observable<boolean> {
-    return this.sidebarService.isVisible$;
-  }
-
-  public get headerSubTitle$(): Observable<string> {
-    return this.appHeaderService.subTitle$;
-  }
-
-  public get headerMainTitle$(): Observable<string> {
-    return this.appHeaderService.mainTitle$;
-  }
 
   public get loadingSpinnerMessage(): string {
     return this.loadingSpinnerService.message;
   }
 
-  public get userIsSignedIn(): boolean {
-    return this.coreAuthenticationService.userIsSignedInFromLocaleStorage;
+  public get userIsSignedIn$(): Observable<boolean> {
+    return this.authorizedUserService.userIsSignedIn$;
   }
 
   //#endregion
 
-  constructor(
-    private sidebarService: SidebarService,
-    private appHeaderService: AppHeaderService,
+  public constructor(
     private loadingSpinnerService: LoadingSpinnerService,
-    private coreAuthenticationService: CoreAuthenticationService,
+    private authorizedUserService: AuthorizedUserService,
     private cdr: ChangeDetectorRef
   ) {}
+
+  public ngOnInit(): void {
+    this.userIsSignedIn$.subscribe(response => {
+      this.userIsSignedIn = response;
+    });
+  }
 
   public ngAfterContentChecked(): void {
     this.cdr.detectChanges();

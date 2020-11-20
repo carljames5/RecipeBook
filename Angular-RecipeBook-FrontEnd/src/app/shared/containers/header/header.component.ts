@@ -1,20 +1,49 @@
 import { Observable } from 'rxjs';
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 
-import { AuthenticationService } from 'src/app/modules/authentication/services/authentication.service';
+import { AppHeaderService } from 'src/app/core/services/app-header.service';
+import { AuthorizedUserService } from 'src/app/core/services/authorized-user.service';
+import { CoreAuthenticationService } from 'src/app/core/services/core-authentication.service';
+
+import { AuthorizedUserDataModel } from '../../models/user/authorized-user-data.model';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
-  @Input() public subTitle$: Observable<string>;
-  @Input() public mainTitle$: Observable<string>;
+export class HeaderComponent implements OnInit {
+  @Output() public authorizedUserData: AuthorizedUserDataModel;
 
-  public constructor(private authenticationService: AuthenticationService) {}
+  //#region GETTERS
+
+  public get authorizedUserData$(): Observable<AuthorizedUserDataModel> {
+    return this.authorizedUserService.authorizedUserDataFromCache;
+  }
+
+  public get subTitle$(): Observable<string> {
+    return this.appHeaderService.subTitle$;
+  }
+
+  public get mainTitle$(): Observable<string> {
+    return this.appHeaderService.mainTitle$;
+  }
+
+  //#endregion
+
+  public constructor(
+    private appHeaderService: AppHeaderService,
+    private authorizedUserService: AuthorizedUserService,
+    private coreAuthenticationService: CoreAuthenticationService
+  ) {}
+
+  public ngOnInit(): void {
+    this.authorizedUserData$.subscribe((response: AuthorizedUserDataModel) => {
+      this.authorizedUserData = response;
+    });
+  }
 
   public onSignOut(): void {
-    this.authenticationService.signOut();
+    this.coreAuthenticationService.signOut();
   }
 }

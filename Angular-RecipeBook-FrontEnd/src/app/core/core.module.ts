@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
+import { SidebarModule } from 'ng-sidebar';
+import { CommonModule } from '@angular/common';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { AppRoutingModule } from '../app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,10 +11,10 @@ import { RibbonToastrComponent } from '../shared/containers/ribbon-toastr/ribbon
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor';
-import { SidebarModule } from 'ng-sidebar';
 
 @NgModule({
   imports: [
+    CommonModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -23,7 +25,7 @@ import { SidebarModule } from 'ng-sidebar';
     UiSwitchModule.forRoot({
       size: 'small',
     }),
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
   ],
   providers: [
     {

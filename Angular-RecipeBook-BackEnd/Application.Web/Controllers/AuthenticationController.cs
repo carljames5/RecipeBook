@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.Authentication.Commands;
 using Application.BusinessLogicLayer.Modules.Authentication.RequestModels;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Web.Controllers
@@ -32,13 +31,6 @@ namespace Application.Web.Controllers
         {
             await _mediator.Send(new SignOutCommand());
 
-            return Ok();
-        }
-
-        [Authorize]
-        [HttpGet("UserIsSignedIn")]
-        public ActionResult UserIsSignedIn()
-        {
             return Ok();
         }
     }

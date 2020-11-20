@@ -1,13 +1,18 @@
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { finalize, mergeMap } from 'rxjs/operators';
 
-import { SidebarService } from './sidebar.service';
-import { LocaleStorageService } from './locale-storage.service';
+import { LoadingSpinnerService } from './loading-spinner.service';
+import { AuthorizedUserService } from './authorized-user.service';
+import { AppCacheStorageService } from './app-cache-storage.service';
+import { AuthorizedUserHttpService } from './authorized-user-http.service';
 import { CoreAuthenticationHttpService } from './core-authentication-http.service';
 
-import { LOCALE_SOTRAGE_KEYS } from '../constants/locale-storage-key.constants';
+import { CACHE_STORAGE_KEYS } from '../constants/app-cache-storage-service/app-cache-storage-service.constants';
+
+import { AuthorizedUserDataModel } from 'src/app/shared/models/user/authorized-user-data.model';
+import { CacheStorageSaveOptions } from '../models/app-cache-storage-service/cache-storage-save-options.model';
+import { SignInRequestModel } from 'src/app/modules/authentication/models/request-models/sign-in-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,41 +20,56 @@ import { LOCALE_SOTRAGE_KEYS } from '../constants/locale-storage-key.constants';
 export class CoreAuthenticationService {
   public constructor(
     private router: Router,
-    private sidebarService: SidebarService,
-    private localStorageService: LocaleStorageService,
+    private appCacheService: AppCacheStorageService,
+    private authorizedUserService: AuthorizedUserService,
+    private loadingSpinnerService: LoadingSpinnerService,
+    private authorizedUserHttpService: AuthorizedUserHttpService,
     private coreAuthenticationHttpService: CoreAuthenticationHttpService
   ) {}
 
+  public signIn(signInFormValue: any) {
+    const requestModel: SignInRequestModel = {
+      userName: signInFormValue.get('userName').value,
+      password: signInFormValue.get('password').value,
+      isPersistent: signInFormValue.get('isPersistent').value,
+    } as SignInRequestModel;
+
+    this.loadingSpinnerService.show('Sign in...');
+
+    this.coreAuthenticationHttpService
+      .signIn(requestModel)
+      .pipe(
+        mergeMap(() => this.authorizedUserHttpService.getAuthorizedUserData()),
+        finalize(() => this.loadingSpinnerService.hide())
+      )
+      .subscribe((response: AuthorizedUserDataModel) => {
+        let cacheSaveOptionsItems: CacheStorageSaveOptions[] = [
+          {
+            data: true,
+            storageKey: CACHE_STORAGE_KEYS['USER_IS_SIGNED_IN'],
+          },
+          { data: response, storageKey: CACHE_STORAGE_KEYS['AUTHORIZED_USER_DATA'] },
+        ];
+
+        this.appCacheService.setMoreItem(cacheSaveOptionsItems);
+
+        this.router.navigate(['/']);
+      });
+  }
+
   public signOut() {
     this.coreAuthenticationHttpService.signOut().subscribe(() => {
-      this.localStorageService.setItem<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN'], false);
+      const cacheSaveOptionsItem: CacheStorageSaveOptions = {
+        data: false,
+        storageKey: CACHE_STORAGE_KEYS['USER_IS_SIGNED_IN'],
+      };
 
-      this.sidebarService.setSidebarVisibility(false);
+      this.appCacheService.setItem(cacheSaveOptionsItem);
+      this.appCacheService.removeItem(CACHE_STORAGE_KEYS['AUTHORIZED_USER_DATA']);
+
+      this.authorizedUserService.setUserIsSignedIn(false);
 
       this.router.navigate(['/sign-in']);
     });
-  }
-
-  public get userIsSignedIn(): Observable<boolean> {
-    return this.coreAuthenticationHttpService.userIsSignedIn().pipe(
-      tap(() => {
-        this.localStorageService.setItem<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN'], true);
-
-        this.sidebarService.setSidebarVisibility(true);
-      }),
-      map(() => {
-        return true;
-      })
-    );
-  }
-
-  public get userIsSignedInFromLocaleStorage(): boolean {
-    const userIsLoggedIn = this.localStorageService.getItemValue<boolean>(LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN']);
-
-    if (userIsLoggedIn) {
-      return true;
-    }
-
-    return false;
   }
 }

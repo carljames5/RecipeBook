@@ -1,28 +1,27 @@
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 
-import { LocaleStorageService } from '../services/locale-storage.service';
-
-import { LOCALE_SOTRAGE_KEYS } from '../constants/locale-storage-key.constants';
+import { AuthorizedUserService } from '../services/authorized-user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignedInGuard implements CanActivate {
-  constructor(private router: Router, private localeStorageService: LocaleStorageService) {}
+  constructor(private router: Router, private authorizedUserService: AuthorizedUserService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    const userIsSignedIn: boolean = this.localeStorageService.getItemValue<boolean>(
-      LOCALE_SOTRAGE_KEYS['USER_IS_SIGNED_IN']
+    return this.authorizedUserService.userIsSignedInFromCache.pipe(
+      map((response: boolean) => {
+        if (response) {
+          this.router.navigate(['/']);
+
+          return false;
+        }
+
+        return true;
+      })
     );
-
-    if (userIsSignedIn) {
-      this.router.navigate(['/']);
-
-      return of(false);
-    } else {
-      return of(true);
-    }
   }
 }

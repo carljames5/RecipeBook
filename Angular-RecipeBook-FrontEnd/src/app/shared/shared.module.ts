@@ -22,6 +22,7 @@ import { ClosedSidebarComponent } from './containers/sidebar/components/closed-s
 import { OpenedSidebarComponent } from './containers/sidebar/components/opened-sidebar/opened-sidebar.component';
 import { ClosedSidebarItemComponent } from './containers/sidebar/components/closed-sidebar/closed-sidebar-item/closed-sidebar-item.component';
 import { OpenedSidebarItemComponent } from './containers/sidebar/components/opened-sidebar/opened-sidebar-item/opened-sidebar-item.component';
+import { AuthorizedUserInformationComponent } from './containers/header/authorized-user-information/authorized-user-information.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { OpenedSidebarItemComponent } from './containers/sidebar/components/open
     ClosedSidebarItemComponent,
     OpenedSidebarComponent,
     OpenedSidebarItemComponent,
+    AuthorizedUserInformationComponent,
   ],
   imports: [
     RouterModule,
