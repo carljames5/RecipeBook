@@ -60,11 +60,8 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.subscriptions.push(
-      this.recipeService.createdRecipeItemSubject.subscribe(() => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      })
-    );
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['CREATE']);
 
     this.recipeForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
@@ -75,8 +72,11 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
 
     this.recipeName().setAsyncValidators(this.recipeFormValidator.recipeNameValidator());
 
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['CREATE']);
+    this.subscriptions.push(
+      this.recipeService.recipeItemCreated$.subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      })
+    );
   }
 
   public ngOnDestroy(): void {

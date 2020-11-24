@@ -21,17 +21,19 @@ import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response
   providedIn: 'root',
 })
 export class RecipeService {
-  public refreshRecipeItemsSubject = new Subject<GetAllRecipeListItemResponseModel[]>();
-  public getRecipeByIdSubject = new Subject<GetRecipeByIdResponseModel>();
+  public allRecipeItem$: Subject<GetAllRecipeListItemResponseModel[]> = new Subject<
+    GetAllRecipeListItemResponseModel[]
+  >();
+  public recipeItemById$: Subject<GetRecipeByIdResponseModel> = new Subject<GetRecipeByIdResponseModel>();
+  public recipeItemToBeEdited$: Subject<GetRecipeForEditingResponseModel> = new Subject<GetRecipeForEditingResponseModel>();
 
-  public createdRecipeItemSubject = new Subject();
-  public updatedRecipeItemSubject = new Subject();
-  public deletedRecipeItemSubject = new Subject();
-  public recipeWasLoadedForEditingSubject = new Subject<GetRecipeForEditingResponseModel>();
+  public recipeItemCreated$ = new Subject();
+  public recipeItemUpdated$ = new Subject();
+  public recipeItemDeleted$ = new Subject();
 
   public constructor(
-    private shoppingListService: ShoppingListService,
     private recipeHttpService: RecipeHttpService,
+    private shoppingListService: ShoppingListService,
     private loadingSpinnerService: LoadingSpinnerService
   ) {}
 
@@ -42,33 +44,29 @@ export class RecipeService {
       .getAllRecipe()
       .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe((resposne: GetAllRecipeResponseModel) => {
-        this.refreshRecipeItemsSubject.next(resposne.recipes);
+        this.allRecipeItem$.next(resposne.recipes);
       });
   }
 
-  public getRecipeById(id: number): void {
-    const requestModel: GetRecipeByIdRequestModel = { id: id } as GetRecipeByIdRequestModel;
-
+  public getRecipeById(requestModel: GetRecipeByIdRequestModel): void {
     this.loadingSpinnerService.show('Loading recipe details...');
 
     this.recipeHttpService
       .getRecipeById(requestModel)
       .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe((recipe: GetRecipeByIdResponseModel) => {
-        this.getRecipeByIdSubject.next(recipe);
+        this.recipeItemById$.next(recipe);
       });
   }
 
-  public getrecipeForEditing(id: number): void {
-    const requestModel: GetRecipeForEditingRequestModel = { id: id } as GetRecipeForEditingRequestModel;
-
+  public getrecipeForEditing(requestModel: GetRecipeForEditingRequestModel): void {
     this.loadingSpinnerService.show('Loading recipe for editing...');
 
     this.recipeHttpService
       .getRecipeForEditing(requestModel)
       .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe((recipe: GetRecipeForEditingResponseModel) => {
-        this.recipeWasLoadedForEditingSubject.next(recipe);
+        this.recipeItemToBeEdited$.next(recipe);
       });
   }
 
@@ -80,7 +78,8 @@ export class RecipeService {
       .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe(() => {
         this.refreshRecipeItems();
-        this.createdRecipeItemSubject.next();
+
+        this.recipeItemCreated$.next();
       });
   }
 
@@ -92,7 +91,8 @@ export class RecipeService {
       .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe(() => {
         this.refreshRecipeItems();
-        this.updatedRecipeItemSubject.next();
+
+        this.recipeItemUpdated$.next();
       });
   }
 
@@ -104,7 +104,8 @@ export class RecipeService {
       .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe(() => {
         this.refreshRecipeItems();
-        this.deletedRecipeItemSubject.next();
+
+        this.recipeItemDeleted$.next();
       });
   }
 

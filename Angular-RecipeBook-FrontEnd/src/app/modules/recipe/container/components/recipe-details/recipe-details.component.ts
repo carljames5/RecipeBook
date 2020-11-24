@@ -8,6 +8,7 @@ import { RecipeService } from '../../../services/recipe.service';
 import { AppHeaderService } from 'src/app/core/services/app-header.service';
 
 import { DeleteRecipeRequestModel } from '../../../models/request-models/delete-recipe-request.model';
+import { GetRecipeByIdRequestModel } from '../../../models/request-models/get-recipe-by-id-request.model';
 import { GetRecipeByIdResponseModel } from '../../../models/response-models/get-recipe-by-id-response.model';
 
 @Component({
@@ -20,43 +21,41 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   public recipe: GetRecipeByIdResponseModel;
 
-  constructor(
+  public constructor(
     private route: ActivatedRoute,
     private router: Router,
     private recipeService: RecipeService,
     private appHeaderService: AppHeaderService
   ) {}
 
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.recipeService.getRecipeByIdSubject.subscribe(recipe => {
-        this.recipe = recipe;
-      })
-    );
+  public ngOnInit(): void {
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['DETAILS']);
 
     this.subscriptions.push(
-      this.recipeService.deletedRecipeItemSubject.subscribe(() => {
+      this.route.params.subscribe((params: Params) => {
+        const requestModel: GetRecipeByIdRequestModel = { id: +params['id'] } as GetRecipeByIdRequestModel;
+
+        this.recipeService.getRecipeById(requestModel);
+      }),
+      this.recipeService.recipeItemById$.subscribe(recipe => {
+        this.recipe = recipe;
+      }),
+      this.recipeService.recipeItemDeleted$.subscribe(() => {
         this.router.navigate(['/recipes']);
       })
     );
-
-    this.route.params.subscribe((params: Params) => {
-      this.recipeService.getRecipeById(+params['id']);
-    });
-
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['DETAILS']);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscriptions.forEach(x => x.unsubscribe());
   }
 
-  public onAddRecipeIngredientsToShoppingList() {
+  public onAddRecipeIngredientsToShoppingList(): void {
     this.recipeService.addRecipeIngredientsToShoppingList(this.recipe.ingredients);
   }
 
-  public onEditRecipe() {
+  public onEditRecipe(): void {
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
 

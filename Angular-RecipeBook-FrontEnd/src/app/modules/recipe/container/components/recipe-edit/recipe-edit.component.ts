@@ -3,12 +3,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 
-import { RecipeService } from '../../../services/recipe.service';
-import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
-import { EditRecipeIngredientListItemResponseModel } from '../../../models/response-models/edit-recipe-ingredient-list-item-response.model';
-import { AppHeaderService } from 'src/app/core/services/app-header.service';
 import { MODULE_NAMES } from '../../../constants/module-names.constant';
+
+import { RecipeService } from '../../../services/recipe.service';
+import { AppHeaderService } from 'src/app/core/services/app-header.service';
+import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
+
 import { UpdateRecipeRequestModel } from '../../../models/request-models/update-recipe-request.model';
+import { GetRecipeForEditingRequestModel } from '../../../models/request-models/get-recipe-for-editing-request.model';
+import { EditRecipeIngredientListItemResponseModel } from '../../../models/response-models/edit-recipe-ingredient-list-item-response.model';
 import { UpdateRecipeIngredientListItemRequestModel } from '../../../models/request-models/update-recipe-ingredient-list-item-request.model';
 
 @Component({
@@ -54,7 +57,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   //#endregion
 
-  constructor(
+  public constructor(
     private router: Router,
     private route: ActivatedRoute,
     private recipeService: RecipeService,
@@ -62,13 +65,17 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     private recipeFormValidator: RecipeFormValidator
   ) {}
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.recipeService.getrecipeForEditing(+params['id']);
-    });
+  public ngOnInit(): void {
+    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.mainTitle$.next(MODULE_NAMES['EDIT']);
 
     this.subscriptions.push(
-      this.recipeService.recipeWasLoadedForEditingSubject.subscribe(recipe => {
+      this.route.params.subscribe((params: Params) => {
+        const rrequestModel: GetRecipeForEditingRequestModel = { id: +params['id'] } as GetRecipeForEditingRequestModel;
+
+        this.recipeService.getrecipeForEditing(rrequestModel);
+      }),
+      this.recipeService.recipeItemToBeEdited$.subscribe(recipe => {
         this.recipeForm = new FormGroup({
           id: new FormControl(recipe.id),
           name: new FormControl(recipe.name, [Validators.required]),
@@ -78,24 +85,18 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         });
 
         this.recipeName().setAsyncValidators(this.recipeFormValidator.recipeNameValidator(this.recipeId()));
-      })
-    );
-
-    this.subscriptions.push(
-      this.recipeService.updatedRecipeItemSubject.subscribe(() => {
+      }),
+      this.recipeService.recipeItemUpdated$.subscribe(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
       })
     );
-
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['EDIT']);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscriptions.forEach(x => x.unsubscribe());
   }
 
-  public onAddNewRecipeIngredient() {
+  public onAddNewRecipeIngredient(): void {
     this.ingredients.push(this.createNewRecipeIngredientFormGroup());
   }
 

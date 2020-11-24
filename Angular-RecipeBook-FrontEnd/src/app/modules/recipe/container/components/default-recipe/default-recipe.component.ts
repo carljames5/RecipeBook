@@ -8,7 +8,7 @@ import { MODULE_NAMES } from '../../../constants/module-names.constant';
   styleUrls: ['./default-recipe.component.scss'],
 })
 export class DefaultRecipeComponent implements OnInit {
-  constructor(private appHeaderService: AppHeaderService) {}
+  public constructor(private appHeaderService: AppHeaderService) {}
 
   public ngOnInit(): void {
     this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
