@@ -27,13 +27,7 @@ export class CoreAuthenticationService {
     private coreAuthenticationHttpService: CoreAuthenticationHttpService
   ) {}
 
-  public signIn(signInFormValue: any) {
-    const requestModel: SignInRequestModel = {
-      userName: signInFormValue.get('userName').value,
-      password: signInFormValue.get('password').value,
-      isPersistent: signInFormValue.get('isPersistent').value,
-    } as SignInRequestModel;
-
+  public signIn(requestModel: SignInRequestModel) {
     this.loadingSpinnerService.show('Sign in...');
 
     this.coreAuthenticationHttpService
