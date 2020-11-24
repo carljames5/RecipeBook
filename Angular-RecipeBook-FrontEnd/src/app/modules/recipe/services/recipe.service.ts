@@ -72,9 +72,7 @@ export class RecipeService {
       });
   }
 
-  public createRecipe(createRecipeFormValue: any): void {
-    const requestModel: CreateRecipeRequestModel = createRecipeFormValue;
-
+  public createRecipe(requestModel: CreateRecipeRequestModel): void {
     this.loadingSpinnerService.show('Saving recipe...');
 
     this.recipeHttpService
@@ -86,9 +84,7 @@ export class RecipeService {
       });
   }
 
-  public updateRecipe(updateRecipeFormValue: any): void {
-    const requestModel: UpdateRecipeRequestModel = updateRecipeFormValue;
-
+  public updateRecipe(requestModel: UpdateRecipeRequestModel): void {
     this.loadingSpinnerService.show('Update recipe...');
 
     this.recipeHttpService
@@ -100,9 +96,7 @@ export class RecipeService {
       });
   }
 
-  public deleteRecipe(id: number): void {
-    const requestModel: DeleteRecipeRequestModel = { id: id } as DeleteRecipeRequestModel;
-
+  public deleteRecipe(requestModel: DeleteRecipeRequestModel): void {
     this.loadingSpinnerService.show('Delete recipe...');
 
     this.recipeHttpService

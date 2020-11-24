@@ -6,8 +6,11 @@ import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '
 import { MODULE_NAMES } from '../../../constants/module-names.constant';
 
 import { RecipeService } from '../../../services/recipe.service';
-import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
 import { AppHeaderService } from 'src/app/core/services/app-header.service';
+import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
+
+import { CreateRecipeRequestModel } from '../../../models/request-models/create-recipe-request.model';
+import { CreateRecipeIngredientListItemRequestModel } from '../../../models/request-models/create-recipe-ingredient-list-item-request.model';
 
 @Component({
   selector: 'app-recipe-create',
@@ -48,7 +51,7 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
 
   //#endregion
 
-  constructor(
+  public constructor(
     private router: Router,
     private route: ActivatedRoute,
     private recipeService: RecipeService,
@@ -56,7 +59,7 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
     private recipeFormValidator: RecipeFormValidator
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.subscriptions.push(
       this.recipeService.createdRecipeItemSubject.subscribe(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
@@ -76,7 +79,7 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
     this.appHeaderService.mainTitle$.next(MODULE_NAMES['CREATE']);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscriptions.forEach(x => x.unsubscribe());
   }
 
@@ -91,7 +94,20 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
   }
 
   public onCreateRecipe(): void {
-    this.recipeService.createRecipe(this.recipeForm.value);
+    const requestModel: CreateRecipeRequestModel = {
+      name: this.recipeName().value,
+      description: this.recipeDescription().value,
+      imagePath: this.recipeImgPath().value,
+      ingredients: this.ingredients.controls.map(
+        item =>
+          ({
+            name: item.get('name').value,
+            amount: item.get('amount').value,
+          } as CreateRecipeIngredientListItemRequestModel)
+      ),
+    } as CreateRecipeRequestModel;
+
+    this.recipeService.createRecipe(requestModel);
   }
 
   public onCancel(): void {

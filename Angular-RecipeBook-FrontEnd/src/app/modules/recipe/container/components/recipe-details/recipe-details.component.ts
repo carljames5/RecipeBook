@@ -6,6 +6,8 @@ import { MODULE_NAMES } from '../../../constants/module-names.constant';
 
 import { RecipeService } from '../../../services/recipe.service';
 import { AppHeaderService } from 'src/app/core/services/app-header.service';
+
+import { DeleteRecipeRequestModel } from '../../../models/request-models/delete-recipe-request.model';
 import { GetRecipeByIdResponseModel } from '../../../models/response-models/get-recipe-by-id-response.model';
 
 @Component({
@@ -59,6 +61,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   public onDeleteRecipe(id: number): void {
-    this.recipeService.deleteRecipe(id);
+    const requestModel: DeleteRecipeRequestModel = { id: id } as DeleteRecipeRequestModel;
+
+    this.recipeService.deleteRecipe(requestModel);
   }
 }

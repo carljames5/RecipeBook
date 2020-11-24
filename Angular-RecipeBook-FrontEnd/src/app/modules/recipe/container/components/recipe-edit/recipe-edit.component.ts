@@ -8,6 +8,8 @@ import { RecipeFormValidator } from '../../../validators/recipe-form-validators'
 import { EditRecipeIngredientListItemResponseModel } from '../../../models/response-models/edit-recipe-ingredient-list-item-response.model';
 import { AppHeaderService } from 'src/app/core/services/app-header.service';
 import { MODULE_NAMES } from '../../../constants/module-names.constant';
+import { UpdateRecipeRequestModel } from '../../../models/request-models/update-recipe-request.model';
+import { UpdateRecipeIngredientListItemRequestModel } from '../../../models/request-models/update-recipe-ingredient-list-item-request.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -104,7 +106,21 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   public onUpdateRecipe(): void {
-    this.recipeService.updateRecipe(this.recipeForm.value);
+    const requestModel: UpdateRecipeRequestModel = {
+      id: this.recipeId().value,
+      name: this.recipeName().value,
+      description: this.recipeDescription().value,
+      imagePath: this.recipeImgPath().value,
+      ingredients: this.ingredients.controls.map(
+        item =>
+          ({
+            name: item.get('name').value,
+            amount: item.get('amount').value,
+          } as UpdateRecipeIngredientListItemRequestModel)
+      ),
+    } as UpdateRecipeRequestModel;
+
+    this.recipeService.updateRecipe(requestModel);
   }
 
   public onCancel(): void {
