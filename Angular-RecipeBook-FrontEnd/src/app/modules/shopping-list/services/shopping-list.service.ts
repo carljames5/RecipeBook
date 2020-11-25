@@ -19,14 +19,14 @@ import { GetRecipeByIdIngredientListItemResponseModel } from '../../recipe/model
 export class ShoppingListService {
   private shoppingList: ShoppingListModel;
 
-  public shoppingListClearedSubject = new Subject();
-  public refreshShoppingListIngredientsSubject = new Subject<ShoppingListIngredientModel[]>();
-  public shoppingListIngredientWasLoadedForEditingSubject = new Subject<EditShoppingListIngredientModel>();
+  public shoppingListCleared$ = new Subject();
+  public shoppingListIngredients$ = new Subject<ShoppingListIngredientModel[]>();
+  public shoppingListIngredientToBeEdited$ = new Subject<EditShoppingListIngredientModel>();
 
   constructor(
-    private shoppingListHttpService: ShoppingListHttpService,
+    private toastrService: ToastrService,
     private loadingSpinnerService: LoadingSpinnerService,
-    private toastrService: ToastrService
+    private shoppingListHttpService: ShoppingListHttpService
   ) {
     this.shoppingList = { ingredients: [] } as ShoppingListModel;
   }
@@ -44,7 +44,7 @@ export class ShoppingListService {
           titleClass: 'title success',
         });
 
-        this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
+        this.shoppingListIngredients$.next(this.shoppingList.ingredients);
       });
   }
 
@@ -67,7 +67,7 @@ export class ShoppingListService {
   public addShoppingListIngredientToShoppingList(shoppingListIngredient: ShoppingListIngredientModel): void {
     this.addNewShoppingListIngredientToShoppingList(shoppingListIngredient);
 
-    this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
+    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
   }
 
   public updateShoppingListIngredientInShoppingList(editedElement: EditShoppingListIngredientModel): void {
@@ -84,16 +84,16 @@ export class ShoppingListService {
       } as ShoppingListIngredientModel;
     }
 
-    this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
+    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
   }
 
   public deleteIngredientFromShoppingList(arrayIndex: number): void {
     this.shoppingList.ingredients.splice(arrayIndex, 1);
 
-    this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
+    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
   }
 
-  public saveShoppingList() {
+  public saveShoppingList(): void {
     const requestModel: SaveShoppingListRequestModel = {
       ingredients: this.shoppingList.ingredients,
     } as SaveShoppingListRequestModel;
@@ -122,19 +122,19 @@ export class ShoppingListService {
       titleClass: 'title success',
     });
 
-    this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
+    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
   }
 
   public clearingShoppingListIngredients(): void {
     this.shoppingList.ingredients = [];
 
-    this.refreshShoppingListIngredientsSubject.next(this.shoppingList.ingredients);
-    this.shoppingListClearedSubject.next();
+    this.shoppingListCleared$.next();
+    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
   }
 
   //#region PRIVATE Helper Methods
 
-  private addNewShoppingListIngredientToShoppingList(newShoppingListIngredient: ShoppingListIngredientModel) {
+  private addNewShoppingListIngredientToShoppingList(newShoppingListIngredient: ShoppingListIngredientModel): void {
     const existingIngredientIndex = this.getShoppingListIngredientIndexByName(newShoppingListIngredient.name);
 
     if (existingIngredientIndex !== -1) {

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { ShoppingListService } from 'src/app/modules/shopping-list/services/shopping-list.service';
+
 import { ShoppingListIngredientModel } from 'src/app/modules/shopping-list/models/shopping-list-ingredient.model';
 import { EditShoppingListIngredientModel } from 'src/app/modules/shopping-list/models/edit-shopping-list-ingredient.model';
 
@@ -20,6 +21,6 @@ export class ShoppingListIngredientItemComponent {
       arrayIndex
     );
 
-    this.shoppingListService.shoppingListIngredientWasLoadedForEditingSubject.next(editingElement);
+    this.shoppingListService.shoppingListIngredientToBeEdited$.next(editingElement);
   }
 }

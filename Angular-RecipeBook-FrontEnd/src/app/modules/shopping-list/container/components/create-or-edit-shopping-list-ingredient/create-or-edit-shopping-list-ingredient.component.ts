@@ -12,7 +12,7 @@ import { ShoppingListIngredientFormValidator } from '../../../validators/shoppin
 })
 export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
-  
+
   public shoppingListIngredientForm: FormGroup;
 
   //#region GETTERS
@@ -40,19 +40,20 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscriptions.push(this.shoppingListService.shoppingListIngredientWasLoadedForEditingSubject.subscribe(
-      selectedShoppingListIngredient => {
+    this.subscriptions.push(
+      this.shoppingListService.shoppingListIngredientToBeEdited$.subscribe(selectedShoppingListIngredient => {
         this.shoppingListIngredientForm.setValue({
           arrayIndex: selectedShoppingListIngredient.arrayIndex,
           name: selectedShoppingListIngredient.name,
           amount: selectedShoppingListIngredient.amount,
         });
-      }
-    ));
-
-    this.subscriptions.push(this.shoppingListService.shoppingListClearedSubject.subscribe(() => {
-      this.onClear();
-    }));
+      })
+    ),
+      this.subscriptions.push(
+        this.shoppingListService.shoppingListCleared$.subscribe(() => {
+          this.onClear();
+        })
+      );
   }
 
   public ngOnDestroy(): void {

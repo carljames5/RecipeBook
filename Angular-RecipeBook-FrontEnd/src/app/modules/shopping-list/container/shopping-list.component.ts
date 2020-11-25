@@ -10,7 +10,7 @@ import { MODULE_NAMES } from '../constants/module-names.constant';
 export class ShoppingListComponent implements OnInit {
   public constructor(private appHeaderService: AppHeaderService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.appHeaderService.subTitle$.next();
     this.appHeaderService.mainTitle$.next(MODULE_NAMES['MAIN']);
   }
