@@ -7,9 +7,9 @@ import { MODULE_NAMES } from '../../../constants/module-names.constant';
 import { RecipeService } from '../../../services/recipe.service';
 import { AppHeaderService } from 'src/app/core/services/app-header.service';
 
+import { RecipeModel } from '../../../models/recipe.model';
 import { DeleteRecipeRequestModel } from '../../../models/request-models/delete-recipe-request.model';
 import { GetRecipeByIdRequestModel } from '../../../models/request-models/get-recipe-by-id-request.model';
-import { GetRecipeByIdResponseModel } from '../../../models/response-models/get-recipe-by-id-response.model';
 
 @Component({
   selector: 'app-recipe-details',
@@ -19,7 +19,7 @@ import { GetRecipeByIdResponseModel } from '../../../models/response-models/get-
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
-  public recipe: GetRecipeByIdResponseModel;
+  public recipe: RecipeModel;
 
   public constructor(
     private route: ActivatedRoute,
@@ -38,7 +38,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
         this.recipeService.getRecipeById(requestModel);
       }),
-      this.recipeService.recipeItemById$.subscribe(recipe => {
+      this.recipeService.recipe$.subscribe((recipe: RecipeModel) => {
         this.recipe = recipe;
       }),
       this.recipeService.recipeItemDeleted$.subscribe(() => {

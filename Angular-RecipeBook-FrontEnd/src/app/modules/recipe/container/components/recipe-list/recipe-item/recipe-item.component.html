@@ -4,12 +4,12 @@
   routerLinkActive="active"
 >
   <div class="item-header">
-    <h4>{{ recipe.name }}</h4>
-    <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid" />
+    <h4>{{ recipeListItem.name }}</h4>
+    <img [src]="recipeListItem.imagePath" alt="{{ recipeListItem.name }}" class="img-fluid" />
   </div>
   <hr />
 
   <div class="item-content">
-    <p>{{ recipe.description }}</p>
+    <p>{{ recipeListItem.description }}</p>
   </div>
 </li>

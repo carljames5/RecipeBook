@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { RecipeService } from '../../../services/recipe.service';
-import { GetAllRecipeListItemResponseModel } from '../../../models/response-models/get-all-recipe-list-item-response.model';
+import { RecipeListItemModel } from '../../../models/recipe-list-item.model';
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,14 +13,14 @@ import { GetAllRecipeListItemResponseModel } from '../../../models/response-mode
 export class RecipeListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
-  public recipes: GetAllRecipeListItemResponseModel[];
+  public recipeListItems: RecipeListItemModel[];
 
   public constructor(private router: Router, private route: ActivatedRoute, private recipeService: RecipeService) {}
 
   public ngOnInit(): void {
     this.subscriptions.push(
-      this.recipeService.allRecipeItem$.subscribe((recipeItems: GetAllRecipeListItemResponseModel[]) => {
-        this.recipes = recipeItems;
+      this.recipeService.recipeListItems$.subscribe((recipeListItems: RecipeListItemModel[]) => {
+        this.recipeListItems = recipeListItems;
       })
     );
 

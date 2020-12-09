@@ -46,14 +46,6 @@ namespace Application.Web.Controllers
             return Ok();
         }
 
-        [HttpPost("GetRecipeForEditing")]
-        public async Task<ActionResult<GetRecipeForEditingResponseModel>> GetRecipeForEditing([FromBody] GetRecipeForEditingRequestModel requestModel)
-        {
-            GetRecipeForEditingResponseModel result = await _mediator.Send(new GetRecipeForEditingQuery(requestModel));
-
-            return Ok(result);
-        }
-
         [HttpPut("Update")]
         public async Task<IActionResult> UpdateRecipe([FromBody] UpdateRecipeRequestModel model)
         {

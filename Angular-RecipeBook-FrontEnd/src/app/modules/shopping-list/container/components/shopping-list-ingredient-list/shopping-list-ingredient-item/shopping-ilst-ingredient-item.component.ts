@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { ShoppingListService } from 'src/app/modules/shopping-list/services/shopping-list.service';
-
 import { ShoppingListIngredientModel } from 'src/app/modules/shopping-list/models/shopping-list-ingredient.model';
-import { EditShoppingListIngredientModel } from 'src/app/modules/shopping-list/models/edit-shopping-list-ingredient.model';
 
 @Component({
   selector: 'shopping-list-ingredient-item',
@@ -17,10 +15,6 @@ export class ShoppingListIngredientItemComponent {
   constructor(private shoppingListService: ShoppingListService) {}
 
   public onEditItem(arrayIndex: number): void {
-    const editingElement: EditShoppingListIngredientModel = this.shoppingListService.getShoppingListIngredientForEdit(
-      arrayIndex
-    );
-
-    this.shoppingListService.shoppingListIngredientToBeEdited$.next(editingElement);
+    this.shoppingListService.getShoppingListIngredientByIndex(arrayIndex);
   }
 }

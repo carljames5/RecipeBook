@@ -1,6 +1,6 @@
 <div id="create-or-edit-shopping-list-ingredient">
   <div id="header">
-    <h2 *ngIf="ingredientArrayIndex.value === null; then createHeaderTmp; else editHeaderTmp"></h2>
+    <h2 *ngIf="ingredientArrayIndex().value === null; then createHeaderTmp; else editHeaderTmp"></h2>
   </div>
   <hr />
 
@@ -28,12 +28,12 @@
         </div>
       </div>
       <div class="flex-container">
-        <div class="validation-error" *ngIf="!ingredientName.valid && ingredientName.touched">
+        <div class="validation-error" *ngIf="!ingredientName().valid && ingredientName().touched">
           <span><strong>Name</strong> is required</span>
         </div>
-        <div class="validation-error" *ngIf="!ingredientAmount.valid && ingredientAmount.touched">
-          <span *ngIf="ingredientAmount.errors?.required"><strong>Amount</strong> is required</span>
-          <span *ngIf="ingredientAmount.errors?.notValidAmount">
+        <div class="validation-error" *ngIf="!ingredientAmount().valid && ingredientAmount().touched">
+          <span *ngIf="ingredientAmount().errors?.required"><strong>Amount</strong> is required</span>
+          <span *ngIf="ingredientAmount().errors?.notValidAmount">
             <strong>Amount</strong> must be greater or equal than zero
           </span>
         </div>
@@ -41,14 +41,14 @@
     </div>
     <div id="operation-btns">
       <button class="btn btn-outline-success mr-2" type="submit" [disabled]="!shoppingListIngredientForm.valid">
-        <span *ngIf="ingredientArrayIndex.value === null"> <fa-icon icon="plus"></fa-icon> Add</span>
-        <span *ngIf="ingredientArrayIndex.value !== null"><fa-icon icon="sync-alt"></fa-icon> Update</span>
+        <span *ngIf="ingredientArrayIndex().value === null"> <fa-icon icon="plus"></fa-icon> Add</span>
+        <span *ngIf="ingredientArrayIndex().value !== null"><fa-icon icon="sync-alt"></fa-icon> Update</span>
       </button>
       <button class="btn btn-outline-dark mr-2" type="button" (click)="onClear()">
         <span> <fa-icon icon="eraser"></fa-icon> Clear</span>
       </button>
       <button
-        *ngIf="ingredientArrayIndex.value !== null"
+        *ngIf="ingredientArrayIndex().value !== null"
         class="btn btn-outline-danger"
         type="button"
         (click)="onDelete()"

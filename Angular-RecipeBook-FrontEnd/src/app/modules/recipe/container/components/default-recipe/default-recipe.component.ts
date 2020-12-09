@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AppHeaderService } from 'src/app/core/services/app-header.service';
+
 import { MODULE_NAMES } from '../../../constants/module-names.constant';
+
+import { AppHeaderService } from 'src/app/core/services/app-header.service';
 
 @Component({
   selector: 'app-default-recipe',

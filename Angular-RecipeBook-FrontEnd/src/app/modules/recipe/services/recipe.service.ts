@@ -1,31 +1,28 @@
 import { Subject } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { RecipeHttpService } from './recipe-http.service';
 import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
 import { ShoppingListService } from '../../shopping-list/services/shopping-list.service';
 
+import { RecipeModel } from '../models/recipe.model';
+import { RecipeListItemModel } from '../models/recipe-list-item.model';
+import { RecipeIngredientListItemModel } from '../models/recipe-ingredient-list-item.model';
 import { CreateRecipeRequestModel } from '../models/request-models/create-recipe-request.model';
 import { UpdateRecipeRequestModel } from '../models/request-models/update-recipe-request.model';
 import { DeleteRecipeRequestModel } from '../models/request-models/delete-recipe-request.model';
 import { GetAllRecipeResponseModel } from '../models/response-models/get-all-recipe-response.model';
 import { GetRecipeByIdRequestModel } from '../models/request-models/get-recipe-by-id-request.model';
 import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
-import { GetRecipeForEditingRequestModel } from '../models/request-models/get-recipe-for-editing-request.model';
-import { GetRecipeForEditingResponseModel } from '../models/response-models/get-recipe-for-editing-response.model';
 import { GetAllRecipeListItemResponseModel } from '../models/response-models/get-all-recipe-list-item-response.model';
-import { GetRecipeByIdIngredientListItemResponseModel } from '../models/response-models/get-recipe-by-id-ingredient-list-item-response.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
-  public allRecipeItem$: Subject<GetAllRecipeListItemResponseModel[]> = new Subject<
-    GetAllRecipeListItemResponseModel[]
-  >();
-  public recipeItemById$: Subject<GetRecipeByIdResponseModel> = new Subject<GetRecipeByIdResponseModel>();
-  public recipeItemToBeEdited$: Subject<GetRecipeForEditingResponseModel> = new Subject<GetRecipeForEditingResponseModel>();
+  public recipe$: Subject<RecipeModel> = new Subject<RecipeModel>();
+  public recipeListItems$ = new Subject<RecipeListItemModel[]>();
 
   public recipeItemCreated$ = new Subject();
   public recipeItemUpdated$ = new Subject();
@@ -42,31 +39,46 @@ export class RecipeService {
 
     this.recipeHttpService
       .getAllRecipe()
-      .pipe(finalize(() => this.loadingSpinnerService.hide()))
-      .subscribe((resposne: GetAllRecipeResponseModel) => {
-        this.allRecipeItem$.next(resposne.recipes);
+      .pipe(
+        map((response: GetAllRecipeResponseModel) => {
+          return response.recipes.map(
+            (listItem: GetAllRecipeListItemResponseModel) =>
+              ({
+                id: listItem.id,
+                name: listItem.name,
+                description: listItem.description,
+                imagePath: listItem.imagePath,
+              } as RecipeListItemModel)
+          );
+        }),
+        finalize(() => this.loadingSpinnerService.hide())
+      )
+      .subscribe((resposne: RecipeListItemModel[]) => {
+        this.recipeListItems$.next(resposne);
       });
   }
 
   public getRecipeById(requestModel: GetRecipeByIdRequestModel): void {
-    this.loadingSpinnerService.show('Loading recipe details...');
+    this.loadingSpinnerService.show('Loading recipe...');
 
     this.recipeHttpService
       .getRecipeById(requestModel)
-      .pipe(finalize(() => this.loadingSpinnerService.hide()))
-      .subscribe((recipe: GetRecipeByIdResponseModel) => {
-        this.recipeItemById$.next(recipe);
-      });
-  }
-
-  public getrecipeForEditing(requestModel: GetRecipeForEditingRequestModel): void {
-    this.loadingSpinnerService.show('Loading recipe for editing...');
-
-    this.recipeHttpService
-      .getRecipeForEditing(requestModel)
-      .pipe(finalize(() => this.loadingSpinnerService.hide()))
-      .subscribe((recipe: GetRecipeForEditingResponseModel) => {
-        this.recipeItemToBeEdited$.next(recipe);
+      .pipe(
+        map((response: GetRecipeByIdResponseModel) => {
+          return {
+            id: response.id,
+            name: response.name,
+            description: response.description,
+            imagePath: response.imagePath,
+            ingredients: response.ingredients.map(
+              item => ({ name: item.name, amount: item.amount } as RecipeIngredientListItemModel)
+            ),
+          } as RecipeModel;
+        }),
+        finalize(() => this.loadingSpinnerService.hide())
+      )
+      .subscribe((recipe: RecipeModel) => {
+        this.recipe$.next(recipe);
       });
   }
 
@@ -109,7 +121,7 @@ export class RecipeService {
       });
   }
 
-  public addRecipeIngredientsToShoppingList(ingredients: GetRecipeByIdIngredientListItemResponseModel[]): void {
+  public addRecipeIngredientsToShoppingList(ingredients: RecipeIngredientListItemModel[]): void {
     this.shoppingListService.addRecipeIngredientsToShoppingList(ingredients);
   }
 }

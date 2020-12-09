@@ -9,10 +9,11 @@ import { RecipeService } from '../../../services/recipe.service';
 import { AppHeaderService } from 'src/app/core/services/app-header.service';
 import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
 
+import { RecipeModel } from '../../../models/recipe.model';
 import { UpdateRecipeRequestModel } from '../../../models/request-models/update-recipe-request.model';
-import { GetRecipeForEditingRequestModel } from '../../../models/request-models/get-recipe-for-editing-request.model';
-import { EditRecipeIngredientListItemResponseModel } from '../../../models/response-models/edit-recipe-ingredient-list-item-response.model';
+import { GetRecipeByIdRequestModel } from '../../../models/request-models/get-recipe-by-id-request.model';
 import { UpdateRecipeIngredientListItemRequestModel } from '../../../models/request-models/update-recipe-ingredient-list-item-request.model';
+import { RecipeIngredientListItemModel } from '../../../models/recipe-ingredient-list-item.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -71,11 +72,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
-        const rrequestModel: GetRecipeForEditingRequestModel = { id: +params['id'] } as GetRecipeForEditingRequestModel;
+        const requestModel: GetRecipeByIdRequestModel = { id: +params['id'] } as GetRecipeByIdRequestModel;
 
-        this.recipeService.getrecipeForEditing(rrequestModel);
+        this.recipeService.getRecipeById(requestModel);
       }),
-      this.recipeService.recipeItemToBeEdited$.subscribe(recipe => {
+      this.recipeService.recipe$.subscribe((recipe: RecipeModel) => {
         this.recipeForm = new FormGroup({
           id: new FormControl(recipe.id),
           name: new FormControl(recipe.name, [Validators.required]),
@@ -130,7 +131,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   // #region PRIVATE Helper Methods
 
-  private initRecipeIngredientsFormArray(recipeIngredients: EditRecipeIngredientListItemResponseModel[]): FormArray {
+  private initRecipeIngredientsFormArray(recipeIngredients: RecipeIngredientListItemModel[]): FormArray {
     const recipeIngredientsFormArray: FormArray = new FormArray([]);
 
     for (const ingredientItem of recipeIngredients) {
@@ -140,7 +141,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     return recipeIngredientsFormArray;
   }
 
-  private createNewRecipeIngredientFormGroup(recipeIngredient?: EditRecipeIngredientListItemResponseModel): FormGroup {
+  private createNewRecipeIngredientFormGroup(recipeIngredient?: RecipeIngredientListItemModel): FormGroup {
     return new FormGroup({
       name: new FormControl(recipeIngredient?.name, Validators.required),
       amount: new FormControl(recipeIngredient?.amount, [

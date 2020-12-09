@@ -5,6 +5,8 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { ShoppingListService } from '../../../services/shopping-list.service';
 import { ShoppingListIngredientFormValidator } from '../../../validators/shopping-list-ingredient-form-validators';
 
+import { ShoppingListIngredientModel } from '../../../models/shopping-list-ingredient.model';
+
 @Component({
   selector: 'create-or-edit-shopping-list-ingredient',
   templateUrl: './create-or-edit-shopping-list-ingredient.component.html',
@@ -17,43 +19,41 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
 
   //#region GETTERS
 
-  public get ingredientArrayIndex(): AbstractControl {
+  public ingredientArrayIndex(): AbstractControl {
     return this.shoppingListIngredientForm.get('arrayIndex');
   }
 
-  public get ingredientName(): AbstractControl {
+  public ingredientName(): AbstractControl {
     return this.shoppingListIngredientForm.get('name');
   }
 
-  public get ingredientAmount(): AbstractControl {
+  public ingredientAmount(): AbstractControl {
     return this.shoppingListIngredientForm.get('amount');
   }
 
   //#endregion
 
-  constructor(private shoppingListService: ShoppingListService) {
+  constructor(private shoppingListService: ShoppingListService) {}
+
+  public ngOnInit(): void {
     this.shoppingListIngredientForm = new FormGroup({
       arrayIndex: new FormControl(null),
       name: new FormControl(null, [Validators.required]),
       amount: new FormControl(null, [Validators.required, ShoppingListIngredientFormValidator.amountValidator]),
     });
-  }
 
-  public ngOnInit(): void {
     this.subscriptions.push(
-      this.shoppingListService.shoppingListIngredientToBeEdited$.subscribe(selectedShoppingListIngredient => {
+      this.shoppingListService.shoppingListIngredient$.subscribe((response: ShoppingListIngredientModel) => {
         this.shoppingListIngredientForm.setValue({
-          arrayIndex: selectedShoppingListIngredient.arrayIndex,
-          name: selectedShoppingListIngredient.name,
-          amount: selectedShoppingListIngredient.amount,
+          arrayIndex: response.arrayIndex,
+          name: response.name,
+          amount: response.amount,
         });
+      }),
+      this.shoppingListService.shoppingListIngredientFormClear$.subscribe(() => {
+        this.onClear();
       })
-    ),
-      this.subscriptions.push(
-        this.shoppingListService.shoppingListCleared$.subscribe(() => {
-          this.onClear();
-        })
-      );
+    );
   }
 
   public ngOnDestroy(): void {
@@ -61,17 +61,23 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
   }
 
   public onCreateOrEditItem(): void {
-    if (this.ingredientArrayIndex.value !== null && this.ingredientArrayIndex.value !== undefined) {
-      this.shoppingListService.updateShoppingListIngredientInShoppingList(this.shoppingListIngredientForm.value);
+    const shoppingListIngredient: ShoppingListIngredientModel = {
+      arrayIndex: this.ingredientArrayIndex().value,
+      name: this.ingredientName().value,
+      amount: this.ingredientAmount().value,
+    } as ShoppingListIngredientModel;
+
+    if (shoppingListIngredient.arrayIndex !== null) {
+      this.shoppingListService.updateShoppingListIngredientInShoppingList(shoppingListIngredient);
     } else {
-      this.shoppingListService.addShoppingListIngredientToShoppingList(this.shoppingListIngredientForm.value);
+      this.shoppingListService.addShoppingListIngredientToShoppingList(shoppingListIngredient);
     }
 
     this.onClear();
   }
 
   public onDelete(): void {
-    this.shoppingListService.deleteIngredientFromShoppingList(this.ingredientArrayIndex.value);
+    this.shoppingListService.deleteIngredientFromShoppingList(this.ingredientArrayIndex().value);
 
     this.onClear();
   }

@@ -1,4 +1,4 @@
-<div id="recipe-detail" *ngIf="recipe; else loading">
+<div id="recipe-detail" *ngIf="recipe">
   <div id="header">
     <span class="p-2">
       <h3>{{ recipe.name }}</h3>
@@ -64,7 +64,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #loading>
-  <!-- <app-loading loadingClass="recipe-details-block-loading"></app-loading> -->
-</ng-template>

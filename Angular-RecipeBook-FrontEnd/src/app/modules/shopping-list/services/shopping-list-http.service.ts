@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 
 import { SaveShoppingListRequestModel } from '../models/request-models/save-shopping-list-request.model';
-import { GetLastSavedShoppingListResponseModel } from '../models/response-models/get-last-saved-shopping-list-response.model.ts';
+import { GetLastSavedShoppingListResponseModel } from '../models/response-models/get-last-saved-shopping-list-response.model';
 
 @Injectable({
   providedIn: 'root',

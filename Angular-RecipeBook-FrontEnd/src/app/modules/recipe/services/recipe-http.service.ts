@@ -11,8 +11,6 @@ import { GetAllRecipeResponseModel } from '../models/response-models/get-all-rec
 import { GetRecipeByIdResponseModel } from '../models/response-models/get-recipe-by-id-response.model';
 import { RecipeNameIsExistRequestModel } from '../models/request-models/recipe-name-is-exist-request.model';
 import { RecipeNameIsExistResponseModel } from '../models/response-models/recipe-name-is-exist-response.model';
-import { GetRecipeForEditingRequestModel } from '../models/request-models/get-recipe-for-editing-request.model';
-import { GetRecipeForEditingResponseModel } from '../models/response-models/get-recipe-for-editing-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,14 +32,6 @@ export class RecipeHttpService {
     const requestUrl: string = `${this._baseUrl}/GetById`;
 
     return this.http.post<GetRecipeByIdResponseModel>(requestUrl, requestModel);
-  }
-
-  public getRecipeForEditing(
-    requestModel: GetRecipeForEditingRequestModel
-  ): Observable<GetRecipeForEditingResponseModel> {
-    const requestUrl: string = `${this._baseUrl}/GetRecipeForEditing`;
-
-    return this.http.post<GetRecipeForEditingResponseModel>(requestUrl, requestModel);
   }
 
   public createNewRecipe(recipe: CreateRecipeRequestModel): Observable<Object> {
