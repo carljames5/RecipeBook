@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MODULE_NAMES } from '../../../constants/module-names.constant';
 
 import { RecipeService } from '../../../services/recipe.service';
-import { AppHeaderService } from 'src/app/core/services/app-header.service';
+import { AppHeaderService } from 'src/app/shared/utilities/header/services/app-header.service';
 
 import { RecipeModel } from '../../../models/recipe.model';
 import { DeleteRecipeRequestModel } from '../../../models/request-models/delete-recipe-request.model';

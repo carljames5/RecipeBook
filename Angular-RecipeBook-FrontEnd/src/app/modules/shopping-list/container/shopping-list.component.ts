@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppHeaderService } from 'src/app/core/services/app-header.service';
+import { AppHeaderService } from 'src/app/shared/utilities/header/services/app-header.service';
 import { MODULE_NAMES } from '../constants/module-names.constant';
 
 @Component({
