@@ -2,11 +2,11 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { finalize, mergeMap } from 'rxjs/operators';
 
-import { LoadingSpinnerService } from './loading-spinner.service';
 import { AuthorizedUserService } from './authorized-user.service';
 import { AppCacheStorageService } from './app-cache-storage.service';
 import { AuthorizedUserHttpService } from './authorized-user-http.service';
 import { CoreAuthenticationHttpService } from './core-authentication-http.service';
+import { LoadingSpinnerService } from '../../shared/utilities/loading-spinner/services/loading-spinner.service';
 
 import { CACHE_STORAGE_KEYS } from '../constants/app-cache-storage-service/app-cache-storage-service.constants';
 

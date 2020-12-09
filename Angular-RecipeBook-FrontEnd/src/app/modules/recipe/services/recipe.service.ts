@@ -3,8 +3,8 @@ import { finalize, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { RecipeHttpService } from './recipe-http.service';
-import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
 import { ShoppingListService } from '../../shopping-list/services/shopping-list.service';
+import { LoadingSpinnerService } from 'src/app/shared/utilities/loading-spinner/services/loading-spinner.service';
 
 import { RecipeModel } from '../models/recipe.model';
 import { RecipeListItemModel } from '../models/recipe-list-item.model';

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 import { ToastrService } from 'ngx-toastr';
 import { ShoppingListHttpService } from './shopping-list-http.service';
-import { LoadingSpinnerService } from 'src/app/core/services/loading-spinner.service';
+import { LoadingSpinnerService } from 'src/app/shared/utilities/loading-spinner/services/loading-spinner.service';
 
 import { ShoppingListModel } from '../models/shopping-list.model';
 import { ShoppingListIngredientModel } from '../models/shopping-list-ingredient.model';

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { LoadingSpinnerService } from './core/services/loading-spinner.service';
+import { LoadingSpinnerService } from './shared/utilities/loading-spinner/services/loading-spinner.service';
 import { AuthorizedUserService } from './core/services/authorized-user.service';
 
 @Component({
