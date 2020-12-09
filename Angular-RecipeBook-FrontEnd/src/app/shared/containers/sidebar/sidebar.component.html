@@ -9,12 +9,10 @@
     [autoCollapseWidth]="autoCollapseWidthSize"
   >
     <div *ngIf="isOpened">
-      <app-opened-sidebar (toggleEvent)="onToggleSwitch($event)">
-      </app-opened-sidebar>
+      <app-opened-sidebar (toggleEvent)="onToggleSwitch($event)"> </app-opened-sidebar>
     </div>
     <div *ngIf="!isOpened">
-      <app-closed-sidebar (toggleEvent)="onToggleSwitch($event)">
-      </app-closed-sidebar>
+      <app-closed-sidebar (toggleEvent)="onToggleSwitch($event)"> </app-closed-sidebar>
     </div>
   </ng-sidebar>
 
