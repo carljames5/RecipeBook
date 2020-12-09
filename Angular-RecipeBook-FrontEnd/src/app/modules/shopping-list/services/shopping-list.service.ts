@@ -11,6 +11,7 @@ import { ShoppingListIngredientModel } from '../models/shopping-list-ingredient.
 import { RecipeIngredientListItemModel } from '../../recipe/models/recipe-ingredient-list-item.model';
 import { SaveShoppingListRequestModel } from '../models/request-models/save-shopping-list-request.model';
 import { GetLastSavedShoppingListResponseModel } from '../models/response-models/get-last-saved-shopping-list-response.model';
+import { RibbonToastrService } from 'src/app/shared/utilities/ribbon-toastr/services/ribbon-toastr.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,7 @@ export class ShoppingListService {
 
   constructor(
     private toastrService: ToastrService,
+    private ribbonToastrService: RibbonToastrService,
     private loadingSpinnerService: LoadingSpinnerService,
     private shoppingListHttpService: ShoppingListHttpService
   ) {
@@ -38,9 +40,7 @@ export class ShoppingListService {
       } as ShoppingListIngredientModel);
     });
 
-    this.toastrService.success('This recipe ingredients successfully added to your shopping list!', null, {
-      titleClass: 'title success',
-    });
+    this.ribbonToastrService.success('This recipe ingredients successfully added to your shopping list!');
 
     this.shoppingListIngredients$.next(this.shoppingList.ingredients);
   }
@@ -118,9 +118,7 @@ export class ShoppingListService {
       .subscribe((response: ShoppingListModel) => {
         this.shoppingList.ingredients = response.ingredients;
 
-        this.toastrService.success('The shopping list was fetch successfully!', null, {
-          titleClass: 'title success',
-        });
+        this.ribbonToastrService.success('The shopping list was fetch successfully!');
 
         this.shoppingListIngredients$.next(this.shoppingList.ingredients);
       });
@@ -137,9 +135,7 @@ export class ShoppingListService {
       .saveShoppingList(requestModel)
       .pipe(finalize(() => this.loadingSpinnerService.hide()))
       .subscribe(() => {
-        this.toastrService.success('Shopping list saved successfully!', null, {
-          titleClass: 'title success',
-        });
+        this.ribbonToastrService.success('Shopping list saved successfully!');
       });
   }
 

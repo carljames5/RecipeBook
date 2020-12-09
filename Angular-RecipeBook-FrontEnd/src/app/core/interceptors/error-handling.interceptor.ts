@@ -2,10 +2,10 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 
 import { CoreAuthenticationService } from '../services/core-authentication.service';
+import { RibbonToastrService } from 'src/app/shared/utilities/ribbon-toastr/services/ribbon-toastr.service';
 import {
   getBadRequestMessage,
   getInternalServerErrorMessage,
@@ -19,7 +19,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
 
   constructor(
     private router: Router,
-    private toastrService: ToastrService,
+    private ribbonToastrService: RibbonToastrService,
     private coreAuthenticationService: CoreAuthenticationService
   ) {
     this._httpBadRequestStatusCode = 400;
@@ -36,26 +36,20 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
         } else if (err.status === this._httpBadRequestStatusCode) {
           if (err.error.ExceptionCode) {
             // For Custom Error Handling
-            this.toastrService.error(localizeException(err.error.ExceptionCode), null, {
-              titleClass: 'title error',
-            });
+            this.ribbonToastrService.error(localizeException(err.error.ExceptionCode));
           } else if (err.error.errors) {
             // For Validation Erorr Handling
             for (const propertyName of Object.keys(err.error.errors)) {
-              this.toastrService.error(err.error.errors[propertyName]);
+              this.ribbonToastrService.error(err.error.errors[propertyName]);
             }
           } else {
             // For 400 - Unknow Error
-            this.toastrService.error(getBadRequestMessage(), null, {
-              titleClass: 'title error',
-            });
+            this.ribbonToastrService.error(getBadRequestMessage());
 
             console.log(err);
           }
         } else {
-          this.toastrService.error(getInternalServerErrorMessage(), null, {
-            titleClass: 'title error',
-          });
+          this.ribbonToastrService.error(getInternalServerErrorMessage());
 
           console.log(err);
         }
