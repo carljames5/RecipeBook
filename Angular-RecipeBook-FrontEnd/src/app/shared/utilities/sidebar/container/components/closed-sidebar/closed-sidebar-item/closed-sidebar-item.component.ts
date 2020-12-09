@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, Input } from '@angular/core';
 
-import { ClosedSidebarLinkItemModel } from '../../../models/closed-sidebar-link-item.model';
-import { ROUTER_LINKS } from 'src/app/shared/containers/sidebar/constants/sidebar.constants';
+import { ROUTER_LINKS } from '../../../../constants/sidebar.constants';
+import { ClosedSidebarLinkItemModel } from '../../../../models/closed-sidebar-link-item.model';
 
 @Component({
   selector: 'app-closed-sidebar-item',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Toast, ToastrService, ToastPackage } from 'ngx-toastr';
 
-import { RibbonToastrAnimation } from '../../animations/ribbon-toastr.animation';
+import { RibbonToastrAnimation } from '../animations/ribbon-toastr.animation';
 
 @Component({
   selector: '[ribbon-toastr]',

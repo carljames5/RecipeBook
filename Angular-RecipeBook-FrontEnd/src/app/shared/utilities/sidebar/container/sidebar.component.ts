@@ -1,12 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
-
-import {
-  MODE_KEYS,
-  DOCKED_SIZE,
-  POSITION_KEYS,
-  AUTO_COLLAPSE_WIDTH_SIZE,
-} from 'src/app/shared/containers/sidebar/constants/sidebar.constants';
+import { AUTO_COLLAPSE_WIDTH_SIZE, DOCKED_SIZE, MODE_KEYS, POSITION_KEYS } from '../constants/sidebar.constants';
 
 @Component({
   selector: 'app-sidebar',

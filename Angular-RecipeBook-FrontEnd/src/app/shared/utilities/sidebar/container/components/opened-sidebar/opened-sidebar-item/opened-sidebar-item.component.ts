@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, Input } from '@angular/core';
 
-import { OpenedSidebarLinkItemModel } from '../../../models/opened-sidebar-link-item.model';
-import { ROUTER_LINKS } from 'src/app/shared/containers/sidebar/constants/sidebar.constants';
+import { ROUTER_LINKS } from '../../../../constants/sidebar.constants';
+import { OpenedSidebarLinkItemModel } from '../../../../models/opened-sidebar-link-item.model';
 
 @Component({
   selector: 'app-opened-sidebar-item',

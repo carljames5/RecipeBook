@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
-import { SidebarLinkType } from '../../enums/sidebar-link-type.enum';
-import { OpenedSidebarLinkItemModel } from '../../models/opened-sidebar-link-item.model';
+import { SidebarLinkType } from '../../../enums/sidebar-link-type.enum';
+import { OpenedSidebarLinkItemModel } from '../../../models/opened-sidebar-link-item.model';
 
 @Component({
   selector: 'app-opened-sidebar',

@@ -5,7 +5,7 @@ import { AppHeaderService } from 'src/app/core/services/app-header.service';
 import { AuthorizedUserService } from 'src/app/core/services/authorized-user.service';
 import { CoreAuthenticationService } from 'src/app/core/services/core-authentication.service';
 
-import { AuthorizedUserDataModel } from '../../models/user/authorized-user-data.model';
+import { AuthorizedUserDataModel } from 'src/app/shared/models/user/authorized-user-data.model';
 
 @Component({
   selector: 'app-header',

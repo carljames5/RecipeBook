@@ -6,7 +6,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import { AppRoutingModule } from '../app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RibbonToastrComponent } from '../shared/containers/ribbon-toastr/ribbon-toastr.component';
+import { RibbonToastrComponent } from '../shared/utilities/ribbon-toastr/container/ribbon-toastr.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';

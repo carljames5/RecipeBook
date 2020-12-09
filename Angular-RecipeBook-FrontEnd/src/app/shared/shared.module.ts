@@ -13,16 +13,16 @@ import { FontAwesomeIconsModule } from './modules/fontawesome-icons.module';
 
 import { DropDownDirective } from './directives/dropdown.directive';
 
-import { FooterComponent } from './containers/footer/footer.component';
-import { HeaderComponent } from './containers/header/header.component';
-import { SideNavComponent } from './containers/sidebar/sidebar.component';
-import { RibbonToastrComponent } from './containers/ribbon-toastr/ribbon-toastr.component';
-import { LoadingSpinnerComponent } from './containers/loading-spinner/loading-spinner.component';
-import { ClosedSidebarComponent } from './containers/sidebar/components/closed-sidebar/closed-sidebar.component';
-import { OpenedSidebarComponent } from './containers/sidebar/components/opened-sidebar/opened-sidebar.component';
-import { ClosedSidebarItemComponent } from './containers/sidebar/components/closed-sidebar/closed-sidebar-item/closed-sidebar-item.component';
-import { OpenedSidebarItemComponent } from './containers/sidebar/components/opened-sidebar/opened-sidebar-item/opened-sidebar-item.component';
-import { AuthorizedUserInformationComponent } from './containers/header/authorized-user-information/authorized-user-information.component';
+import { FooterComponent } from './utilities/footer/container/footer.component';
+import { HeaderComponent } from './utilities/header/container/header.component';
+import { SideNavComponent } from './utilities/sidebar/container/sidebar.component';
+import { RibbonToastrComponent } from './utilities/ribbon-toastr/container/ribbon-toastr.component';
+import { LoadingSpinnerComponent } from './utilities/loading-spinner/container/loading-spinner.component';
+import { OpenedSidebarComponent } from './utilities/sidebar/container/components/opened-sidebar/opened-sidebar.component';
+import { ClosedSidebarComponent } from './utilities/sidebar/container/components/closed-sidebar/closed-sidebar.component';
+import { OpenedSidebarItemComponent } from './utilities/sidebar/container/components/opened-sidebar/opened-sidebar-item/opened-sidebar-item.component';
+import { ClosedSidebarItemComponent } from './utilities/sidebar/container/components/closed-sidebar/closed-sidebar-item/closed-sidebar-item.component';
+import { AuthorizedUserInformationComponent } from './utilities/header/container/components/authorized-user-information/authorized-user-information.component';
 
 @NgModule({
   declarations: [
