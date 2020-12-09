@@ -11,7 +11,7 @@
       <label for="password">Password</label>
     </div>
     <div id="stay-logged-in-group">
-      <ui-switch id="is-persistent-switch" formControlName="isPersistent"></ui-switch>
+      <ui-switch formControlName="isPersistent"></ui-switch>
       <label>Stay logged in?</label>
     </div>
     <button type="submit" class="submit-btn" [disabled]="!signInForm.valid">

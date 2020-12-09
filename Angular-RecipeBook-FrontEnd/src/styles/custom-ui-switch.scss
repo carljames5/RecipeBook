@@ -10,12 +10,4 @@ ui-switch {
       outline: none;
     }
   }
-
-  &#is-persistent-switch {
-    .switch {
-      &.checked {
-        background: #52747d;
-      }
-    }
-  }
 }

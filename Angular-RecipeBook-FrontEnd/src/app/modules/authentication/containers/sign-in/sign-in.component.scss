@@ -75,6 +75,14 @@
 
       ui-switch {
         width: 15%;
+
+        ::ng-deep {
+          .switch {
+            &.checked {
+              background: #52747d;
+            }
+          }
+        }
       }
     }
 
