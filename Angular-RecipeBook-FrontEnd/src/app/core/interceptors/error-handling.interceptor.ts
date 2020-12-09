@@ -5,12 +5,12 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 
+import { CoreAuthenticationService } from '../services/core-authentication.service';
 import {
   getBadRequestMessage,
   getInternalServerErrorMessage,
   localizeException,
-} from '../../shared/helpers/interceptors/error-handling.helper';
-import { CoreAuthenticationService } from '../services/core-authentication.service';
+} from '../helpers/interceptors/error-handling-interceptor.helper';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {
