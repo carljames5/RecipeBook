@@ -2,8 +2,8 @@ import { Subject } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
-import { ToastrService } from 'ngx-toastr';
 import { ShoppingListHttpService } from './shopping-list-http.service';
+import { RibbonToastrService } from 'src/app/shared/utilities/ribbon-toastr/services/ribbon-toastr.service';
 import { LoadingSpinnerService } from 'src/app/shared/utilities/loading-spinner/services/loading-spinner.service';
 
 import { ShoppingListModel } from '../models/shopping-list.model';
@@ -11,7 +11,6 @@ import { ShoppingListIngredientModel } from '../models/shopping-list-ingredient.
 import { RecipeIngredientListItemModel } from '../../recipe/models/recipe-ingredient-list-item.model';
 import { SaveShoppingListRequestModel } from '../models/request-models/save-shopping-list-request.model';
 import { GetLastSavedShoppingListResponseModel } from '../models/response-models/get-last-saved-shopping-list-response.model';
-import { RibbonToastrService } from 'src/app/shared/utilities/ribbon-toastr/services/ribbon-toastr.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +23,6 @@ export class ShoppingListService {
   public shoppingListIngredientFormClear$ = new Subject();
 
   constructor(
-    private toastrService: ToastrService,
     private ribbonToastrService: RibbonToastrService,
     private loadingSpinnerService: LoadingSpinnerService,
     private shoppingListHttpService: ShoppingListHttpService
@@ -65,12 +63,13 @@ export class ShoppingListService {
     const existingIngredientIndex = this.getShoppingListIngredientIndexByName(shoppingListIngredient.name);
 
     if (existingIngredientIndex !== -1) {
-      this.shoppingList.ingredients[existingIngredientIndex].amount += shoppingListIngredient.amount;
-
       if (existingIngredientIndex !== shoppingListIngredient.arrayIndex) {
+        this.shoppingList.ingredients[existingIngredientIndex].amount += shoppingListIngredient.amount;
         this.shoppingList.ingredients.splice(shoppingListIngredient.arrayIndex, 1);
 
         this.reIndexShoppingListIngredientsArray();
+      } else {
+        this.shoppingList.ingredients[existingIngredientIndex].amount = shoppingListIngredient.amount;
       }
     } else {
       this.shoppingList.ingredients[shoppingListIngredient.arrayIndex] = shoppingListIngredient;
