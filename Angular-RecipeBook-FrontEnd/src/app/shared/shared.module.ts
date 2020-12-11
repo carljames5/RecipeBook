@@ -11,6 +11,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FontAwesomeIconsModule } from './modules/fontawesome-icons.module';
 
+import { TruncatePipe } from './pipes/truncate.pipe';
+
 import { DropDownDirective } from './directives/dropdown.directive';
 
 import { FooterComponent } from './utilities/footer/container/footer.component';
@@ -26,6 +28,7 @@ import { AuthorizedUserInformationComponent } from './utilities/header/container
 
 @NgModule({
   declarations: [
+    TruncatePipe,
     HeaderComponent,
     FooterComponent,
     DropDownDirective,
@@ -65,6 +68,7 @@ import { AuthorizedUserInformationComponent } from './utilities/header/container
     FontAwesomeModule,
     SideNavComponent,
     SidebarModule,
+    TruncatePipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [RibbonToastrComponent],
