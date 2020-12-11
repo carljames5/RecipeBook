@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UiSwitchModule } from 'ngx-ui-switch';
-import { DigitOnlyModule } from '@uiowa/digit-only';
+import { NgxCurrencyModule } from 'ngx-currency';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FontAwesomeIconsModule } from './modules/fontawesome-icons.module';
 
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { ThousandSeparatorPipe } from './pipes/thousand-separator.pipe';
 
 import { DropDownDirective } from './directives/dropdown.directive';
 
@@ -33,6 +34,7 @@ import { AuthorizedUserInformationComponent } from './utilities/header/container
     FooterComponent,
     DropDownDirective,
     RibbonToastrComponent,
+    ThousandSeparatorPipe,
     LoadingSpinnerComponent,
     SideNavComponent,
     ClosedSidebarComponent,
@@ -46,12 +48,12 @@ import { AuthorizedUserInformationComponent } from './utilities/header/container
     ReactiveFormsModule,
     CommonModule,
     HttpClientModule,
-    DigitOnlyModule,
     NgxSpinnerModule,
     UiSwitchModule,
     FontAwesomeModule,
     SidebarModule,
     AvatarModule,
+    NgxCurrencyModule,
   ],
   exports: [
     RouterModule,
@@ -60,7 +62,6 @@ import { AuthorizedUserInformationComponent } from './utilities/header/container
     DropDownDirective,
     HeaderComponent,
     FooterComponent,
-    DigitOnlyModule,
     NgxSpinnerModule,
     LoadingSpinnerComponent,
     UiSwitchModule,
@@ -69,6 +70,8 @@ import { AuthorizedUserInformationComponent } from './utilities/header/container
     SideNavComponent,
     SidebarModule,
     TruncatePipe,
+    ThousandSeparatorPipe,
+    NgxCurrencyModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [RibbonToastrComponent],

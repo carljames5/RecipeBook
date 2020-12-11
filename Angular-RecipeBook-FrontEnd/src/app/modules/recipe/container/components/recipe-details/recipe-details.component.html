@@ -57,7 +57,7 @@
         <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
           <div class="flex-container">
             <span>{{ ingredient.name }}</span>
-            <span>{{ ingredient.amount }}</span>
+            <span>{{ ingredient.amount | thousandSeparator: ['.', ','] }}</span>
           </div>
         </li>
       </ul>

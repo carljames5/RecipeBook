@@ -3,6 +3,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SidebarModule } from 'ng-sidebar';
 import { CommonModule } from '@angular/common';
 import { UiSwitchModule } from 'ngx-ui-switch';
+import { NgxCurrencyModule } from 'ngx-currency';
 import { AppRoutingModule } from '../app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,6 +12,7 @@ import { RibbonToastrComponent } from '../shared/utilities/ribbon-toastr/contain
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor';
+import { ngxCurrencyDefaultMaskOptions } from './constants/ngx-currency/ngx-currency.constants';
 
 @NgModule({
   imports: [
@@ -26,6 +28,7 @@ import { ErrorHandlingInterceptor } from './interceptors/error-handling.intercep
       size: 'small',
     }),
     SidebarModule.forRoot(),
+    NgxCurrencyModule.forRoot(ngxCurrencyDefaultMaskOptions),
   ],
   providers: [
     {

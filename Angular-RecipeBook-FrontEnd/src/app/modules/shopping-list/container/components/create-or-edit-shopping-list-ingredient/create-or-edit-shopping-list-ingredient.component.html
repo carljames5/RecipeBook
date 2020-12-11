@@ -16,14 +16,15 @@
         <div class="form-group">
           <label for="amount">Amount</label>
           <input
-            id="amount"
-            type="number"
-            class="form-control"
-            inputmode="numeric"
-            min="0"
-            max="999999"
-            digitOnly
             formControlName="amount"
+            class="form-control"
+            currencyMask
+            [options]="{
+              min: '0',
+              max: '999999',
+              allowNegative: 'false',
+              precision: 0
+            }"
           />
         </div>
       </div>
