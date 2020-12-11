@@ -1,21 +1,22 @@
-<div id="login-wrapper">
-  <form id="login-form" [formGroup]="signInForm" (ngSubmit)="onSignIn()">
-    <img src="./assets/img/kisspng-book-cover-outline-clip-art-5aed58b683c385.5774176815255041825397.png" />
-    <h2>Sign In</h2>
+<div id="sign-in-wrapper">
+  <form id="sign-in-form" [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+    <h1>Sign in</h1>
     <div class="input-group">
-      <input id="userName" type="text" autocomplete="off" formControlName="userName" />
-      <label for="userName">User Name</label>
+      <input type="text" formControlName="userName" />
+      <span></span>
+      <label>User name</label>
     </div>
     <div class="input-group">
-      <input id="password" type="password" autocomplete="off" formControlName="password" />
-      <label for="password">Password</label>
+      <input type="password" formControlName="password" />
+      <span></span>
+      <label>Password</label>
     </div>
     <div id="stay-logged-in-group">
-      <ui-switch formControlName="isPersistent"></ui-switch>
-      <label>Stay logged in?</label>
+      <ui-switch id="is-persistent-switch" formControlName="isPersistent"></ui-switch>
+      <label>Stay logged in</label>
     </div>
-    <button type="submit" class="submit-btn" [disabled]="!signInForm.valid">
-      <span><fa-icon icon="sign-in-alt"></fa-icon> Sign In</span>
-    </button>
+    <div id="operations-container">
+      <button type="submit" class="" [disabled]="!signInForm.valid">Sign in</button>
+    </div>
   </form>
 </div>
