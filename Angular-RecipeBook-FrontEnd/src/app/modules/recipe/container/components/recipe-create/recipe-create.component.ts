@@ -60,8 +60,7 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['CREATE']);
+    this.appHeaderService.setTitles(MODULE_NAMES['CREATE'], MODULE_NAMES['MAIN']);
 
     this.recipeForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),

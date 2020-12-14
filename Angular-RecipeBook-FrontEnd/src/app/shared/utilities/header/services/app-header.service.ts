@@ -9,11 +9,8 @@ export class AppHeaderService {
   public subTitle$: Subject<string> = new Subject<string>();
   public mainTitle$: Subject<string> = new Subject<string>();
 
-  public setSubTitle(subTitle: string) {
-    this.subTitle$.next(subTitle);
-  }
-
-  public setMainTitle(mainTitle: string) {
+  public setTitles(mainTitle: string, subTitle: string = null) {
     this.mainTitle$.next(mainTitle);
+    this.subTitle$.next(subTitle);
   }
 }

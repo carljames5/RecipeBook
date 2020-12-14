@@ -13,7 +13,6 @@ export class DefaultRecipeComponent implements OnInit {
   public constructor(private appHeaderService: AppHeaderService) {}
 
   public ngOnInit(): void {
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['LIST']);
+    this.appHeaderService.setTitles(MODULE_NAMES['LIST'], MODULE_NAMES['MAIN']);
   }
 }

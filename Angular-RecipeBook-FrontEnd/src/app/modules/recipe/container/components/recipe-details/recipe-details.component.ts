@@ -29,8 +29,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.appHeaderService.subTitle$.next(MODULE_NAMES['MAIN']);
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['DETAILS']);
+    this.appHeaderService.setTitles(MODULE_NAMES['DETAILS'], MODULE_NAMES['MAIN']);
 
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {

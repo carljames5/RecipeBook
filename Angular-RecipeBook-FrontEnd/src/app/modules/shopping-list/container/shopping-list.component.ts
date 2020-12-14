@@ -11,7 +11,6 @@ export class ShoppingListComponent implements OnInit {
   public constructor(private appHeaderService: AppHeaderService) {}
 
   public ngOnInit(): void {
-    this.appHeaderService.subTitle$.next();
-    this.appHeaderService.mainTitle$.next(MODULE_NAMES['MAIN']);
+    this.appHeaderService.setTitles(MODULE_NAMES['MAIN']);
   }
 }
