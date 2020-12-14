@@ -3,17 +3,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 
-import { MODULE_NAMES } from '../../../constants/module-names.constant';
-
 import { RecipeService } from '../../../services/recipe.service';
-import { AppHeaderService } from 'src/app/shared/utilities/header/services/app-header.service';
 import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
 
 import { RecipeModel } from '../../../models/recipe.model';
+import { RecipeIngredientListItemModel } from '../../../models/recipe-ingredient-list-item.model';
 import { UpdateRecipeRequestModel } from '../../../models/request-models/update-recipe-request.model';
 import { GetRecipeByIdRequestModel } from '../../../models/request-models/get-recipe-by-id-request.model';
 import { UpdateRecipeIngredientListItemRequestModel } from '../../../models/request-models/update-recipe-ingredient-list-item-request.model';
-import { RecipeIngredientListItemModel } from '../../../models/recipe-ingredient-list-item.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -62,13 +59,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private appHeaderService: AppHeaderService,
     private recipeFormValidator: RecipeFormValidator
   ) {}
 
   public ngOnInit(): void {
-    this.appHeaderService.setTitles(MODULE_NAMES['EDIT'], MODULE_NAMES['MAIN']);
-
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         const requestModel: GetRecipeByIdRequestModel = { id: +params['id'] } as GetRecipeByIdRequestModel;

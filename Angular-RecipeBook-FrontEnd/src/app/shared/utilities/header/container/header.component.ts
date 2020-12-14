@@ -1,10 +1,11 @@
-import { Observable } from 'rxjs';
-import { Component, OnInit, Output } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 
-import { AppHeaderService } from 'src/app/shared/utilities/header/services/app-header.service';
 import { AuthorizedUserService } from 'src/app/core/services/authorized-user.service';
 import { CoreAuthenticationService } from 'src/app/core/services/core-authentication.service';
+import { AppHeaderService } from 'src/app/shared/utilities/header/services/app-header.service';
 
+import { HeaderTitleDataModel } from 'src/app/core/models/routes/header-title-data.model';
 import { AuthorizedUserDataModel } from 'src/app/shared/models/user/authorized-user-data.model';
 
 @Component({
@@ -12,8 +13,11 @@ import { AuthorizedUserDataModel } from 'src/app/shared/models/user/authorized-u
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
+
   @Output() public authorizedUserData: AuthorizedUserDataModel;
+  @Output() public titleData: HeaderTitleDataModel;
 
   //#region GETTERS
 
@@ -21,12 +25,8 @@ export class HeaderComponent implements OnInit {
     return this.authorizedUserService.authorizedUserDataFromCache;
   }
 
-  public get subTitle$(): Observable<string> {
-    return this.appHeaderService.subTitle$;
-  }
-
-  public get mainTitle$(): Observable<string> {
-    return this.appHeaderService.mainTitle$;
+  public get titleData$(): Observable<HeaderTitleDataModel> {
+    return this.appHeaderService.titleData$;
   }
 
   //#endregion
@@ -38,9 +38,19 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.authorizedUserData$.subscribe((response: AuthorizedUserDataModel) => {
-      this.authorizedUserData = response;
-    });
+    this.subscriptions.push(
+      this.authorizedUserData$.subscribe((response: AuthorizedUserDataModel) => {
+        this.authorizedUserData = response;
+      }),
+
+      this.titleData$.subscribe((response: HeaderTitleDataModel) => {
+        this.titleData = response;
+      })
+    );
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach(x => x.unsubscribe());
   }
 
   public onSignOut(): void {

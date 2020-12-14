@@ -3,10 +3,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 
-import { MODULE_NAMES } from '../../../constants/module-names.constant';
-
 import { RecipeService } from '../../../services/recipe.service';
-import { AppHeaderService } from 'src/app/shared/utilities/header/services/app-header.service';
 import { RecipeFormValidator } from '../../../validators/recipe-form-validators';
 
 import { CreateRecipeRequestModel } from '../../../models/request-models/create-recipe-request.model';
@@ -55,13 +52,10 @@ export class RecipeCreateComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private appHeaderService: AppHeaderService,
     private recipeFormValidator: RecipeFormValidator
   ) {}
 
   public ngOnInit(): void {
-    this.appHeaderService.setTitles(MODULE_NAMES['CREATE'], MODULE_NAMES['MAIN']);
-
     this.recipeForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       imagePath: new FormControl(null, [Validators.required]),

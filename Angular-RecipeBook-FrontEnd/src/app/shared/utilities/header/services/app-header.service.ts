@@ -1,16 +1,19 @@
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
+import { HeaderTitleDataModel } from 'src/app/core/models/routes/header-title-data.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppHeaderService {
-  public subTitle$: Subject<string> = new Subject<string>();
-  public mainTitle$: Subject<string> = new Subject<string>();
+  private titleData: BehaviorSubject<HeaderTitleDataModel> = new BehaviorSubject<HeaderTitleDataModel>(null);
 
-  public setTitles(mainTitle: string, subTitle: string = null) {
-    this.mainTitle$.next(mainTitle);
-    this.subTitle$.next(subTitle);
+  public setTitleData(titleData: HeaderTitleDataModel) {
+    this.titleData.next(titleData);
+  }
+
+  public get titleData$(): Observable<HeaderTitleDataModel> {
+    return this.titleData.asObservable();
   }
 }

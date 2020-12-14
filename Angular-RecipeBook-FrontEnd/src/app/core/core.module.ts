@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { AppRoutingModule } from '../app-routing.module';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RibbonToastrComponent } from '../shared/utilities/ribbon-toastr/container/ribbon-toastr.component';
 
@@ -41,6 +41,7 @@ import { ngxCurrencyDefaultMaskOptions } from './constants/ngx-currency/ngx-curr
       useClass: AuthInterceptor,
       multi: true,
     },
+    Title,
   ],
 })
 export class CoreModule {}

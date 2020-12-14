@@ -7,16 +7,69 @@ import { RecipeCreateComponent } from './container/components/recipe-create/reci
 import { RecipeDetailComponent } from './container/components/recipe-details/recipe-details.component';
 import { DefaultRecipeComponent } from './container/components/default-recipe/default-recipe.component';
 
+import { MODULE_NAMES } from './constants/module-names.constant';
+
+import { RouterDataModel } from 'src/app/core/models/routes/router-data.model';
+import { HeaderTitleDataModel } from 'src/app/core/models/routes/header-title-data.model';
+import { BrowserTitleDataModel } from 'src/app/core/models/routes/browser-title-data.model';
+
 const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
   {
     path: 'recipes',
     component: RecipesComponent,
+    data: {
+      headerTitle: {
+        mainTitle: MODULE_NAMES['LIST'],
+        subTitle: MODULE_NAMES['MAIN'],
+      } as HeaderTitleDataModel,
+      browserTitle: { name: `${MODULE_NAMES['MAIN']} - ${MODULE_NAMES['LIST']}` } as BrowserTitleDataModel,
+    } as RouterDataModel,
     children: [
-      { path: '', component: DefaultRecipeComponent },
-      { path: 'create', component: RecipeCreateComponent },
-      { path: ':id', component: RecipeDetailComponent },
-      { path: ':id/edit', component: RecipeEditComponent },
+      {
+        path: '',
+        component: DefaultRecipeComponent,
+        data: {
+          headerTitle: {
+            mainTitle: MODULE_NAMES['LIST'],
+            subTitle: MODULE_NAMES['MAIN'],
+          } as HeaderTitleDataModel,
+          browserTitle: { name: `${MODULE_NAMES['MAIN']} - ${MODULE_NAMES['LIST']}` } as BrowserTitleDataModel,
+        } as RouterDataModel,
+      },
+      {
+        path: 'create',
+        component: RecipeCreateComponent,
+        data: {
+          headerTitle: {
+            mainTitle: MODULE_NAMES['CREATE'],
+            subTitle: MODULE_NAMES['MAIN'],
+          } as HeaderTitleDataModel,
+          browserTitle: { name: `${MODULE_NAMES['MAIN']} - ${MODULE_NAMES['CREATE']}` } as BrowserTitleDataModel,
+        } as RouterDataModel,
+      },
+      {
+        path: ':id',
+        component: RecipeDetailComponent,
+        data: {
+          headerTitle: {
+            mainTitle: MODULE_NAMES['DETAILS'],
+            subTitle: MODULE_NAMES['MAIN'],
+          } as HeaderTitleDataModel,
+          browserTitle: { name: `${MODULE_NAMES['MAIN']} - ${MODULE_NAMES['DETAILS']}` } as BrowserTitleDataModel,
+        } as RouterDataModel,
+      },
+      {
+        path: ':id/edit',
+        component: RecipeEditComponent,
+        data: {
+          headerTitle: {
+            mainTitle: MODULE_NAMES['EDIT'],
+            subTitle: MODULE_NAMES['MAIN'],
+          } as HeaderTitleDataModel,
+          browserTitle: { name: `${MODULE_NAMES['MAIN']} - ${MODULE_NAMES['EDIT']}` } as BrowserTitleDataModel,
+        } as RouterDataModel,
+      },
     ],
   },
 ];
