@@ -44,12 +44,15 @@ export class ShoppingListIngredientEditComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.shoppingListService.shoppingListIngredient$.subscribe((response: ShoppingListIngredientModel) => {
-        this.shoppingListIngredientForm.setValue({
-          arrayIndex: response.arrayIndex,
-          name: response.name,
-          amount: response.amount,
-        });
+        if (response) {
+          this.shoppingListIngredientForm.setValue({
+            arrayIndex: response.arrayIndex,
+            name: response.name,
+            amount: response.amount,
+          });
+        }
       }),
+
       this.shoppingListService.shoppingListIngredientFormClear$.subscribe(() => {
         this.onClear();
       })

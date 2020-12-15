@@ -1,6 +1,6 @@
-import { Subject } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { finalize, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { ShoppingListHttpService } from './shopping-list-http.service';
 import { RibbonToastrService } from 'src/app/shared/utilities/ribbon-toastr/services/ribbon-toastr.service';
@@ -18,9 +18,9 @@ import { GetLastSavedShoppingListResponseModel } from '../models/response-models
 export class ShoppingListService {
   private shoppingList: ShoppingListModel;
 
-  public shoppingListIngredient$ = new Subject<ShoppingListIngredientModel>();
-  public shoppingListIngredients$ = new Subject<ShoppingListIngredientModel[]>();
-  public shoppingListIngredientFormClear$ = new Subject();
+  private shoppingListIngredient = new BehaviorSubject<ShoppingListIngredientModel>(null);
+  private shoppingListIngredients = new BehaviorSubject<ShoppingListIngredientModel[]>(null);
+  private shoppingListIngredientFormClear = new Subject();
 
   constructor(
     private ribbonToastrService: RibbonToastrService,
@@ -29,6 +29,22 @@ export class ShoppingListService {
   ) {
     this.shoppingList = { ingredients: [] } as ShoppingListModel;
   }
+
+  //#region GETTERS
+
+  public get shoppingListIngredient$(): Observable<ShoppingListIngredientModel> {
+    return this.shoppingListIngredient.asObservable();
+  }
+
+  public get shoppingListIngredients$(): Observable<ShoppingListIngredientModel[]> {
+    return this.shoppingListIngredients.asObservable();
+  }
+
+  public get shoppingListIngredientFormClear$(): Observable<Object> {
+    return this.shoppingListIngredientFormClear.asObservable();
+  }
+
+  //#endregion
 
   public addRecipeIngredientsToShoppingList(recipeIngredients: RecipeIngredientListItemModel[]): void {
     recipeIngredients.forEach(item => {
@@ -40,7 +56,7 @@ export class ShoppingListService {
 
     this.ribbonToastrService.success('This recipe ingredients successfully added to your shopping list!');
 
-    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
+    this.shoppingListIngredients.next(this.shoppingList.ingredients);
   }
 
   public getShoppingListIngredients(): ShoppingListIngredientModel[] {
@@ -50,13 +66,13 @@ export class ShoppingListService {
   public getShoppingListIngredientByIndex(index: number): void {
     const selectedItem: ShoppingListIngredientModel = this.shoppingList.ingredients[index];
 
-    this.shoppingListIngredient$.next(selectedItem);
+    this.shoppingListIngredient.next(selectedItem);
   }
 
   public addShoppingListIngredientToShoppingList(shoppingListIngredient: ShoppingListIngredientModel): void {
     this.addNewShoppingListIngredientToShoppingList(shoppingListIngredient);
 
-    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
+    this.shoppingListIngredients.next(this.shoppingList.ingredients);
   }
 
   public updateShoppingListIngredientInShoppingList(shoppingListIngredient: ShoppingListIngredientModel): void {
@@ -75,7 +91,7 @@ export class ShoppingListService {
       this.shoppingList.ingredients[shoppingListIngredient.arrayIndex] = shoppingListIngredient;
     }
 
-    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
+    this.shoppingListIngredients.next(this.shoppingList.ingredients);
   }
 
   public deleteIngredientFromShoppingList(arrayIndex: number): void {
@@ -83,14 +99,14 @@ export class ShoppingListService {
 
     this.reIndexShoppingListIngredientsArray();
 
-    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
+    this.shoppingListIngredients.next(this.shoppingList.ingredients);
   }
 
   public clearingShoppingListIngredients(): void {
     this.shoppingList.ingredients = [];
 
-    this.shoppingListIngredientFormClear$.next();
-    this.shoppingListIngredients$.next(this.shoppingList.ingredients);
+    this.shoppingListIngredientFormClear.next();
+    this.shoppingListIngredients.next(this.shoppingList.ingredients);
   }
 
   public getLastSavedShoppingList() {
@@ -119,7 +135,7 @@ export class ShoppingListService {
 
         this.ribbonToastrService.success('The shopping list was fetch successfully!');
 
-        this.shoppingListIngredients$.next(this.shoppingList.ingredients);
+        this.shoppingListIngredients.next(this.shoppingList.ingredients);
       });
   }
 
