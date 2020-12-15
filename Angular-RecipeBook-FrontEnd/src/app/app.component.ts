@@ -1,15 +1,17 @@
 import { Observable, Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 import { Component, OnDestroy } from '@angular/core';
+import { filter } from 'rxjs/internal/operators/filter';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { AuthorizedUserService } from './core/services/authorized-user.service';
 import { AppHeaderService } from './shared/utilities/header/services/app-header.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/internal/operators/filter';
-import { Title } from '@angular/platform-browser';
+
+import { DEFAULT_BROWSER_TAB_TITLE } from './core/constants/browser-data/browser-data.constants';
+
 import { RouterDataModel } from './core/models/routes/router-data.model';
 import { HeaderTitleDataModel } from './core/models/routes/header-title-data.model';
 import { BrowserTitleDataModel } from './core/models/routes/browser-title-data.model';
-import { DEFAULT_BROWSER_TAB_TITLE } from './core/constants/browser-data/browser-data.constants';
 
 @Component({
   selector: 'app-root',
