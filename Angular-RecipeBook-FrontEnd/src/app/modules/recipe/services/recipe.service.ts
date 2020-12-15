@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
@@ -21,18 +21,42 @@ import { GetAllRecipeListItemResponseModel } from '../models/response-models/get
   providedIn: 'root',
 })
 export class RecipeService {
-  public recipe$: Subject<RecipeModel> = new Subject<RecipeModel>();
-  public recipeListItems$ = new Subject<RecipeListItemModel[]>();
+  private recipe = new BehaviorSubject<RecipeModel>(null);
+  private recipeListItems = new BehaviorSubject<RecipeListItemModel[]>(null);
 
-  public recipeItemCreated$ = new Subject();
-  public recipeItemUpdated$ = new Subject();
-  public recipeItemDeleted$ = new Subject();
+  private recipeItemCreated = new Subject();
+  private recipeItemUpdated = new Subject();
+  private recipeItemDeleted = new Subject();
 
   public constructor(
     private recipeHttpService: RecipeHttpService,
     private shoppingListService: ShoppingListService,
     private loadingSpinnerService: LoadingSpinnerService
   ) {}
+
+  //#region GETTERS
+
+  public get recipe$(): Observable<RecipeModel> {
+    return this.recipe.asObservable();
+  }
+
+  public get recipeListItems$(): Observable<RecipeListItemModel[]> {
+    return this.recipeListItems.asObservable();
+  }
+
+  public get recipeItemCreated$(): Observable<Object> {
+    return this.recipeItemCreated.asObservable();
+  }
+
+  public get recipeItemUpdated$(): Observable<Object> {
+    return this.recipeItemUpdated.asObservable();
+  }
+
+  public get recipeItemDeleted$(): Observable<Object> {
+    return this.recipeItemDeleted.asObservable();
+  }
+
+  //#endregion
 
   public refreshRecipeItems(): void {
     this.loadingSpinnerService.show('Loading recipes...');
@@ -54,7 +78,7 @@ export class RecipeService {
         finalize(() => this.loadingSpinnerService.hide())
       )
       .subscribe((resposne: RecipeListItemModel[]) => {
-        this.recipeListItems$.next(resposne);
+        this.recipeListItems.next(resposne);
       });
   }
 
@@ -78,7 +102,7 @@ export class RecipeService {
         finalize(() => this.loadingSpinnerService.hide())
       )
       .subscribe((recipe: RecipeModel) => {
-        this.recipe$.next(recipe);
+        this.recipe.next(recipe);
       });
   }
 
@@ -91,7 +115,7 @@ export class RecipeService {
       .subscribe(() => {
         this.refreshRecipeItems();
 
-        this.recipeItemCreated$.next();
+        this.recipeItemCreated.next();
       });
   }
 
@@ -104,7 +128,7 @@ export class RecipeService {
       .subscribe(() => {
         this.refreshRecipeItems();
 
-        this.recipeItemUpdated$.next();
+        this.recipeItemUpdated.next();
       });
   }
 
@@ -117,7 +141,7 @@ export class RecipeService {
       .subscribe(() => {
         this.refreshRecipeItems();
 
-        this.recipeItemDeleted$.next();
+        this.recipeItemDeleted.next();
       });
   }
 
