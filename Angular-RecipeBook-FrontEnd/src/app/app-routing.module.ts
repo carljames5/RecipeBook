@@ -21,7 +21,12 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./modules/shopping-list/shopping-list.module').then(x => x.ShoppingListModule),
   },
-  { path: '**', redirectTo: 'recipe', pathMatch: 'full' },
+  {
+    path: 'page-not-found',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./modules/page-not-found/page-not-found.module').then(x => x.PageNotFoundModule),
+  },
+  { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' },
 ];
 
 @NgModule({
