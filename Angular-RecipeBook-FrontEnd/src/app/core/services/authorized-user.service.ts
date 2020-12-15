@@ -7,7 +7,7 @@ import { AuthorizedUserHttpService } from './authorized-user-http.service';
 
 import { CACHE_STORAGE_KEYS } from '../constants/app-cache-storage-service/app-cache-storage-service.constants';
 
-import { AuthorizedUserDataModel } from 'src/app/shared/models/user/authorized-user-data.model';
+import { AuthorizedUserDataModel } from 'src/app/core/models/user/authorized-user-data.model';
 import { CacheStorageSaveOptions } from '../models/app-cache-storage-service/cache-storage-save-options.model';
 
 @Injectable({
