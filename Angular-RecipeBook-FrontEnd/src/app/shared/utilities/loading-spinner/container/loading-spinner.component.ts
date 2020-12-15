@@ -8,9 +8,9 @@ import { LoadingSpinnerService } from '../services/loading-spinner.service';
   styleUrls: ['./loading-spinner.component.scss'],
 })
 export class LoadingSpinnerComponent {
+  constructor(private loadingSpinnerService: LoadingSpinnerService) {}
+
   public get message$() {
     return this.loadingSpinnerService.message$;
   }
-
-  constructor(private loadingSpinnerService: LoadingSpinnerService) {}
 }
