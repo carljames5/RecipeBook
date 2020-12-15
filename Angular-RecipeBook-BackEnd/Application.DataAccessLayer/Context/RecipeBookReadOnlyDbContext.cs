@@ -14,6 +14,8 @@ namespace Application.DataAccessLayer.Context
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public IQueryable<ApplicationLog> ApplicationLogs => _context.ApplicationLog.AsNoTracking();
+
         public IQueryable<ApplicationUser> Users => _context.Users.AsNoTracking();
 
         public IQueryable<ApplicationRole> Roles => _context.Roles.AsNoTracking();

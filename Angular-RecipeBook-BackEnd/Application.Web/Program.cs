@@ -1,6 +1,7 @@
 using Application.Web.Core.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using NLog.Web;
 
 namespace Application.Web
 {
@@ -18,7 +19,8 @@ namespace Application.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                              .UseNLog();
                 });
     }
 }

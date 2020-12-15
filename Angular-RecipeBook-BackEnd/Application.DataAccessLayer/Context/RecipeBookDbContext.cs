@@ -18,6 +18,8 @@ namespace Application.DataAccessLayer.Context
 
         #region DbSets
 
+        public DbSet<ApplicationLog> ApplicationLog { get; set; }
+
         public DbSet<Recipe> Recipe { get; set; }
 
         public DbSet<Ingredient> Ingredient { get; set; }
