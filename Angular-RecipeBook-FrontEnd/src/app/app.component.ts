@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { AuthorizedUserService } from './core/services/authorized-user.service';
 import { AppHeaderService } from './shared/utilities/header/services/app-header.service';
@@ -16,17 +16,13 @@ import { DEFAULT_BROWSER_TAB_TITLE } from './core/constants/browser-data/browser
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnDestroy {
   private subscriptions: Subscription[] = [];
-
-  title: string = 'Angular-RecipeBook';
-
-  public userIsSignedIn: boolean;
 
   //#region GETTERS
 
-  public get userIsSignedIn$(): Observable<boolean> {
-    return this.authorizedUserService.userIsSignedIn$;
+  public get userSignInState$(): Observable<boolean> {
+    return this.authorizedUserService.userSignInState$;
   }
 
   //#endregion
@@ -54,12 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       })
     );
-  }
-
-  public ngOnInit(): void {
-    this.userIsSignedIn$.subscribe(response => {
-      this.userIsSignedIn = response;
-    });
   }
 
   public ngOnDestroy(): void {

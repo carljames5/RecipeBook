@@ -1,6 +1,6 @@
 import { map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { AppCacheStorageService } from './app-cache-storage.service';
 import { AuthorizedUserHttpService } from './authorized-user-http.service';
@@ -14,7 +14,7 @@ import { CacheStorageSaveOptions } from '../models/app-cache-storage-service/cac
   providedIn: 'root',
 })
 export class AuthorizedUserService {
-  public userIsSignedIn$: Subject<boolean> = new Subject<boolean>();
+  private userSignInState: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   //#region GETTERS
 
@@ -28,7 +28,7 @@ export class AuthorizedUserService {
 
         this.appCacheService.setItem(cacheStorageSaveOptionsItem);
 
-        this.setUserIsSignedIn(true);
+        this.setUserSignInState(true);
       }),
       map(() => {
         return true;
@@ -82,6 +82,10 @@ export class AuthorizedUserService {
     return of<AuthorizedUserDataModel>(authorizedUserData);
   }
 
+  public get userSignInState$(): Observable<boolean> {
+    return this.userSignInState.asObservable();
+  }
+
   //#endregion
 
   constructor(
@@ -89,7 +93,7 @@ export class AuthorizedUserService {
     private authorizedUserHttpService: AuthorizedUserHttpService
   ) {}
 
-  public setUserIsSignedIn(userIsSignedIn: boolean) {
-    this.userIsSignedIn$.next(userIsSignedIn);
+  public setUserSignInState(signInState: boolean) {
+    this.userSignInState.next(signInState);
   }
 }

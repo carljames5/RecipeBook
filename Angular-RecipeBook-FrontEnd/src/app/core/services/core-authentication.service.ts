@@ -61,7 +61,7 @@ export class CoreAuthenticationService {
       this.appCacheService.setItem(cacheSaveOptionsItem);
       this.appCacheService.removeItem(CACHE_STORAGE_KEYS['AUTHORIZED_USER_DATA']);
 
-      this.authorizedUserService.setUserIsSignedIn(false);
+      this.authorizedUserService.setUserSignInState(false);
 
       this.router.navigate(['/sign-in']);
     });
