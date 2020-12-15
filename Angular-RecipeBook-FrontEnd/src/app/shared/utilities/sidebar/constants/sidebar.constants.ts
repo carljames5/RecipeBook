@@ -16,6 +16,6 @@ export const DOCKED_SIZE: string = '60px';
 export const AUTO_COLLAPSE_WIDTH_SIZE: number = 1180;
 
 export const ROUTER_LINKS: { [linkTypeCode: number]: string } = {
-  [1]: '/recipes',
+  [1]: '/recipe',
   [2]: '/shopping-list',
 };
