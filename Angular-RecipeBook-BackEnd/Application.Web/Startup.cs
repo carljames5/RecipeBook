@@ -1,5 +1,6 @@
-using System.Linq;
-using Application.Core.Constants;
+using Application.Core.AppSettingsConfiguration.Constants;
+using Application.Core.AppSettingsConfiguration.Enums;
+using Application.Core.AppSettingsConfiguration.Models;
 using Application.DataAccessLayer.Context;
 using Application.Web.Core.Configurations;
 using Application.Web.Core.Extensions;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Application.Web
 {
@@ -22,6 +24,8 @@ namespace Application.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CorsConfigurationModel>(_configuration.GetSection(ConfigurationConstants.CONFIGURATIONS[ConfigurationType.CorsConfiguration]));
+
             services.AddDbContext<RecipeBookDbContext>(options =>
                 options.UseSqlServer(
                     _configuration.GetConnectionString("DevConnection")
@@ -44,11 +48,11 @@ namespace Application.Web
             services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IOptions<CorsConfigurationModel> corsConfiguration)
         {
             app.AddApiExceptionHandler();
 
-            app.UseCors(builder => builder.WithOrigins(CorsConstants.SPECIFIED_ORIGINS.ToArray())
+            app.UseCors(builder => builder.WithOrigins(corsConfiguration.Value.SpecifiedOrigins)
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
