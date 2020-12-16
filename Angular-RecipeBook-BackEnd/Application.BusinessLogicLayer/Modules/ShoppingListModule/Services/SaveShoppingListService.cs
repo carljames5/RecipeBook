@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos;
+using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos.Services.SaveShoppingListService;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;

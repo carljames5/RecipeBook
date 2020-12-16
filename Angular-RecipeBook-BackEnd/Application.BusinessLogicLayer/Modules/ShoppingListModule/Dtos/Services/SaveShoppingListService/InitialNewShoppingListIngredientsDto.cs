@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 
-namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos
+namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos.Services.SaveShoppingListService
 {
     public class InitialNewShoppingListIngredientsDto
     {

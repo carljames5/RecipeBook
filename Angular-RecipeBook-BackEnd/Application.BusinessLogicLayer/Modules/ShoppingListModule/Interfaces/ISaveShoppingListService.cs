@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos;
+using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos.Services.SaveShoppingListService;
 using Application.DataAccessLayer.Entities;
 
 namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces
