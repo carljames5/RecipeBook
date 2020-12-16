@@ -33,7 +33,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       }),
 
       this.recipeService.recipeItemDeleted$.subscribe(() => {
-        this.router.navigate(['/recipes']);
+        this.router.navigate(['/recipe']);
       })
     );
   }
