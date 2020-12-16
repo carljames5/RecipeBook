@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.BusinessLogicLayer.Modules.RecipeModule.ResponseModels;
 using Application.Core.Exceptions;
+using Application.Core.Exceptions.Enums;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;
@@ -35,7 +36,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 
             if (recipe == null)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.RecipeNotFound,
+                throw new ApiException(ApiExceptionCode.RecipeNotFound,
                     $"This recipe not found in database! {nameof(recipe.RecipeId)}: {request.Id}");
             }
 

@@ -1,4 +1,5 @@
 ﻿using Application.Core.Exceptions;
+using Application.Core.Exceptions.Enums;
 
 namespace Application.Core.Helpers
 {
@@ -10,7 +11,7 @@ namespace Application.Core.Helpers
 
             if (!parsingResult)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.InvalidAuthorizedUserId, $"The user id is not an integer value! Parsed user id: {userId}");
+                throw new ApiException(ApiExceptionCode.InvalidAuthorizedUserId, $"The user id is not an integer value! Parsed user id: {userId}");
             }
 
             return result;

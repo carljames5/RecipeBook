@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.AuthorizedUser.ResponseModels;
 using Application.Core.Exceptions;
+using Application.Core.Exceptions.Enums;
 using Application.Core.Interfaces.Services;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
@@ -28,7 +29,7 @@ namespace Application.BusinessLogicLayer.Modules.AuthorizedUser.Queries
 
             if (user == null)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UserNotFound, $"User not found in database! {nameof(user.Id)}: {_authorizedUserId}");
+                throw new ApiException(ApiExceptionCode.UserNotFound, $"User not found in database! {nameof(user.Id)}: {_authorizedUserId}");
             }
 
             return new AuthorizedUserDataResponseModel

@@ -11,7 +11,7 @@ import { RibbonToastrComponent } from '../shared/utilities/ribbon-toastr/contain
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor';
+import { ErrorHandlerInterceptor } from './error-handler/interceptors/error-handler.interceptor';
 import { ngxCurrencyDefaultMaskOptions } from './constants/ngx-currency/ngx-currency.constants';
 
 @NgModule({
@@ -33,7 +33,7 @@ import { ngxCurrencyDefaultMaskOptions } from './constants/ngx-currency/ngx-curr
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorHandlingInterceptor,
+      useClass: ErrorHandlerInterceptor,
       multi: true,
     },
     {

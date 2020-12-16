@@ -6,6 +6,7 @@ using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels;
 using Application.Core.Exceptions;
+using Application.Core.Exceptions.Enums;
 using Application.Core.Interfaces.Services;
 using Application.Core.Structs;
 using Application.DataAccessLayer.Context;
@@ -47,7 +48,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 
             if (user == null)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UserNotFound, $"User not found in database! {nameof(user.Id)}: {_authorizedUserId}");
+                throw new ApiException(ApiExceptionCode.UserNotFound, $"User not found in database! {nameof(user.Id)}: {_authorizedUserId}");
             }
 
             Context.ShoppingList.RemoveRange(user.ShoppingList);

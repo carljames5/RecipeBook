@@ -34,11 +34,11 @@ namespace Application.Web.Core.Middlewares
             {
                 await _next(httpContext);
             }
-            catch (RecipeBookException ex)
+            catch (ApiException ex)
             {
-                _logger.LogWarning(ex, $"Exception Code: {(int)ex.RecipeBookExceptionCode}");
+                _logger.LogWarning(ex, $"Exception Code: {(int)ex.ExceptionCode}");
 
-                RecipeBookExceptionModel payload = new RecipeBookExceptionModel(ex, _webHostEnvironment.IsDevelopment());
+                ApiErrorModel payload = new ApiErrorModel(ex, _webHostEnvironment.IsDevelopment());
 
                 await WriteAsJsonAsync(httpContext, HttpStatusCode.BadRequest, payload);
             }
@@ -46,7 +46,7 @@ namespace Application.Web.Core.Middlewares
             {
                 _logger.LogError(ex, ex.Message);
 
-                InternalServerErrorExceptionModel payload = new InternalServerErrorExceptionModel(ex, _webHostEnvironment.IsDevelopment());
+                InternalServerErrorModel payload = new InternalServerErrorModel(ex, _webHostEnvironment.IsDevelopment());
 
                 await WriteAsJsonAsync(httpContext, HttpStatusCode.InternalServerError, payload);
             }

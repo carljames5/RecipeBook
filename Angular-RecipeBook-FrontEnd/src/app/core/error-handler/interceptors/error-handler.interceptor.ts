@@ -4,16 +4,16 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 
-import { CoreAuthenticationService } from '../services/core-authentication.service';
+import { CoreAuthenticationService } from '../../services/core-authentication.service';
 import { RibbonToastrService } from 'src/app/shared/utilities/ribbon-toastr/services/ribbon-toastr.service';
 import {
   getBadRequestMessage,
   getInternalServerErrorMessage,
   localizeException,
-} from '../helpers/interceptors/error-handling-interceptor.helper';
+} from '../helpers/error-handler-interceptor.helper';
 
 @Injectable()
-export class ErrorHandlingInterceptor implements HttpInterceptor {
+export class ErrorHandlerInterceptor implements HttpInterceptor {
   private readonly _httpBadRequestStatusCode: number;
   private readonly _httpUnauthorizedStatusCode: number;
 

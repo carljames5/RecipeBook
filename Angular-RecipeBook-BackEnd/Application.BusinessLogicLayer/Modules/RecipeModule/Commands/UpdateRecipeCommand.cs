@@ -7,6 +7,7 @@ using Application.BusinessLogicLayer.Modules.RecipeModule.Dtos.Services.RecipeVa
 using Application.BusinessLogicLayer.Modules.RecipeModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.Core.Exceptions;
+using Application.Core.Exceptions.Enums;
 using Application.Core.Structs;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
@@ -57,13 +58,13 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
             if (recipe == null)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UpgradeableRecipeNotFound,
+                throw new ApiException(ApiExceptionCode.UpgradeableRecipeNotFound,
                     $"Upgradeable recipe not found in database! {nameof(recipe.RecipeId)}: {request.Id}");
             }
 
             if (await _recipeValidatorService.RecipeNameIsExist(new RecipeNameIsExistDto(request.Id, request.Name, cancellationToken)))
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.RecipeNameIsAlreadyExist, $"Recipe name is exist! {nameof(request.Name)}: {request.Name}");
+                throw new ApiException(ApiExceptionCode.RecipeNameIsAlreadyExist, $"Recipe name is exist! {nameof(request.Name)}: {request.Name}");
             }
 
             Context.RecipeIngredient.RemoveRange(recipe.RecipeIngredients);

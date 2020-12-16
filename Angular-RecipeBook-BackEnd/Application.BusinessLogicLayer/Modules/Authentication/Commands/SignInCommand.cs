@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.Authentication.RequestModels;
 using Application.Core.Exceptions;
+using Application.Core.Exceptions.Enums;
 using Application.Core.Structs;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
@@ -47,7 +48,7 @@ namespace Application.BusinessLogicLayer.Modules.Authentication.Commands
 
             if (user == null)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.SignInUserNotFound,
+                throw new ApiException(ApiExceptionCode.SignInUserNotFound,
                     $"User not found in database! {nameof(user.NormalizedUserName)}: {request.UserName}");
             }
 
@@ -55,17 +56,17 @@ namespace Application.BusinessLogicLayer.Modules.Authentication.Commands
 
             if (signInResult.IsLockedOut)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UserIsLockedOut, $"User is locked out! {nameof(user.NormalizedUserName)}: {user.UserName}");
+                throw new ApiException(ApiExceptionCode.UserIsLockedOut, $"User is locked out! {nameof(user.NormalizedUserName)}: {user.UserName}");
             }
 
             if (signInResult.IsNotAllowed)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UserIsNotAllowed, $"User is not allowed! {nameof(user.NormalizedUserName)}: {user.UserName}");
+                throw new ApiException(ApiExceptionCode.UserIsNotAllowed, $"User is not allowed! {nameof(user.NormalizedUserName)}: {user.UserName}");
             }
 
             if (!signInResult.Succeeded)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.LoginFailed, $"The user failed to log in! {nameof(user.NormalizedUserName)} {user.UserName}");
+                throw new ApiException(ApiExceptionCode.LoginFailed, $"The user failed to log in! {nameof(user.NormalizedUserName)} {user.UserName}");
             }
 
             return Result.Success();

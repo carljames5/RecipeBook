@@ -1,8 +1,7 @@
-﻿namespace Application.Core.Exceptions
+﻿namespace Application.Core.Exceptions.Enums
 {
-    public enum RecipeBookExceptionCode
+    public enum ApiExceptionCode
     {
-        None = 0,
         UserNotFound = 1,
         SignInUserNotFound = 2,
         UnauthorizedUser = 3,

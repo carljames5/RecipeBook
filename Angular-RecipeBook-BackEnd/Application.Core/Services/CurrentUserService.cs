@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Application.Core.Exceptions;
+using Application.Core.Exceptions.Enums;
 using Application.Core.Helpers;
 using Application.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace Application.Core.Services
 
             if (string.IsNullOrWhiteSpace(userId))
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UnauthorizedUser, "The user performing the operation is unauthorized!");
+                throw new ApiException(ApiExceptionCode.UnauthorizedUser, "The user performing the operation is unauthorized!");
             }
 
             int result = CurrentUserServiceHelper.UserIdParser(userId);

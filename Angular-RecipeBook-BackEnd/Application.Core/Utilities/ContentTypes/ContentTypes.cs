@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Application.Core.Utilities.ContentTypes.Enums;
 
 namespace Application.Core.Utilities.ContentTypes
 {
     public static class ContentTypes
     {
-        private static readonly ReadOnlyDictionary<Enum.ContentType, string> ContentTypesDictionary;
+        private static readonly ReadOnlyDictionary<ContentType, string> ContentTypesDictionary;
 
         static ContentTypes()
         {
-            ContentTypesDictionary = new ReadOnlyDictionary<Enum.ContentType, string>(new Dictionary<Enum.ContentType, string>
+            ContentTypesDictionary = new ReadOnlyDictionary<ContentType, string>(new Dictionary<ContentType, string>
             {
                 {
-                    Enum.ContentType.Json, "application/json"
+                    ContentType.Json, "application/json"
                 }
             });
         }
 
-        public static string GetContentType(Enum.ContentType key)
+        public static string GetContentType(ContentType key)
         {
             ContentTypesDictionary.TryGetValue(key, out string result);
 

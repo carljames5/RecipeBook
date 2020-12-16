@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
 using Application.Core.Exceptions;
+using Application.Core.Exceptions.Enums;
 using Application.Core.Structs;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
@@ -31,7 +32,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
             if (recipe == null)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.DeletableRecipeNotFound,
+                throw new ApiException(ApiExceptionCode.DeletableRecipeNotFound,
                     $"Deletable recipe not found in database! {nameof(recipe.RecipeId)}: {request.Id}");
             }
 
