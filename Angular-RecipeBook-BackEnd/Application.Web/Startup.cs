@@ -1,4 +1,4 @@
-using Application.Core.AppSettingsConfiguration.Constants;
+using Application.Core.AppSettingsConfiguration;
 using Application.Core.AppSettingsConfiguration.Enums;
 using Application.Core.AppSettingsConfiguration.Models;
 using Application.DataAccessLayer.Context;
@@ -24,7 +24,7 @@ namespace Application.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CorsConfigurationModel>(_configuration.GetSection(ConfigurationConstants.CONFIGURATIONS[ConfigurationType.CorsConfiguration]));
+            services.Configure<CorsConfigurationModel>(_configuration.GetSection(AppSettingsConfiguration.GetConfigurationType(ConfigurationType.CorsConfiguration)));
 
             services.AddDbContext<RecipeBookDbContext>(options =>
                 options.UseSqlServer(
