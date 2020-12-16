@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.ResponseModels;
@@ -21,7 +20,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries
 
         public GetLastSavedShoppingListQueryHandler(RecipeBookReadOnlyDbContext context, ICurrentUserService currentUserService) : base(context)
         {
-            _authorizedUserId = currentUserService?.GetAuthorizedUserId() ?? throw new ArgumentNullException(nameof(currentUserService));
+            _authorizedUserId = currentUserService.GetAuthorizedUserId();
         }
 
         public override async Task<GetLastSavedShoppingListResponseModel> Handle(GetLastSavedShoppingListQuery request, CancellationToken cancellationToken)

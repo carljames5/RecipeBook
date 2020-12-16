@@ -17,7 +17,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Services
 
         public RecipeIngredientService(RecipeBookDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
         public async Task<ICollection<RecipeIngredient>> InitialNewRecipeIngredients(InitialNewRecipeIngredientsDto modelDto)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Application.Core.Exceptions;
 using Application.Core.Helpers;
 using Application.Core.Interfaces.Services;
@@ -13,7 +12,7 @@ namespace Application.Core.Services
 
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            _httpContext = httpContextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _httpContext = httpContextAccessor.HttpContext;
         }
 
         public int GetAuthorizedUserId()

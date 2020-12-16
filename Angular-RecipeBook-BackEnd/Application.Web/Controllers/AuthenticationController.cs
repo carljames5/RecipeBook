@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.Authentication.Commands;
 using Application.BusinessLogicLayer.Modules.Authentication.RequestModels;
 using MediatR;
@@ -15,7 +14,7 @@ namespace Application.Web.Controllers
 
         public AuthenticationController(IMediator mediator)
         {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator;
         }
 
         [HttpPost("SignIn")]

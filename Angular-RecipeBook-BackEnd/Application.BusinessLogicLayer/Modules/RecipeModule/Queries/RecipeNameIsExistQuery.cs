@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Dtos.Services.RecipeValidatorService;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Interfaces;
@@ -29,7 +28,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
 
         public RecipeNameIsExistQueryHandler(RecipeBookReadOnlyDbContext context, IRecipeValidatorService recipeValidatorService) : base(context)
         {
-            _recipeValidatorService = recipeValidatorService ?? throw new ArgumentNullException(nameof(recipeValidatorService));
+            _recipeValidatorService = recipeValidatorService;
         }
 
         public override async Task<RecipeNameIsExistResponseModel> Handle(RecipeNameIsExistQuery request, CancellationToken cancellationToken)

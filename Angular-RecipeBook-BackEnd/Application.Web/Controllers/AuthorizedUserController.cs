@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.AuthorizedUser.Queries;
 using Application.BusinessLogicLayer.Modules.AuthorizedUser.ResponseModels;
 using MediatR;
@@ -17,7 +16,7 @@ namespace Application.Web.Controllers
 
         public AuthorizedUserController(IMediator mediator)
         {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator;
         }
 
         [Authorize]

@@ -35,7 +35,7 @@ namespace Application.BusinessLogicLayer.Modules.Authentication.Commands
 
         public SignInCommandHandler(RecipeBookDbContext context, SignInManager<ApplicationUser> signInManager) : base(context)
         {
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            _signInManager = signInManager;
         }
 
         protected override async Task<Result> Handler(SignInCommand request, CancellationToken cancellationToken)

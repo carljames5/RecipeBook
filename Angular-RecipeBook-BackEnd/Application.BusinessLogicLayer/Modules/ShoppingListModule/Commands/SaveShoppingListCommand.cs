@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,9 +34,8 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 
         public SaveShoppingListCommandHandler(RecipeBookDbContext context, ICurrentUserService currentUserService, ISaveShoppingListService saveShoppingListService) : base(context)
         {
-            _saveShoppingListService = saveShoppingListService ?? throw new ArgumentNullException(nameof(saveShoppingListService));
-
-            _authorizedUserId = currentUserService?.GetAuthorizedUserId() ?? throw new ArgumentNullException(nameof(currentUserService));
+            _saveShoppingListService = saveShoppingListService;
+            _authorizedUserId = currentUserService.GetAuthorizedUserId();
         }
 
         protected override async Task<Result> Handler(SaveShoppingListCommand request, CancellationToken cancellationToken)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,8 +45,8 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
         public UpdateRecipeCommandHandler(RecipeBookDbContext context, IRecipeIngredientService recipeIngredientService, IRecipeValidatorService recipeValidatorService) : base(context)
         {
-            _recipeIngredientService = recipeIngredientService ?? throw new ArgumentNullException(nameof(recipeIngredientService));
-            _recipeValidatorService = recipeValidatorService ?? throw new ArgumentNullException(nameof(recipeValidatorService));
+            _recipeIngredientService = recipeIngredientService;
+            _recipeValidatorService = recipeValidatorService;
         }
 
         protected override async Task<Result> Handler(UpdateRecipeCommand request, CancellationToken cancellationToken)

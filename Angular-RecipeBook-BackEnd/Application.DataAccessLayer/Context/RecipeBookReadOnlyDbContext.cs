@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Application.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,7 @@ namespace Application.DataAccessLayer.Context
 
         public RecipeBookReadOnlyDbContext(RecipeBookDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
         public IQueryable<ApplicationLog> ApplicationLogs => _context.ApplicationLog.AsNoTracking();

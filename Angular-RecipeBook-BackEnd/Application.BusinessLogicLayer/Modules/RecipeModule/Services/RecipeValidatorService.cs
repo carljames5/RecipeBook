@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Dtos.Services.RecipeValidatorService;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Interfaces;
 using Application.DataAccessLayer.Context;
@@ -14,7 +13,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Services
 
         public RecipeValidatorService(RecipeBookReadOnlyDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
         public async Task<bool> RecipeNameIsExist(RecipeNameIsExistDto dtoModel)

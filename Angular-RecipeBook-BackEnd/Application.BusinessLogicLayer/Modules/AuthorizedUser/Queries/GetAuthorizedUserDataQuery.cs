@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.AuthorizedUser.ResponseModels;
 using Application.Core.Exceptions;
@@ -20,7 +19,7 @@ namespace Application.BusinessLogicLayer.Modules.AuthorizedUser.Queries
 
         public GetAuthorizedUserDataQueryHandler(RecipeBookReadOnlyDbContext context, ICurrentUserService currentUserService) : base(context)
         {
-            _authorizedUserId = currentUserService?.GetAuthorizedUserId() ?? throw new ArgumentNullException(nameof(currentUserService));
+            _authorizedUserId = currentUserService.GetAuthorizedUserId();
         }
 
         public override async Task<AuthorizedUserDataResponseModel> Handle(GetAuthorizedUserDataQuery request, CancellationToken cancellationToken)

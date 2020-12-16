@@ -22,9 +22,9 @@ namespace Application.Web.Core.Middlewares
 
         public ApiExceptionHandlerMiddleware(IWebHostEnvironment webHostEnvironment, RequestDelegate next, ILogger<ApiExceptionHandlerMiddleware> logger)
         {
-            _webHostEnvironment = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
-            _next = next ?? throw new ArgumentNullException(nameof(next));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _webHostEnvironment = webHostEnvironment;
+            _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext httpContext)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Queries;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels;
@@ -19,7 +18,7 @@ namespace Application.Web.Controllers
 
         public ShoppingListController(IMediator mediator)
         {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator;
         }
 
         [HttpGet("GetLastSavedShoppingList")]

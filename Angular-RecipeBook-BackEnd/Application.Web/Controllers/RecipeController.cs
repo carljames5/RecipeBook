@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Commands;
 using Application.BusinessLogicLayer.Modules.RecipeModule.Queries;
 using Application.BusinessLogicLayer.Modules.RecipeModule.RequestModels;
@@ -19,7 +18,7 @@ namespace Application.Web.Controllers
 
         public RecipeController(IMediator mediator)
         {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator;
         }
 
         [HttpPost("GetById")]

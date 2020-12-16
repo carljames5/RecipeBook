@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos;
@@ -16,7 +15,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Services
 
         public SaveShoppingListService(RecipeBookDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
         public async Task<ICollection<ShoppingList>> InitialNewShoppingListIngredients(InitialNewShoppingListIngredientsDto modelDto)
