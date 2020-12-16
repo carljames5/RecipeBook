@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.Authentication.RequestModels;
@@ -38,7 +37,7 @@ namespace Application.BusinessLogicLayer.Modules.Authentication.Commands
             _signInManager = signInManager;
         }
 
-        protected override async Task<Result> Handler(SignInCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
             ApplicationUser user = await Context.Users
                 .AsNoTracking()
@@ -61,7 +60,7 @@ namespace Application.BusinessLogicLayer.Modules.Authentication.Commands
 
             if (signInResult.IsNotAllowed)
             {
-                throw new RecipeBookException(RecipeBookExceptionCode.UserIsNotAllowed, $"User is not allowd! {nameof(user.NormalizedUserName)}: {user.UserName}");
+                throw new RecipeBookException(RecipeBookExceptionCode.UserIsNotAllowed, $"User is not allowed! {nameof(user.NormalizedUserName)}: {user.UserName}");
             }
 
             if (!signInResult.Succeeded)

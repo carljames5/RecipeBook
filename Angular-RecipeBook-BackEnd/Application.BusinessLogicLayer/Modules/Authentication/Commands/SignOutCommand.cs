@@ -20,7 +20,7 @@ namespace Application.BusinessLogicLayer.Modules.Authentication.Commands
             _signInManager = signInManager;
         }
 
-        protected override async Task<Result> Handler(SignOutCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(SignOutCommand request, CancellationToken cancellationToken)
         {
             await _signInManager.SignOutAsync();
 

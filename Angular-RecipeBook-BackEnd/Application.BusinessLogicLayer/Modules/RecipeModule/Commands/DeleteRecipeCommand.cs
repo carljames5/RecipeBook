@@ -25,7 +25,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
         public DeleteRecipeCommandHandler(RecipeBookDbContext context) : base(context)
         { }
 
-        protected override async Task<Result> Handler(DeleteRecipeCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
         {
             Recipe recipe = Context.Recipe.FirstOrDefault(x => x.RecipeId == request.Id);
 

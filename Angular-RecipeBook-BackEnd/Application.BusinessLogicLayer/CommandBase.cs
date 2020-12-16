@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.DataAccessLayer.Context;
 using MediatR;
@@ -15,16 +14,6 @@ namespace Application.BusinessLogicLayer
             Context = context;
         }
 
-        public Task<TResult> Handle(TCommand command, CancellationToken cancellationToken)
-        {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-
-            return Handler(command, cancellationToken);
-        }
-
-        protected abstract Task<TResult> Handler(TCommand request, CancellationToken cancellationToken);
+        public abstract Task<TResult> Handle(TCommand request, CancellationToken cancellationToken);
     }
 }

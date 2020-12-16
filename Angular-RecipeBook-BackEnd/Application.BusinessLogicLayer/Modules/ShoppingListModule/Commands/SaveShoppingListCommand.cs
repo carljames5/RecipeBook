@@ -38,7 +38,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
             _authorizedUserId = currentUserService.GetAuthorizedUserId();
         }
 
-        protected override async Task<Result> Handler(SaveShoppingListCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(SaveShoppingListCommand request, CancellationToken cancellationToken)
         {
             ApplicationUser user = await Context.Users
                 .Include(x => x.ShoppingList)

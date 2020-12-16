@@ -45,7 +45,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
             _recipeIngredientService = recipeIngredientService;
         }
 
-        protected override async Task<Result> Handler(CreateRecipeCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
         {
             if (await _recipeValidatorService.RecipeNameIsExist(new RecipeNameIsExistDto(null, request.Name, cancellationToken)))
             {

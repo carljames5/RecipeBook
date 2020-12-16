@@ -49,7 +49,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
             _recipeValidatorService = recipeValidatorService;
         }
 
-        protected override async Task<Result> Handler(UpdateRecipeCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
         {
             Recipe recipe = Context.Recipe
                 .Include(x => x.RecipeIngredients)
