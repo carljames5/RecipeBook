@@ -7,7 +7,7 @@ namespace Application.BusinessLogicLayer
 {
     public abstract class QueryBase<TQuery, TResult> : IRequestHandler<TQuery, TResult> where TQuery : IRequest<TResult>
     {
-        protected RecipeBookReadOnlyDbContext Context { get; set; }
+        protected RecipeBookReadOnlyDbContext Context;
 
         protected QueryBase(RecipeBookReadOnlyDbContext context)
         {
