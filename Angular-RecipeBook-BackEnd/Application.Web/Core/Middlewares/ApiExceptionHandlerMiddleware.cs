@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using Application.Core.Constants;
 using Application.Core.Exceptions;
 using Application.Core.Exceptions.Models;
+using Application.Core.Utilities.ContentTypes;
+using Application.Core.Utilities.ContentTypes.Enum;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
@@ -59,7 +60,7 @@ namespace Application.Web.Core.Middlewares
             }
 
             context.Response.StatusCode = (int)httpStatusCode;
-            context.Response.ContentType = ContentTypeConstants.APPLICATION_JSON;
+            context.Response.ContentType = ContentTypes.GetContentType(ContentType.Json);
 
             string jsonText = JsonConvert.SerializeObject(payload);
 
