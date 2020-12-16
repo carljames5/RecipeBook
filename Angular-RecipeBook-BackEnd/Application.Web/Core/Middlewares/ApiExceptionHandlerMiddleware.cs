@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Application.Core.Exceptions;
 using Application.Core.Exceptions.Models;
 using Application.Core.Utilities.ContentTypes;
-using Application.Core.Utilities.ContentTypes.Enum;
+using Application.Core.Utilities.ContentTypes.Enums;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;

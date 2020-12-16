@@ -1,4 +1,4 @@
-﻿namespace Application.Core.Utilities.ContentTypes.Enum
+﻿namespace Application.Core.Utilities.ContentTypes.Enums
 {
     public enum ContentType
     {
