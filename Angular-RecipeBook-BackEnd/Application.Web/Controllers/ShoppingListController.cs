@@ -11,7 +11,8 @@ namespace Application.Web.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{api-version:apiVersion}/[controller]")]
     public class ShoppingListController : ControllerBase
     {
         private readonly IMediator _mediator;

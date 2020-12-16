@@ -5,7 +5,9 @@ using Application.DataAccessLayer.Context;
 using Application.Web.Core.Configurations;
 using Application.Web.Core.Extensions;
 using Application.Web.Core.Providers;
+using Application.Web.Core.Swagger;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +42,8 @@ namespace Application.Web
             services.ConfigureAuthService();
             services.ConfigureApplicationCookies();
 
+            services.ConfigureSwaggerServices();
+
             services.AddScopedServices();
 
             services.AddCors();
@@ -48,7 +52,7 @@ namespace Application.Web
             services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app, IOptions<CorsConfigurationModel> corsConfiguration)
+        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider, IOptions<CorsConfigurationModel> corsConfiguration)
         {
             app.AddApiExceptionHandler();
 
@@ -62,11 +66,7 @@ namespace Application.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(o =>
-            {
-                o.SwaggerEndpoint("/swagger/v1/swagger.json", "Angular RecipeBook API v1");
-            });
+            app.ConfigureSwagger(provider);
 
             app.UseEndpoints(endpoints =>
             {

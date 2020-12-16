@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Application.Web.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{api-version:apiVersion}/[controller]")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IMediator _mediator;

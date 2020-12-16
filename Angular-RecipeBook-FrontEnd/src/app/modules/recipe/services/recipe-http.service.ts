@@ -19,7 +19,7 @@ export class RecipeHttpService {
   private readonly _baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this._baseUrl = `${environment.apiUrl}/Recipe`;
+    this._baseUrl = `${environment.apiUrl}/v1/Recipe`;
   }
 
   public getAllRecipe(): Observable<GetAllRecipeResponseModel> {

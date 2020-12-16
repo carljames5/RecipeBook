@@ -13,7 +13,7 @@ export class ShoppingListHttpService {
   private readonly _baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this._baseUrl = `${environment.apiUrl}/ShoppingList`;
+    this._baseUrl = `${environment.apiUrl}/v1/ShoppingList`;
   }
 
   public getLastSavedShoppingList(): Observable<GetLastSavedShoppingListResponseModel> {

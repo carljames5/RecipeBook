@@ -12,7 +12,7 @@ export class CoreAuthenticationHttpService {
   private readonly _baseUrl: string;
 
   public constructor(private http: HttpClient) {
-    this._baseUrl = `${environment.apiUrl}/Authentication`;
+    this._baseUrl = `${environment.apiUrl}/v1/Authentication`;
   }
 
   public signIn(requestModel: SignInRequestModel): Observable<Object> {

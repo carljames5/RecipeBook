@@ -12,7 +12,7 @@ export class AuthorizedUserHttpService {
   private readonly _baseUrl: string;
 
   public constructor(private http: HttpClient) {
-    this._baseUrl = `${environment.apiUrl}/AuthorizedUser`;
+    this._baseUrl = `${environment.apiUrl}/v1/AuthorizedUser`;
   }
 
   public userIsSignedIn(): Observable<Object> {
