@@ -2,8 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.Authentication.RequestModels;
-using Application.Core.CommonModels;
 using Application.Core.Exceptions;
+using Application.Core.Structs;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;

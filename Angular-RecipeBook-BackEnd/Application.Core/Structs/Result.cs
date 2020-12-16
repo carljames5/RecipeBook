@@ -1,6 +1,6 @@
 ﻿using Application.Core.Interfaces;
 
-namespace Application.Core.CommonModels
+namespace Application.Core.Structs
 {
     public struct Result : IResult
     {
