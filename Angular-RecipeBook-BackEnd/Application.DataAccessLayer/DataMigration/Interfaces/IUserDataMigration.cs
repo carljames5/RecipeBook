@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.DataAccessLayer.DataMigration.Interfaces
 {
-    public interface IUserMigrationInitial
+    public interface IUserDataMigration : IBaseMigration
     {
-        Task SeedAsync(RecipeBookDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager);
+        Task SeedAsync(RecipeBookDbContext context, UserManager<ApplicationUser> userManager);
     }
 }
