@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-import { AuthorizedUserDataModel } from 'src/app/core/models/user/authorized-user-data.model';
+import { AuthorizedUserDataModel } from 'src/app/core/authorization/models/authorized-user-data.model';
 
 @Injectable({
   providedIn: 'root',

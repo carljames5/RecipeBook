@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { AppLocaleStorageService } from './app-locale-storage.service';
+import { AppLocaleStorageService } from '../../app-locale-storage/services/app-locale-storage.service';
 
-import { CacheStorageItem } from '../models/app-cache-storage-service/cache-storage-item.model';
-import { CacheStorageSaveOptions } from '../models/app-cache-storage-service/cache-storage-save-options.model';
+import { CacheStorageItem } from '../models/cache-storage-item.model';
+import { CacheStorageSaveOptions } from '../models/cache-storage-save-options.model';
 
 @Injectable({
   providedIn: 'root',

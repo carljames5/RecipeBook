@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 
-import { CoreAuthenticationService } from '../../services/core-authentication.service';
+import { CoreAuthenticationService } from '../../authentication/services/core-authentication.service';
 import { RibbonToastrService } from 'src/app/shared/utilities/ribbon-toastr/services/ribbon-toastr.service';
 import {
   getBadRequestMessage,

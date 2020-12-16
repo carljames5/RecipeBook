@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { AuthorizedUserDataModel } from 'src/app/core/models/user/authorized-user-data.model';
+import { AuthorizedUserDataModel } from 'src/app/core/authorization/models/authorized-user-data.model';
 
 @Component({
   selector: 'app-authorized-user-information',

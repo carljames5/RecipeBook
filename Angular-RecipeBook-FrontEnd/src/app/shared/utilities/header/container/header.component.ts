@@ -1,12 +1,12 @@
 import { Observable, Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 
-import { AuthorizedUserService } from 'src/app/core/services/authorized-user.service';
-import { CoreAuthenticationService } from 'src/app/core/services/core-authentication.service';
 import { AppHeaderService } from 'src/app/shared/utilities/header/services/app-header.service';
+import { AuthorizedUserService } from 'src/app/core/authorization/services/authorized-user.service';
+import { CoreAuthenticationService } from 'src/app/core/authentication/services/core-authentication.service';
 
-import { HeaderTitleDataModel } from 'src/app/core/models/routes/header-title-data.model';
-import { AuthorizedUserDataModel } from 'src/app/core/models/user/authorized-user-data.model';
+import { HeaderTitleDataModel } from 'src/app/core/router/models/header-title-data.model';
+import { AuthorizedUserDataModel } from 'src/app/core/authorization/models/authorized-user-data.model';
 
 @Component({
   selector: 'app-header',

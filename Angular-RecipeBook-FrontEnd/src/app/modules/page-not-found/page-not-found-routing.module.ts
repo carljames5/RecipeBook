@@ -4,8 +4,8 @@ import { PageNotFoundComponent } from './container/page-not-found.component';
 
 import { MODULE_NAMES } from './constants/module-names.constant';
 
-import { RouterDataModel } from 'src/app/core/models/routes/router-data.model';
-import { HeaderTitleDataModel } from 'src/app/core/models/routes/header-title-data.model';
+import { RouterDataModel } from 'src/app/core/router/models/router-data.model';
+import { HeaderTitleDataModel } from 'src/app/core/router/models/header-title-data.model';
 
 const routes: Routes = [
   {

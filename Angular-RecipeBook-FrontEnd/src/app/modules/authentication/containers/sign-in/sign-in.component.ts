@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CoreAuthenticationService } from 'src/app/core/services/core-authentication.service';
+import { CoreAuthenticationService } from 'src/app/core/authentication/services/core-authentication.service';
 
 import { SignInRequestModel } from '../../models/request-models/sign-in-request.model';
 

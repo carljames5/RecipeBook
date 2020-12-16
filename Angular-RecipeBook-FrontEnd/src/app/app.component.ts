@@ -4,14 +4,14 @@ import { Component, OnDestroy } from '@angular/core';
 import { filter } from 'rxjs/internal/operators/filter';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
-import { AuthorizedUserService } from './core/services/authorized-user.service';
 import { AppHeaderService } from './shared/utilities/header/services/app-header.service';
+import { AuthorizedUserService } from './core/authorization/services/authorized-user.service';
 
-import { DEFAULT_BROWSER_TAB_TITLE } from './core/constants/browser-data/browser-data.constants';
+import { DEFAULT_BROWSER_TAB_TITLE } from './core/utilities/browser-data/constants/browser-data.constants';
 
-import { RouterDataModel } from './core/models/routes/router-data.model';
-import { HeaderTitleDataModel } from './core/models/routes/header-title-data.model';
-import { BrowserTitleDataModel } from './core/models/routes/browser-title-data.model';
+import { RouterDataModel } from './core/router/models/router-data.model';
+import { HeaderTitleDataModel } from './core/router/models/header-title-data.model';
+import { BrowserTitleDataModel } from './core/router/models/browser-title-data.model';
 
 @Component({
   selector: 'app-root',

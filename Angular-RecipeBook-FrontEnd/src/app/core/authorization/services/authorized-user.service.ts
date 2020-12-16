@@ -2,13 +2,13 @@ import { map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
-import { AppCacheStorageService } from './app-cache-storage.service';
 import { AuthorizedUserHttpService } from './authorized-user-http.service';
+import { AppCacheStorageService } from '../../app-cache-storage/services/app-cache-storage.service';
 
-import { CACHE_STORAGE_KEYS } from '../constants/app-cache-storage-service/app-cache-storage-service.constants';
+import { CACHE_STORAGE_KEYS } from '../../app-cache-storage/constants/app-cache-storage-service.constants';
 
-import { AuthorizedUserDataModel } from 'src/app/core/models/user/authorized-user-data.model';
-import { CacheStorageSaveOptions } from '../models/app-cache-storage-service/cache-storage-save-options.model';
+import { AuthorizedUserDataModel } from 'src/app/core/authorization/models/authorized-user-data.model';
+import { CacheStorageSaveOptions } from '../../app-cache-storage/models/cache-storage-save-options.model';
 
 @Injectable({
   providedIn: 'root',

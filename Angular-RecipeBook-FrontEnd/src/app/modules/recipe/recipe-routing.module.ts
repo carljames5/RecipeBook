@@ -9,9 +9,9 @@ import { DefaultRecipeComponent } from './container/components/default-recipe/de
 
 import { MODULE_NAMES } from './constants/module-names.constant';
 
-import { RouterDataModel } from 'src/app/core/models/routes/router-data.model';
-import { HeaderTitleDataModel } from 'src/app/core/models/routes/header-title-data.model';
-import { BrowserTitleDataModel } from 'src/app/core/models/routes/browser-title-data.model';
+import { RouterDataModel } from 'src/app/core/router/models/router-data.model';
+import { HeaderTitleDataModel } from 'src/app/core/router/models/header-title-data.model';
+import { BrowserTitleDataModel } from 'src/app/core/router/models/browser-title-data.model';
 
 const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },

@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 
-import { AuthorizedUserService } from '../services/authorized-user.service';
+import { AuthorizedUserService } from '../authorization/services/authorized-user.service';
 
 @Injectable({
   providedIn: 'root',
