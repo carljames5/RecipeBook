@@ -1,5 +1,5 @@
 ﻿namespace Application.BusinessLogicLayer.Interfaces
 {
-    public interface IBusinessLogicLayerAssembly
+    public interface IBusinessLogicLayerMarker
     { }
 }

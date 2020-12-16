@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
-using Application.BusinessLogicLayer.Interfaces;
-using Application.Core.Helpers;
+﻿using Application.BusinessLogicLayer.Interfaces;
 using Application.DataAccessLayer.Context;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,12 +16,7 @@ namespace Application.Web.Core.Configurations
 
         public static IServiceCollection ConfigureMediatR(this IServiceCollection services)
         {
-            Assembly bllAssembly = typeof(Startup).Assembly.GetReferencedAssemblies()
-                .Where(x => x.Name == AssemblyHelper<IBusinessLogicLayerAssembly>.AssemblyName)
-                .Select(Assembly.Load)
-                .Single();
-
-            services.AddMediatR(bllAssembly);
+            services.AddMediatR(typeof(IBusinessLogicLayerMarker));
 
             return services;
         }
