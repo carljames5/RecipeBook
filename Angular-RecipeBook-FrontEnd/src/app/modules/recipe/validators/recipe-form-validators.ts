@@ -1,5 +1,5 @@
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/internal/operators/map';
 import { Observable } from 'rxjs/internal/Observable';
 import { FormControl, AbstractControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
 
