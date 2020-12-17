@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Application.DataAccessLayer.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.DataAccessLayer.Entities
 {
-    public class ApplicationUser : IdentityUser<int>, IEntity
+    public class ApplicationUser : IdentityUser<int>
     {
         public string FirstName { get; set; }
 

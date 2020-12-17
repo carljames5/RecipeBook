@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Application.DataAccessLayer.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Application.DataAccessLayer.Entities
 {
-    public class Ingredient : IEntity
+    public class Ingredient
     {
         [Key]
         public int Id { get; set; }
