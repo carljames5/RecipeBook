@@ -2,8 +2,8 @@
 using Application.BusinessLogicLayer.Modules.RecipeModule.Services;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.Services;
-using Application.Core.Interfaces.Services;
 using Application.Core.Services;
+using Application.Core.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Web.Core.Providers

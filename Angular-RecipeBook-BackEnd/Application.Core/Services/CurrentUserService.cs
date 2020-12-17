@@ -2,7 +2,7 @@
 using Application.Core.Exceptions;
 using Application.Core.Exceptions.Enums;
 using Application.Core.Helpers;
-using Application.Core.Interfaces.Services;
+using Application.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Core.Services

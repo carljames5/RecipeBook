@@ -8,7 +8,7 @@ using Application.BusinessLogicLayer.Modules.ShoppingListModule.Interfaces;
 using Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModels;
 using Application.Core.Exceptions;
 using Application.Core.Exceptions.Enums;
-using Application.Core.Interfaces.Services;
+using Application.Core.Services.Interfaces;
 using Application.Core.Structs;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;

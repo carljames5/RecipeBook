@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Application.BusinessLogicLayer.Modules.AuthorizedUser.ResponseModels;
 using Application.Core.Exceptions;
 using Application.Core.Exceptions.Enums;
-using Application.Core.Interfaces.Services;
+using Application.Core.Services.Interfaces;
 using Application.DataAccessLayer.Context;
 using Application.DataAccessLayer.Entities;
 using MediatR;
