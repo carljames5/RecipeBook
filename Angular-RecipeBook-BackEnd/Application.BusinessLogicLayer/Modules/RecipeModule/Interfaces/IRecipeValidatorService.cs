@@ -5,6 +5,6 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Interfaces
 {
     public interface IRecipeValidatorService
     {
-        Task<bool> RecipeNameIsExist(RecipeNameIsExistDto dtoModel);
+        Task<bool> RecipeNameIsExist(RecipeNameIsExistValidationDto dtoModel);
     }
 }

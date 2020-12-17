@@ -4,7 +4,7 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.RequestModel
 {
     public class SaveShoppingListRequestModel
     {
-        public List<SaveShoppingListIngredientListItemRequestModel> Ingredients { get; set; }
+        public List<SaveShoppingListIngredientListItemRequestModel> Ingredients { get; init; }
 
         public SaveShoppingListRequestModel()
         {

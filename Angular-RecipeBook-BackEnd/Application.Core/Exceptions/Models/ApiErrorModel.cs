@@ -1,21 +1,13 @@
-﻿using Application.Core.Exceptions.Constants;
-using Application.Core.Exceptions.Enums;
+﻿using Application.Core.Exceptions.Enums;
 
 namespace Application.Core.Exceptions.Models
 {
     public class ApiErrorModel
     {
-        public ApiExceptionCode ExceptionCode { get; }
+        public ApiExceptionCode ExceptionCode { get; init; }
 
-        public string Message { get; }
+        public string Message { get; init; }
 
-        public string Exception { get; }
-
-        public ApiErrorModel(ApiException ex, bool isDevelopmentEnvironment)
-        {
-            ExceptionCode = ex.ExceptionCode;
-            Message = ex.Message;
-            Exception = isDevelopmentEnvironment ? ex.ToString() : ApiErrorConstants.NON_DEVELOPMENT_EXCEPTION_MESSAGE;
-        }
+        public string Exception { get; init; }
     }
 }

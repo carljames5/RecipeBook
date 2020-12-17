@@ -16,6 +16,6 @@ namespace Application.DataAccessLayer.DataMigration.Constants
         public const string PASSWORD = "techadmin2020";
 
         public static ReadOnlyCollection<RoleType> ROLES { get; } =
-            new ReadOnlyCollection<RoleType>(new[] { RoleType.TechnicalAdministrator });
+            new(new[] { RoleType.TechnicalAdministrator });
     }
 }

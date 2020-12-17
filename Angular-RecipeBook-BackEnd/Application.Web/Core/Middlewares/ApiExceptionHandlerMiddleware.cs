@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Application.Core.Exceptions;
+using Application.Core.Exceptions.Constants;
 using Application.Core.Exceptions.Models;
 using Application.Core.Utilities.ContentTypes;
 using Application.Core.Utilities.ContentTypes.Enums;
@@ -38,7 +39,12 @@ namespace Application.Web.Core.Middlewares
             {
                 _logger.LogWarning(ex, $"Exception Code: {(int)ex.ExceptionCode}");
 
-                ApiErrorModel payload = new ApiErrorModel(ex, _webHostEnvironment.IsDevelopment());
+                ApiErrorModel payload = new ApiErrorModel
+                {
+                    ExceptionCode = ex.ExceptionCode,
+                    Message = ex.Message,
+                    Exception = _webHostEnvironment.IsDevelopment() ? ex.ToString() : ApiErrorConstants.NON_DEVELOPMENT_EXCEPTION_MESSAGE
+                };
 
                 await WriteAsJsonAsync(httpContext, HttpStatusCode.BadRequest, payload);
             }
@@ -46,7 +52,11 @@ namespace Application.Web.Core.Middlewares
             {
                 _logger.LogError(ex, ex.Message);
 
-                InternalServerErrorModel payload = new InternalServerErrorModel(ex, _webHostEnvironment.IsDevelopment());
+                InternalServerErrorModel payload = new InternalServerErrorModel
+                {
+                    Message = ex.Message,
+                    Exception = _webHostEnvironment.IsDevelopment() ? ex.ToString() : InternalServerErrorConstants.NON_DEVELOPMENT_EXCEPTION_MESSAGE
+                };
 
                 await WriteAsJsonAsync(httpContext, HttpStatusCode.InternalServerError, payload);
             }

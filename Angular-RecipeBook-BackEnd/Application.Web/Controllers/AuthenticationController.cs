@@ -27,7 +27,7 @@ namespace Application.Web.Controllers
         }
 
         [HttpGet("SignOut")]
-        public async Task<ActionResult> SignOut()
+        public new async Task<ActionResult> SignOut()
         {
             await _mediator.Send(new SignOutCommand());
 

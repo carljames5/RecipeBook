@@ -23,8 +23,11 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 
         public SaveShoppingListCommand(SaveShoppingListRequestModel requestModel)
         {
-            Ingredients = requestModel.Ingredients?.Select(x =>
-                new ShoppingListIngredientListItemDto(x.Name, x.Amount));
+            Ingredients = requestModel.Ingredients?.Select(x => new ShoppingListIngredientListItemDto
+            {
+                Name = x.Name.Trim(),
+                Amount = x.Amount
+            }).ToList();
         }
     }
 
@@ -54,8 +57,11 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Commands
 
             Context.ShoppingList.RemoveRange(user.ShoppingList);
 
-            user.ShoppingList = await _saveShoppingListService.InitialNewShoppingListIngredients(
-                new InitialNewShoppingListIngredientsDto(request.Ingredients, cancellationToken));
+            user.ShoppingList = await _saveShoppingListService.InitialNewShoppingListIngredients(new InitialNewShoppingListIngredientsDto
+            {
+                Ingredients = request.Ingredients,
+                CancellationToken = cancellationToken
+            });
 
             await Context.SaveChangesAsync(cancellationToken);
 

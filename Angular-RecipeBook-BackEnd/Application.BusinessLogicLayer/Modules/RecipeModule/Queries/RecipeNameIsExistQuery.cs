@@ -35,8 +35,14 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Queries
         {
             RecipeNameIsExistResponseModel responseModel = new RecipeNameIsExistResponseModel();
 
-            responseModel.RecipeNameIsExist = await _recipeValidatorService.RecipeNameIsExist(
-                new RecipeNameIsExistDto(request.RecipeId, request.RecipeName, cancellationToken));
+            RecipeNameIsExistValidationDto recipeNameIsExistValidationDto = new RecipeNameIsExistValidationDto
+            {
+                RecipeId = request.RecipeId,
+                RecipeName = request.RecipeName.Trim().ToLower(),
+                CancellationToken = cancellationToken
+            };
+
+            responseModel.RecipeNameIsExist = await _recipeValidatorService.RecipeNameIsExist(recipeNameIsExistValidationDto);
 
             return responseModel;
         }

@@ -5,14 +5,8 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Dtos.Services.Reci
 {
     public class InitialNewRecipeIngredientsDto
     {
-        public List<RecipeIngredientListItemDto> Ingredients { get; }
+        public List<RecipeIngredientListItemDto> Ingredients { get; init; }
 
-        public CancellationToken CancellationToken { get; }
-
-        public InitialNewRecipeIngredientsDto(List<RecipeIngredientListItemDto> ingredients, CancellationToken cancellationToken)
-        {
-            Ingredients = ingredients;
-            CancellationToken = cancellationToken;
-        }
+        public CancellationToken CancellationToken { get; init; }
     }
 }

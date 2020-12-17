@@ -6,6 +6,6 @@ namespace Application.DataAccessLayer.DataMigration.Constants
     public static class AddDefaultRolesMigrationConstants
     {
         public static ReadOnlyCollection<RoleType> DEFAULT_ROLES { get; } =
-            new ReadOnlyCollection<RoleType>(new[] { RoleType.TechnicalAdministrator });
+            new(new[] { RoleType.TechnicalAdministrator });
     }
 }

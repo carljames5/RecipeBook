@@ -35,7 +35,11 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
             Name = requestModel.Name;
             Description = requestModel.Description;
             ImagePath = requestModel.ImagePath;
-            Ingredients = requestModel.Ingredients?.Select(x => new RecipeIngredientListItemDto(x.Name, x.Amount)).ToList();
+            Ingredients = requestModel.Ingredients?.Select(x => new RecipeIngredientListItemDto
+            {
+                Name = x.Name.Trim(),
+                Amount = x.Amount
+            }).ToList();
         }
     }
 
@@ -53,6 +57,18 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
         public override async Task<Result> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
         {
+            RecipeNameIsExistValidationDto recipeNameIsExistValidationDto = new RecipeNameIsExistValidationDto
+            {
+                RecipeId = request.Id,
+                RecipeName = request.Name.Trim().ToLower(),
+                CancellationToken = cancellationToken
+            };
+
+            if (await _recipeValidatorService.RecipeNameIsExist(recipeNameIsExistValidationDto))
+            {
+                throw new ApiException(ApiExceptionCode.RecipeNameIsAlreadyExist, $"Recipe name is exist! {nameof(request.Name)}: {request.Name}");
+            }
+
             Recipe recipe = Context.Recipe
                 .Include(x => x.RecipeIngredients)
                 .FirstOrDefault(x => x.RecipeId == request.Id);
@@ -63,17 +79,16 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
                     $"Upgradeable recipe not found in database! {nameof(recipe.RecipeId)}: {request.Id}");
             }
 
-            if (await _recipeValidatorService.RecipeNameIsExist(new RecipeNameIsExistDto(request.Id, request.Name, cancellationToken)))
-            {
-                throw new ApiException(ApiExceptionCode.RecipeNameIsAlreadyExist, $"Recipe name is exist! {nameof(request.Name)}: {request.Name}");
-            }
-
             Context.RecipeIngredient.RemoveRange(recipe.RecipeIngredients);
 
             recipe.Name = request.Name;
             recipe.Description = request.Description;
             recipe.ImagePath = request.ImagePath;
-            recipe.RecipeIngredients = await _recipeIngredientService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto(request.Ingredients, cancellationToken));
+            recipe.RecipeIngredients = await _recipeIngredientService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto
+            {
+                Ingredients = request.Ingredients,
+                CancellationToken = cancellationToken
+            });
 
             await Context.SaveChangesAsync(cancellationToken);
 

@@ -31,7 +31,11 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
             Name = requestModel.Name;
             Description = requestModel.Description;
             ImagePath = requestModel.ImagePath;
-            Ingredients = requestModel.Ingredients?.Select(x => new RecipeIngredientListItemDto(x.Name, x.Amount)).ToList();
+            Ingredients = requestModel.Ingredients?.Select(x => new RecipeIngredientListItemDto
+            {
+                Name = x.Name.Trim(),
+                Amount = x.Amount
+            }).ToList();
         }
     }
 
@@ -49,7 +53,13 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
 
         public override async Task<Result> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
         {
-            if (await _recipeValidatorService.RecipeNameIsExist(new RecipeNameIsExistDto(null, request.Name, cancellationToken)))
+            RecipeNameIsExistValidationDto recipeNameIsExistValidationDto = new RecipeNameIsExistValidationDto
+            {
+                RecipeName = request.Name.Trim().ToLower(),
+                CancellationToken = cancellationToken
+            };
+
+            if (await _recipeValidatorService.RecipeNameIsExist(recipeNameIsExistValidationDto))
             {
                 throw new ApiException(ApiExceptionCode.RecipeNameIsAlreadyExist, $"Recipe name is exist! {nameof(request.Name)}: {request.Name}");
             }
@@ -59,9 +69,13 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Commands
                 Name = request.Name,
                 Description = request.Description,
                 ImagePath = request.ImagePath,
-                RecipeIngredients =
-                await _recipeIngredientService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto(request.Ingredients, cancellationToken))
+                RecipeIngredients = await _recipeIngredientService.InitialNewRecipeIngredients(new InitialNewRecipeIngredientsDto
+                {
+                    Ingredients = request.Ingredients,
+                    CancellationToken = cancellationToken
+                }),
             };
+
 
             await Context.Recipe.AddAsync(recipe, cancellationToken);
 

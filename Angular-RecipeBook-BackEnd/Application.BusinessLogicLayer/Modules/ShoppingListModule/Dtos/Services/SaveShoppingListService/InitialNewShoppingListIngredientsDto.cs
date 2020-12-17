@@ -5,15 +5,8 @@ namespace Application.BusinessLogicLayer.Modules.ShoppingListModule.Dtos.Service
 {
     public class InitialNewShoppingListIngredientsDto
     {
-        public IEnumerable<ShoppingListIngredientListItemDto> Ingredients { get; }
+        public IEnumerable<ShoppingListIngredientListItemDto> Ingredients { get; init; }
 
-        public CancellationToken CancellationToken { get; }
-
-        public InitialNewShoppingListIngredientsDto(IEnumerable<ShoppingListIngredientListItemDto> shoppingListIngredients,
-                                                    CancellationToken cancellationToken)
-        {
-            Ingredients = shoppingListIngredients;
-            CancellationToken = cancellationToken;
-        }
+        public CancellationToken CancellationToken { get; init; }
     }
 }

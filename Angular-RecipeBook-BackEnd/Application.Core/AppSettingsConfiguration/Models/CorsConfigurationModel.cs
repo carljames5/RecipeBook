@@ -2,6 +2,6 @@
 {
     public class CorsConfigurationModel
     {
-        public string[] SpecifiedOrigins { get; set; }
+        public string[] SpecifiedOrigins { get; init; }
     }
 }

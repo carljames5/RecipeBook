@@ -16,7 +16,7 @@ namespace Application.BusinessLogicLayer.Modules.RecipeModule.Services
             _context = context;
         }
 
-        public async Task<bool> RecipeNameIsExist(RecipeNameIsExistDto dtoModel)
+        public async Task<bool> RecipeNameIsExist(RecipeNameIsExistValidationDto dtoModel)
         {
             if (dtoModel.RecipeId.HasValue)
             {

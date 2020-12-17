@@ -2,14 +2,8 @@
 {
     public class ShoppingListIngredientListItemDto
     {
-        public string Name { get; }
+        public string Name { get; init; }
 
-        public int Amount { get; }
-
-        public ShoppingListIngredientListItemDto(string name, int amount)
-        {
-            Name = name.Trim();
-            Amount = amount;
-        }
+        public int Amount { get; init; }
     }
 }
