@@ -117,7 +117,10 @@ About the application technologies and operation:
    ```
    ng serve
    ```
-5. After launching the app, you can access the app at the following URL
+   
+5. **[BackEnd]** And launch the application BackEnd side!
+
+6. After launching the app, you can access the app at the following URL
 
    ```
    http://localhost:4200/
