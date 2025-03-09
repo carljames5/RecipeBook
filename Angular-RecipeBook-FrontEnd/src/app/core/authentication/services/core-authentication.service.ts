@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { finalize, mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import { CoreAuthenticationHttpService } from './core-authentication-http.service';
 import { AuthorizedUserService } from '../../authorization/services/authorized-user.service';
@@ -27,43 +28,47 @@ export class CoreAuthenticationService {
     private coreAuthenticationHttpService: CoreAuthenticationHttpService
   ) {}
 
-  public signIn(requestModel: SignInRequestModel) {
+  public async signIn(requestModel: SignInRequestModel) {
     this.loadingSpinnerService.show('Sign in...');
-
-    this.coreAuthenticationHttpService
-      .signIn(requestModel)
-      .pipe(
-        mergeMap(() => this.authorizedUserHttpService.getAuthorizedUserData()),
-        finalize(() => this.loadingSpinnerService.hide())
-      )
-      .subscribe((response: AuthorizedUserDataModel) => {
-        let cacheSaveOptionsItems: CacheStorageSaveOptions[] = [
-          {
-            data: true,
-            storageKey: CACHE_STORAGE_KEYS['USER_IS_SIGNED_IN'],
-          },
-          { data: response, storageKey: CACHE_STORAGE_KEYS['AUTHORIZED_USER_DATA'] },
-        ];
-
-        this.appCacheService.setMoreItem(cacheSaveOptionsItems);
-
-        this.router.navigate(['/']);
-      });
+    try {
+      await this.coreAuthenticationHttpService.signIn(requestModel).toPromise();
+      const response = await this.authorizedUserHttpService.getAuthorizedUserData().toPromise();
+      this.handleSignInSuccess(response);
+    } catch (error) {
+      console.error('Sign in failed', error);
+    } finally {
+      this.loadingSpinnerService.hide();
+    }
   }
 
-  public signOut() {
-    this.coreAuthenticationHttpService.signOut().subscribe(() => {
-      const cacheSaveOptionsItem: CacheStorageSaveOptions = {
-        data: false,
-        storageKey: CACHE_STORAGE_KEYS['USER_IS_SIGNED_IN'],
-      };
+  private handleSignInSuccess(response: AuthorizedUserDataModel) {
+    const cacheSaveOptionsItems: CacheStorageSaveOptions[] = [
+      { data: true, storageKey: CACHE_STORAGE_KEYS['USER_IS_SIGNED_IN'] },
+      { data: response, storageKey: CACHE_STORAGE_KEYS['AUTHORIZED_USER_DATA'] },
+    ];
 
-      this.appCacheService.setItem(cacheSaveOptionsItem);
-      this.appCacheService.removeItem(CACHE_STORAGE_KEYS['AUTHORIZED_USER_DATA']);
+    this.appCacheService.setMoreItem(cacheSaveOptionsItems);
+    this.router.navigate(['/']);
+  }
 
-      this.authorizedUserService.setUserSignInState(false);
+  public async signOut() {
+    try {
+      await this.coreAuthenticationHttpService.signOut().toPromise();
+      this.handleSignOutSuccess();
+    } catch (error) {
+      console.error('Sign out failed', error);
+    }
+  }
 
-      this.router.navigate(['/sign-in']);
-    });
+  private handleSignOutSuccess() {
+    const cacheSaveOptionsItem: CacheStorageSaveOptions = {
+      data: false,
+      storageKey: CACHE_STORAGE_KEYS['USER_IS_SIGNED_IN'],
+    };
+
+    this.appCacheService.setItem(cacheSaveOptionsItem);
+    this.appCacheService.removeItem(CACHE_STORAGE_KEYS['AUTHORIZED_USER_DATA']);
+    this.authorizedUserService.setUserSignInState(false);
+    this.router.navigate(['/sign-in']);
   }
 }
