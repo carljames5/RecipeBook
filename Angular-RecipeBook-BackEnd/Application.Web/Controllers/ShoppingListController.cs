@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Web.Controllers
 {
+    /// <summary>
+    /// Controller for managing shopping lists.
+    /// </summary>
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
@@ -17,25 +20,35 @@ namespace Application.Web.Controllers
     {
         private readonly IMediator _mediator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShoppingListController"/> class.
+        /// </summary>
+        /// <param name="mediator">The mediator instance.</param>
         public ShoppingListController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpGet("GetLastSavedShoppingList")]
+        /// <summary>
+        /// Gets the last saved shopping list.
+        /// </summary>
+        /// <returns>The last saved shopping list.</returns>
+        [HttpGet(nameof(GetLastSavedShoppingList))]
         public async Task<ActionResult<GetLastSavedShoppingListResponseModel>> GetLastSavedShoppingList()
         {
-            GetLastSavedShoppingListResponseModel result =
-                await _mediator.Send(new GetLastSavedShoppingListQuery());
-
+            var result = await _mediator.Send(new GetLastSavedShoppingListQuery());
             return Ok(result);
         }
 
-        [HttpPost("SaveShoppingList")]
+        /// <summary>
+        /// Saves a shopping list.
+        /// </summary>
+        /// <param name="requestModel">The request model containing the shopping list data.</param>
+        /// <returns>An action result.</returns>
+        [HttpPost(nameof(SaveShoppingList))]
         public async Task<ActionResult> SaveShoppingList([FromBody] SaveShoppingListRequestModel requestModel)
         {
             await _mediator.Send(new SaveShoppingListCommand(requestModel));
-
             return Ok();
         }
     }
