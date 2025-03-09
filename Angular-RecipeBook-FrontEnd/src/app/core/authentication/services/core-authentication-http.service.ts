@@ -15,15 +15,17 @@ export class CoreAuthenticationHttpService {
     this._baseUrl = `${environment.apiUrl}/v1/Authentication`;
   }
 
-  public signIn(requestModel: SignInRequestModel): Observable<Object> {
-    const requestUrl: string = `${this._baseUrl}/SignIn`;
-
-    return this.http.post(requestUrl, requestModel);
+  private getRequestUrl(endpoint: string): string {
+    return `${this._baseUrl}/${endpoint}`;
   }
 
-  public signOut(): Observable<Object> {
-    const requestUrl: string = `${this._baseUrl}/SignOut`;
+  public signIn(requestModel: SignInRequestModel): Observable<any> {
+    const requestUrl: string = this.getRequestUrl('SignIn');
+    return this.http.post<any>(requestUrl, requestModel);
+  }
 
-    return this.http.get(requestUrl);
+  public signOut(): Observable<any> {
+    const requestUrl: string = this.getRequestUrl('SignOut');
+    return this.http.get<any>(requestUrl);
   }
 }
